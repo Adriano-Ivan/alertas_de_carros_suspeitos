@@ -1,14 +1,80 @@
 <head th:fragment="head">
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="stylesheet" href="/css/style.css">
-	<link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="/bootstrap/bootstrap.min.css">
+<link rel="stylesheet" href="/css/style.css">
 </head>
 
-<header th:fragment="header" class='header-page container-fluid p-4 d-flex justify-content-between align-items-center'>
-	<div id='mostrar-hora' class='area-hora'>Hora</div>
-	<h1>Monitoramento de alertas</h1>
-	<button class="btn btn-danger">Sair</button>
+<header th:fragment="header">
+	<div
+		class='header-page row d-flex justify-content-between align-items-center'>
+		<div id='mostrar-hora' class='area-hora col-sm-12 col-md-2 col-xl-3'>Hora</div>
+		<h1 class='col-sm-12 col-md-9 col-xl-7 d-flex text-center system-title align-item-center'>Monitoramento
+			de alertas</h1>
+		<div class='d-flex justify-content-end col-sm-12 col-md-1 col-xl-2'>
+			<button class="btn btn-danger">Sair</button>
+		</div>
+	</div>
 </header>
 
-#########
+<nav th:fragment="nav-area"
+	class='area-nav  col-md-5 col-xl-3 col-lg-4 navbar navbar-expand-lg navbar-dark'>
+	<a class="navbar-brand" href="#">Navegação</a>
+	<button class="navbar-toggler" type="button" data-toggle="collapse"
+		data-target="#navbarSupportedContent"
+		aria-controls="navbarSupportedContent" aria-expanded="false"
+		aria-label="Toggle navigation">
+		<span class="navbar-toggler-icon"></span>
+	</button>
+
+	<div class="collapse navbar navbar-collapse" id="navbarSupportedContent">
+		<ul class="navbar-nav mr-auto">
+			<li class="nav-item active"><a class="nav-link" href="#">Home
+					<span class="sr-only">(current)</span>
+			</a></li>
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle dark" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> Alertas </a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="#">Veículos suspeitos</a> <a
+						class="dropdown-item" href="#">Veículos roubados</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Veículos em situação
+						irregular</a> <a class="dropdown-item" href="#">Infração de
+						trânsito</a>
+				</div></li>
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle dark" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> Notas </a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="#">Observações pertinentes</a> <a
+						class="dropdown-item" href="#">Lista de afazeres</a>
+				</div></li>
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle dark" href="#" id="navbarDropdown"
+				role="button" data-toggle="dropdown" aria-haspopup="true"
+				aria-expanded="false"> Recursos utilitários </a>
+				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+					<a class="dropdown-item" href="#">Avisos externos</a> <a
+						class="dropdown-item" href="#">Enviar aviso</a>
+					<div class="dropdown-divider"></div>
+					<a class="dropdown-item" href="#">Zonas</a> <a
+						class="dropdown-item" href="#">Locais</a> <a class="dropdown-item"
+						href="#">Usuários</a>
+				</div></li>
+			<!--  
+      <li class="nav-item">
+        <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+      </li>-->
+		</ul>
+	</div>
+</nav>
+
+<div th:fragment="footer-imports">
+	<script src="/js/horas.js"></script>
+	<script  src='/jquery/jquery-3.6.0.min.js'></script>
+	<script
+		src="/bootstrap/bootstrap.min.js"></script>
+</div>
