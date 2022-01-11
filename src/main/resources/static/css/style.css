@@ -1,31 +1,38 @@
 html {
   font-size: 1rem;
-}
 
+}
+* {
+	box-sizing:border-box;
+}
+body{
+	margin:0;
+}
 .row{
 	height:auto ! important;
-	
 }
+
 .header-page {
-	height:10vh;
+	min-height:10vh;
 	background-color:rgb(2, 35, 90);
 	color:#fff;
 	padding:0 10px;
 }
 
 .main-area {
-	min-height:91vh;
+	min-height:90vh;
 	height:auto;
+	
 }
 .main-area .area-nav {
 	min-height:100%;
-	max-height:auto;
+	height:auto;
 	background-color:rgb(2, 35, 90);
 	
 }
 .main-area .content-area {
 	min-height:100%;
-	max-height:auto ;
+	height:auto ;
 	background-color:#ddd;
 	
 }
@@ -42,11 +49,11 @@ html {
 	color:rgb(255,170,0);
 }
 .first-home-style {
-	height:41%;
+	height:43%;
 	
 }
 .relatory-area {
-	min-height: 52%;
+	min-height: 53%;
 		
 }
 /*
@@ -103,7 +110,7 @@ html {
 	}
 
 }
-@media (max-width:400px){
+@media (max-width:541px){
 	.main-area {
 	height:auto;
 	}
@@ -111,6 +118,9 @@ html {
 	height:43vh;
 	border-bottom:1px solid #fff;
 	padding:10px;
+	}
+	body{
+	background-color:#ddd;
 	}
 	.area-nav {
 
