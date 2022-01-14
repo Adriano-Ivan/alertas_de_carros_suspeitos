@@ -11,10 +11,10 @@ public abstract class Pendencia {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
 	
 	@Column(columnDefinition="TEXT")
-	private String descricao;
+	protected String descricao;
 
 	public Long getId() {
 		return id;
