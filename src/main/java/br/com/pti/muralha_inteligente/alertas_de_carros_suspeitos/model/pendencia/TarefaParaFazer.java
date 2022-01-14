@@ -1,10 +1,10 @@
-package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model;
+package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendencia;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tarefa_para_fazer")
+@Table(name="tarefas_para_fazer")
 public class TarefaParaFazer extends Pendencia{
 	private Boolean cumprida;
 	

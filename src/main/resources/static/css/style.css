@@ -2,16 +2,22 @@ html {
   font-size: 1rem;
 
 }
-* {
-	box-sizing:border-box;
-}
+
 body{
 	margin:0;
+}
+
+.container-fluid.total-area {
+	max-width: 1400px;
 }
 .row{
 	height:auto ! important;
 }
-
+.main-area {
+	min-height:90vh;
+	height:auto;
+	
+}
 .header-page {
 	min-height:10vh;
 	background-color:rgb(2, 35, 90);
@@ -19,11 +25,6 @@ body{
 	padding:0 10px;
 }
 
-.main-area {
-	min-height:90vh;
-	height:auto;
-	
-}
 .main-area .area-nav {
 	min-height:100%;
 	height:auto;
@@ -53,7 +54,7 @@ body{
 	
 }
 .relatory-area {
-	min-height: 53%;
+	height: 53%;
 		
 }
 /*
@@ -103,6 +104,9 @@ body{
 	height:22vh;
 	border-bottom:1px solid #fff;
 	
+	}
+	body{
+	background-color:#ddd;
 	}
 	.area-nav {
 

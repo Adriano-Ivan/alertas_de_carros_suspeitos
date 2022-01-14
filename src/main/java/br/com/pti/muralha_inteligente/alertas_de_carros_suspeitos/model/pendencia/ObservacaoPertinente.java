@@ -1,4 +1,4 @@
-package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model;
+package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendencia;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;

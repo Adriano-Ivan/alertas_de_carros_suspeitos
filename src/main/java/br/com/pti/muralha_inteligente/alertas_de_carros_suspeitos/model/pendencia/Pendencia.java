@@ -1,4 +1,4 @@
-package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model;
+package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendencia;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-public class Pendencia {
+public abstract class Pendencia {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
