@@ -22,39 +22,13 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.
 
 @Entity
 @Table(name="status_do_veiculo")
-public class StatusDoVeiculo {
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
+public class StatusDoVeiculo extends Indicativo {
 	
 	@Enumerated(EnumType.STRING)
 	private StatusVeiculo statusDoVeiculo;
 
-	@OneToMany(mappedBy="statusDoVeiculo",fetch=FetchType.LAZY)
-	@JsonManagedReference
-	private List<VeiculoSuspeito> veiculosSuspeitos;
+	public StatusDoVeiculo() {}
 	
-	@OneToMany(mappedBy="statusDoVeiculo",fetch=FetchType.LAZY)
-	@JsonManagedReference
-	private List<VeiculoRoubado> veiculosRoubados;
-	
-	@OneToMany(mappedBy="statusDoVeiculo",fetch=FetchType.LAZY)
-	@JsonManagedReference
-	private List<VeiculoEmSituacaoIrregular> veiculosEmSituacaoIrregular;
-	
-	@OneToMany(mappedBy="statusDoVeiculo",fetch=FetchType.LAZY)
-	@JsonManagedReference
-	private List<VeiculoComInfracao> veiculosComInfracao;
-	
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public StatusVeiculo getStatusVeiculo() {
 		return statusDoVeiculo;
 	}

@@ -2,6 +2,7 @@ package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,6 +18,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.BotDoTelegramDeUsuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.LocalAlvo;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.enumerator.TipoAutoridade;
@@ -49,10 +51,7 @@ public class Usuario {
 	
 	@Column(length=256)
 	private String token;
-	
-	@Column(length=200)
-	private String token_telegram;
-	
+
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference
 	private Zona zona;
@@ -60,6 +59,10 @@ public class Usuario {
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
 	@JsonManagedReference
 	private List<LocalAlvo> locaisAlvoInseridos;
+	
+	@OneToMany(mappedBy="usuario",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JsonManagedReference
+	private List<BotDoTelegramDeUsuario> botsDoTelegramDeUsuario;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
 	@JsonManagedReference
@@ -176,14 +179,6 @@ public class Usuario {
 
 	public void setToken(String token) {
 		this.token = token;
-	}
-
-	public String getToken_telegram() {
-		return token_telegram;
-	}
-
-	public void setToken_telegram(String token_telegram) {
-		this.token_telegram = token_telegram;
 	}
 
 	public Zona getZona() {

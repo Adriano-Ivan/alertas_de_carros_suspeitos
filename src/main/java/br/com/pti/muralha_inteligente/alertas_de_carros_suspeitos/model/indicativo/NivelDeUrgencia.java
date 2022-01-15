@@ -22,56 +22,13 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.
 
 @Entity
 @Table(name="niveis_de_urgencia")
-public class NivelDeUrgencia {
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Long id;
-	
+public class NivelDeUrgencia extends Indicativo {
+
 	@Enumerated(EnumType.STRING)
 	private NivelUrgencia nivelDeUrgencia;
 
-	@OneToMany(mappedBy="nivelDeUrgencia",fetch=FetchType.LAZY)
-	@JsonManagedReference
-	private List<VeiculoSuspeito> veiculosSuspeitos;
+	public NivelDeUrgencia() {}
 	
-	@OneToMany(mappedBy="nivelDeUrgencia",fetch=FetchType.LAZY)
-	@JsonManagedReference
-	private List<VeiculoRoubado> veiculosRoubados;
-	
-	@OneToMany(mappedBy="nivelDeUrgencia",fetch=FetchType.LAZY)
-	@JsonManagedReference
-	private List<VeiculoEmSituacaoIrregular> veiculosEmSituacaoIrregular;
-	
-	@OneToMany(mappedBy="nivelDeUrgencia",fetch=FetchType.LAZY)
-	@JsonManagedReference
-	private List<VeiculoComInfracao> veiculosComInfracao;
-	
-	
-	public List<VeiculoSuspeito> getVeiculosSuspeitos() {
-		return veiculosSuspeitos;
-	}
-
-	public List<VeiculoRoubado> getVeiculosRoubados() {
-		return veiculosRoubados;
-	}
-
-	public List<VeiculoEmSituacaoIrregular> getVeiculosEmSituacaoIrregular() {
-		return veiculosEmSituacaoIrregular;
-	}
-
-	public List<VeiculoComInfracao> getVeiculosComInfracao() {
-		return veiculosComInfracao;
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
-	}
-
 	public NivelUrgencia getNivelUrgencia() {
 		return nivelDeUrgencia;
 	}

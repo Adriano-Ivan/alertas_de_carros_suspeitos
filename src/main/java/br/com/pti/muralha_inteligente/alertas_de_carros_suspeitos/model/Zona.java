@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
@@ -55,12 +56,21 @@ public class Zona {
 	@JsonManagedReference
 	private List<VeiculoComInfracao> veiculosComInfracao;
 	
+	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
+	@JsonManagedReference
+	private List<BotDoTelegram> botsDoTelegram;
+	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference
 	private Usuario usuarioInsersor;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference
 	private Usuario ultimoUsuarioEditor;
 	
+	public List<BotDoTelegram> getBotsDoTelegram() {
+		return botsDoTelegram;
+	}
 	public List<VeiculoSuspeito> getVeiculosSuspeitos() {
 		return veiculosSuspeitos;
 	}
