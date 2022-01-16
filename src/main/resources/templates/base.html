@@ -29,7 +29,7 @@
 
 	<div class="collapse navbar navbar-collapse" id="navbarSupportedContent">
 		<ul class="navbar-nav mr-auto">
-			<li class="nav-item active"><a class="nav-link" href="#">Home
+			<li class="nav-item active"><a class="nav-link" th:href="@{/home}">Home
 					<span class="sr-only">(current)</span>
 			</a></li>
 			<li class="nav-item dropdown"><a
@@ -37,7 +37,7 @@
 				role="button" data-toggle="dropdown" aria-haspopup="true"
 				aria-expanded="false"> Alertas </a>
 				<div class="dropdown-menu" aria-labelledby="navbarDropdown">
-					<a class="dropdown-item" href="#">Veículos suspeitos</a> <a
+					<a class="dropdown-item" th:href="@{/veiculo_suspeito}">Veículos suspeitos</a> <a
 						class="dropdown-item" href="#">Veículos roubados</a>
 					<div class="dropdown-divider"></div>
 					<a class="dropdown-item" href="#">Veículos em situação
@@ -75,6 +75,7 @@
 <div th:fragment="footer-imports">
 	<script src="/js/horas.js"></script>
 	<script  src='/jquery/jquery-3.6.0.min.js'></script>
-	<script
-		src="/bootstrap/bootstrap.min.js"></script>
+	<script src="/bootstrap/bootstrap.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </div>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+	<meta charset="utf-8">
+	<head th:replace="~{base :: head}"></head>
+	<body onload="onLoad()">
+		<div class='container-fluid total-area'>
+			<header th:replace='~{base :: header}'></header>
+			
+			<main class='row mb-0 pb-0 main-area'>
+				<nav th:replace='~{base :: nav-area}'></nav>
+				<aside
+				 class='container-fluid content-area d-flex justify-content-center align-items-between col-md-7 flex-wrap col-lg-8 col-xl-9'>
+				 	<div class='table-responsive pl-2 pt-2'>
+				 	<table class="table table-striped table-hover table-dark">
+					  <thead>
+					    <tr>
+					      <th scope="col">#</th>
+					      <th scope="col">First</th>
+					      <th scope="col">Last</th>
+					      <th scope="col">Handle</th>
+					      <th scope="col">Handle</th>
+					      <th scope="col">Handle</th>
+					      <th scope="col">Handle</th>
+					      <th scope="col">Handle</th>
+					      <th scope="col">Handle</th>
+					      <th scope="col">Handle</th>
+					      <th scope="col">Handle</th>
+					      <th scope="col">Handle</th>
+					       <th scope="col">Handle</th>
+					    </tr>
+					  </thead>
+					  <tbody>
+					    <tr>
+					      <th scope="row">1</th>
+					      <td>Mark</td>
+					      <td>Otto</td>
+					      <td>@mdo</td>
+					      <td>@mdo</td>
+					      <td>@mdo</td>
+					      <td>@mdo</td>
+					      <td>@mdo</td>
+					      <td>@mdo</td>
+					      <td>@mdo</td>
+					      <td>@mdo</td>
+					      <td>@mdo</td>
+					       <td>@mdo</td>
+					    </tr>
+					    
+					    <tr>
+					      <th scope="row">2</th>
+					      <td>Jacob</td>
+					      <td>Thornton</td>
+					      <td>@fat</td>
+					       <td>@fat</td>
+					        <td>@fat</td>
+					         <td>@fat</td>
+					          <td>@fat</td>
+					           <td>@fat</td>
+					            <td>@fat</td>
+					             <td>@fat</td>
+					              <td>@fat</td>
+					               <td>@fat</td>
+					    </tr>
+					    <tr>
+					      <th scope="row">3</th>
+					      <td>Larry</td>
+					      <td>the Bird</td>
+					      <td>@twitter</td>
+					       <td>@twitter</td>
+					        <td>@twitter</td>
+					         <td>@twitter</td>
+					          <td>@twitter</td>
+					           <td>@twitter</td>
+					            <td>@twitter</td>
+					             <td>@twitter</td>
+					              <td>@twitter</td>
+					                <td>@twitter</td>
+					    </tr>
+					  </tbody>
+					</table>
+					</div>
+				 </aside>
+			</main>
+		</div>
+		<div style='display:none' th:replace="~{base :: footer-imports}"></div>
+	</body>
+</html>

@@ -2,6 +2,7 @@ package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo
 
 import java.time.LocalDateTime;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -36,7 +37,7 @@ public abstract class Veiculo {
 	
 	protected Boolean alertado;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
 	@JsonBackReference
 	protected NivelDeUrgencia nivelDeUrgencia;
 	

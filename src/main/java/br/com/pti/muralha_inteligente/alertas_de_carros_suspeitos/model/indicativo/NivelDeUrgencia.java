@@ -26,6 +26,8 @@ public class NivelDeUrgencia extends Indicativo {
 
 	@Enumerated(EnumType.STRING)
 	private NivelUrgencia nivelDeUrgencia;
+	
+	private NivelUrgencia niv;
 
 	public NivelDeUrgencia() {}
 	

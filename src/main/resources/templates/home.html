@@ -1,37 +1,37 @@
 <!DOCTYPE html>
 <html>
-<meta charset="utf-8">
-<head th:replace="~{base :: head}"></head>
-<body>
-	<div class='container-fluid total-area'>
-		<header th:replace="~{base :: header}"></header>
-
-		<main class='row mb-0 pb-0 main-area'>
-			<nav th:replace="~{base :: nav-area}"></nav>
-			<aside
-				class='container-fluid content-area d-flex justify-content-center align-items-between col-md-7 flex-wrap col-lg-8 col-xl-9'>
-				<div 
-					class='first-home-style pr-0 col-12 d-flex mb-2 row justify-content-center'>
-					<img src='/img/home_img.png'
-						class='col-12 col-md-12 col-lg-5 pr-0 mt-2'>
-					<div class="jumbotron jumb-nback col-12 col-lg-7 col-md-12">
-						<h1 class="text-primary text-center welcome-text">Olá,
-							usuário !</h1>
+	<meta charset="utf-8">
+	<head th:replace="~{base :: head}"></head>
+	<body>
+		<div class='container-fluid total-area'>
+			<header th:replace="~{base :: header}"></header>
+	
+			<main class='row mb-0 pb-0 main-area'>
+				<nav th:replace="~{base :: nav-area}"></nav>
+				<aside
+					class='container-fluid content-area d-flex justify-content-center align-items-between col-md-7 flex-wrap col-lg-8 col-xl-9'>
+					<div 
+						class='first-home-style pr-0 col-12 d-flex mb-2 row justify-content-center'>
+						<img src='/img/home_img.png'
+							class='col-12 col-md-12 col-lg-5 pr-0 mt-2'>
+						<div class="jumbotron jumb-nback col-12 col-lg-7 col-md-12">
+							<h1 class="text-primary text-center welcome-text">Olá,
+								usuário !</h1>
+						</div>
 					</div>
-				</div>
-				<div class='relatory-area row mb-0 container-fluid col-12 d-flex align-items-end'>
-					<div class="occurrences bg-danger col-12 col-lg-6 jumbotron">
-						<h1 class="occurrences-title">Occurrences</h1>
+					<div class='relatory-area row mb-0 container-fluid col-12 d-flex align-items-end'>
+						<div class="occurrences bg-danger col-12 col-lg-6 jumbotron">
+							<h1 class="occurrences-title">Occurrences</h1>
+						</div>
+						<div class="confirmations bg-success col-12 col-lg-6 jumbotron">
+							<h1 class="confirmations-title">Confirmations</h1>
+						</div>
 					</div>
-					<div class="confirmations bg-success col-12 col-lg-6 jumbotron">
-						<h1 class="confirmations-title">Confirmations</h1>
-					</div>
-				</div>
-			</aside>
-		</main>
-	</div>
-
-	<div style='display:none' th:replace="~{base :: footer-imports}"></div>
-</body>
+				</aside>
+			</main>
+		</div>
+	
+		<div style='display:none' th:replace="~{base :: footer-imports}"></div>
+	</body>
 </html>
 

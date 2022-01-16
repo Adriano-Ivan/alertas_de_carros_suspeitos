@@ -5,10 +5,11 @@ html {
 
 body{
 	margin:0;
+	background-color:#ddd;
 }
 
 .container-fluid.total-area {
-	max-width: 1400px;
+	max-width: 1700px;
 }
 .row{
 	height:auto ! important;
