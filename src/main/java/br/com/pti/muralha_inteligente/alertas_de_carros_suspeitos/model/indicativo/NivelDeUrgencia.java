@@ -25,10 +25,8 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.
 public class NivelDeUrgencia extends Indicativo {
 
 	@Enumerated(EnumType.STRING)
-	private NivelUrgencia nivelDeUrgencia;
+	private NivelUrgencia nivelDeUrgencia=NivelUrgencia.ROTINEIRO;
 	
-	private NivelUrgencia niv;
-
 	public NivelDeUrgencia() {}
 	
 	public NivelUrgencia getNivelUrgencia() {

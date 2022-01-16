@@ -1,5 +1,7 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.mensagem;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +23,8 @@ public abstract class Mensagem {
 	
 	@Column(columnDefinition="TEXT")
 	protected String mensagem;
+	
+	protected LocalDateTime momento_da_mensagem=LocalDateTime.now();
 
 	public Long getId() {
 		return id;
@@ -28,6 +32,15 @@ public abstract class Mensagem {
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	
+	public LocalDateTime getMomento_da_mensagem() {
+		return momento_da_mensagem;
+	}
+
+	public void setMomento_da_mensagem(LocalDateTime momento_da_mensagem) {
+		this.momento_da_mensagem = momento_da_mensagem;
 	}
 
 	public Usuario getUsuario() {

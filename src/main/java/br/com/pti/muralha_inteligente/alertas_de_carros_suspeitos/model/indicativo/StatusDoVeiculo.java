@@ -25,7 +25,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.
 public class StatusDoVeiculo extends Indicativo {
 	
 	@Enumerated(EnumType.STRING)
-	private StatusVeiculo statusDoVeiculo;
+	private StatusVeiculo statusDoVeiculo=StatusVeiculo.A_CONFIRMAR;
 
 	public StatusDoVeiculo() {}
 	

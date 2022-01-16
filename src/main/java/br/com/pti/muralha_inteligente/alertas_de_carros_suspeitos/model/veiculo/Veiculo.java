@@ -16,6 +16,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.indicativo.NivelDeUrgencia;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.indicativo.StatusDoVeiculo;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.indicativo.enumerator.NivelUrgencia;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
 @MappedSuperclass
