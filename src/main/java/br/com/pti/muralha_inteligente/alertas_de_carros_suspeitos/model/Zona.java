@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
@@ -33,44 +34,45 @@ public class Zona {
 	private String zona;
 
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Usuario> usuarios;
 	
 	@OneToMany(mappedBy="zonaAssociada",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<LocalAlvo> locaisAlvo;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="zone-movement")
 	private List<VeiculoSuspeito> veiculosSuspeitos;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<VeiculoRoubado> veiculosRoubados;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<VeiculoEmSituacaoIrregular> veiculosEmSituacaoIrregular;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<VeiculoComInfracao> veiculosComInfracao;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<BotDoTelegram> botsDoTelegram;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference
+	@JsonIgnore
 	private Usuario usuarioInsersor;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference
+	@JsonIgnore
 	private Usuario ultimoUsuarioEditor;
 	
 	public List<BotDoTelegram> getBotsDoTelegram() {
 		return botsDoTelegram;
 	}
+	@JsonManagedReference(value="zone-movement")
 	public List<VeiculoSuspeito> getVeiculosSuspeitos() {
 		return veiculosSuspeitos;
 	}
@@ -126,4 +128,10 @@ public class Zona {
 	public void setZona(String zona) {
 		this.zona = zona;
 	}
+	@Override
+	public String toString() {
+		return "Zona [id=" + id + ", zona=" + zona + ", usuarioInsersor=" + usuarioInsersor + ", ultimoUsuarioEditor="
+				+ ultimoUsuarioEditor + "]";
+	}
+	
 }

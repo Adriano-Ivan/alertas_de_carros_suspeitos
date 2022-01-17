@@ -12,11 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.indicativo.NivelDeUrgencia;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.indicativo.StatusDoVeiculo;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.indicativo.enumerator.NivelUrgencia;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
 @MappedSuperclass
@@ -34,30 +33,27 @@ public abstract class Veiculo {
 	@Column(length=80)
 	protected String localDoAlerta;
 	
-	protected LocalDateTime momentoDoAlerta;
+	protected LocalDateTime momentoDoAlerta=LocalDateTime.now();
 	
 	protected Boolean alertado;
-	
-	@ManyToOne(fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JsonBackReference
-	protected NivelDeUrgencia nivelDeUrgencia;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference
-	protected StatusDoVeiculo statusDoVeiculo;
+
+	protected String nivelDeUrgencia;
+
+	protected String statusDoVeiculo;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference
+	@JsonBackReference(value="zone-movement")
 	protected Zona zona;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference
+	@JsonBackReference(value="inser-suspects-movement")
 	protected Usuario usuarioInsersor;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference
+	@JsonBackReference(value="edited-suspects-movement")
 	protected Usuario ultimoUsuarioEditor;
  
+	@JsonBackReference(value="edited-suspects-movement")
 	public Usuario getUltimoUsuarioEditor() {
 		return ultimoUsuarioEditor;
 	}
@@ -114,22 +110,22 @@ public abstract class Veiculo {
 		this.alertado = alertado;
 	}
 
-	public NivelDeUrgencia getNivelDeUrgencia() {
+	public String getNivelDeUrgencia() {
 		return nivelDeUrgencia;
 	}
 
-	public void setNivelDeUrgencia(NivelDeUrgencia nivelDeUrgencia) {
+	public void setNivelDeUrgencia(String nivelDeUrgencia) {
 		this.nivelDeUrgencia = nivelDeUrgencia;
 	}
 
-	public StatusDoVeiculo getStatusDoVeiculo() {
+	public String getStatusDoVeiculo() {
 		return statusDoVeiculo;
 	}
 
-	public void setStatusDoVeiculo(StatusDoVeiculo statusDoVeiculo) {
+	public void setStatusDoVeiculo(String statusDoVeiculo) {
 		this.statusDoVeiculo = statusDoVeiculo;
 	}
-
+	@JsonBackReference(value="zone-movement")
 	public Zona getZona() {
 		return zona;
 	}
@@ -138,12 +134,21 @@ public abstract class Veiculo {
 		this.zona = zona;
 	}
 
+	@JsonBackReference(value="inser-suspects-movement")
 	public Usuario getUsuarioInsersor() {
 		return usuarioInsersor;
 	}
 
 	public void setUsuarioInsersor(Usuario usuarioInsersor) {
 		this.usuarioInsersor = usuarioInsersor;
+	}
+
+	@Override
+	public String toString() {
+		return "Veiculo [id=" + id + ", dono=" + dono + ", placa=" + placa + ", localDoAlerta=" + localDoAlerta
+				+ ", momentoDoAlerta=" + momentoDoAlerta + ", alertado=" + alertado + ", nivelDeUrgencia="
+				+ nivelDeUrgencia + ", statusDoVeiculo=" + statusDoVeiculo + ", zona=" + zona + ", usuarioInsersor="
+				+ usuarioInsersor + ", ultimoUsuarioEditor=" + ultimoUsuarioEditor + ", próprio_da_filha"+"]";
 	}
 	
 	

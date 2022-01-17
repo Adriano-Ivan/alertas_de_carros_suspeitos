@@ -16,6 +16,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.BotDoTelegramDeUsuario;
@@ -53,59 +54,59 @@ public class Usuario {
 	private String token;
 
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference
+	@JsonIgnore
 	private Zona zona;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<LocalAlvo> locaisAlvoInseridos;
 	
 	@OneToMany(mappedBy="usuario",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<BotDoTelegramDeUsuario> botsDoTelegramDeUsuario;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<LocalAlvo> locaisAlvoEditados;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Zona> zonasInseridas;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<Zona> zonasEditadas;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<VeiculoComInfracao> veiculosComInfracaoInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<VeiculoComInfracao> veiculosComInfracaoEditados;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<VeiculoEmSituacaoIrregular> veiculosEmSituacoaIrregularInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<VeiculoEmSituacaoIrregular> veiculosEmSituacoaIrregularEditados;
 
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<VeiculoRoubado> veiculosRoubadosInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonIgnore
 	private List<VeiculoRoubado> veiculosRoubadosEditados;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="inser-suspects-movement")
 	private List<VeiculoSuspeito> veiculosSuspeitosInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference
+	@JsonManagedReference(value="edited-suspects-movement")
 	private List<VeiculoSuspeito> veiculosSuspeitosEditados;
 
 	
@@ -123,6 +124,26 @@ public class Usuario {
 
 	public List<VeiculoEmSituacaoIrregular> getVeiculosEmSituacoaIrregularEditados() {
 		return veiculosEmSituacoaIrregularEditados;
+	}
+
+	public List<BotDoTelegramDeUsuario> getBotsDoTelegramDeUsuario() {
+		return botsDoTelegramDeUsuario;
+	}
+
+	public List<VeiculoRoubado> getVeiculosRoubadosInseridos() {
+		return veiculosRoubadosInseridos;
+	}
+
+	public List<VeiculoRoubado> getVeiculosRoubadosEditados() {
+		return veiculosRoubadosEditados;
+	}
+	@JsonManagedReference(value="inser-suspects-movement")
+	public List<VeiculoSuspeito> getVeiculosSuspeitosInseridos() {
+		return veiculosSuspeitosInseridos;
+	}
+	@JsonManagedReference(value="edited-suspects-movement")
+	public List<VeiculoSuspeito> getVeiculosSuspeitosEditados() {
+		return veiculosSuspeitosEditados;
 	}
 
 	public Long getId() {
@@ -204,4 +225,11 @@ public class Usuario {
 	public List<Zona> getZonasEditadas() {
 		return zonasEditadas;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + id + ", nomeDeUsuario=" + nomeDeUsuario + ", email=" + email + ", autoridade="
+				+ autoridade + ", insercoes=" + insercoes + ", zona=" + zona + "]";
+	}
+	
 }

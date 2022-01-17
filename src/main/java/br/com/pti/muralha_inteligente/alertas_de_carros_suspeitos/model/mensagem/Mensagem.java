@@ -58,4 +58,11 @@ public abstract class Mensagem {
 	public void setMensagem(String mensagem) {
 		this.mensagem = mensagem;
 	}
+
+	@Override
+	public String toString() {
+		return "Mensagem [id=" + id + ", usuario=" + usuario + ", mensagem=" + mensagem + ", momento_da_mensagem="
+				+ momento_da_mensagem + "]";
+	}
+	
 }

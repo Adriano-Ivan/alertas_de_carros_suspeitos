@@ -17,6 +17,11 @@ public class TarefaParaFazer extends Pendencia{
 	public void setCumprida(Boolean cumprida) {
 		this.cumprida = cumprida;
 	}
+
+	@Override
+	public String toString() {
+		return "TarefaParaFazer [cumprida=" + cumprida + ", id=" + id + ", descricao=" + descricao + "]";
+	}
 	
 	
 }

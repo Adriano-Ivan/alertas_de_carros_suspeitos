@@ -77,6 +77,12 @@ public class LocalAlvo {
 	public void setLocal(String local) {
 		this.local = local;
 	}
+
+	@Override
+	public String toString() {
+		return "LocalAlvo [id=" + id + ", local=" + local + ", usuarioInsersor=" + usuarioInsersor
+				+ ", ultimoUsuarioEditor=" + ultimoUsuarioEditor + ", zonaAssociada=" + zonaAssociada + "]";
+	}
 	
 	
 }

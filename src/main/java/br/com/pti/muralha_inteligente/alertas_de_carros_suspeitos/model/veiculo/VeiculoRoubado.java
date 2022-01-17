@@ -20,6 +20,11 @@ public class VeiculoRoubado extends Veiculo{
 	public void setLocalDoRoubo(String localDoRoubo) {
 		this.localDoRoubo = localDoRoubo;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString().replace("próprio_da_filha", "local do roubo: "+localDoRoubo);
+	}
 	
 	
 }

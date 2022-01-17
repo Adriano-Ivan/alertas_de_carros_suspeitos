@@ -2,8 +2,6 @@ package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto;
 
 import java.time.LocalDateTime;
 
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.indicativo.NivelDeUrgencia;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.indicativo.StatusDoVeiculo;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoSuspeito;
 
 public class VeiculoSuspeitoDto {
@@ -16,35 +14,30 @@ public class VeiculoSuspeitoDto {
 	private Boolean alertado;
 	private String nivelDeUrgencia;
 	private String statusDoVeiculo;
-	private String zona;
-	private String usuarioInsersor;
-	private String ultimoUsuarioEditor;
+	private Long idZona;
+	private Long idUsuarioInsersor;
+	private Long idUltimoUsuarioEditor;
 	private String justificativa;
-	
+
 	public VeiculoSuspeitoDto(VeiculoSuspeito veiculo) {
-		this.id=veiculo.getId();
-		this.dono=veiculo.getDono();
-		this.placa=veiculo.getPlaca();
-		this.localDoAlerta=veiculo.getLocalDoAlerta();
-		this.momentoDoAlerta=veiculo.getMomentoDoAlerta();
-		this.alertado=veiculo.getAlertado();
-		this.justificativa=veiculo.getJustificativa();
-		
-		if(veiculo.getNivelDeUrgencia()!=null) {
-			this.nivelDeUrgencia=veiculo.getNivelDeUrgencia().getNivelUrgencia().getDescricao();
+		this.id = veiculo.getId();
+		this.dono = veiculo.getDono();
+		this.placa = veiculo.getPlaca();
+		this.localDoAlerta = veiculo.getLocalDoAlerta();
+		this.momentoDoAlerta = veiculo.getMomentoDoAlerta();
+		this.alertado = veiculo.getAlertado();
+		this.justificativa = veiculo.getJustificativa();
+		this.nivelDeUrgencia = veiculo.getNivelDeUrgencia();
+		this.statusDoVeiculo = veiculo.getStatusDoVeiculo();
+
+		if (veiculo.getZona() != null) {
+			this.idZona = veiculo.getZona().getId();
 		}
-		if(veiculo.getStatusDoVeiculo()!=null) {
-			this.statusDoVeiculo=veiculo.getStatusDoVeiculo().getStatusVeiculo().getDescricao();
+		if (veiculo.getUsuarioInsersor() != null) {
+			this.idUsuarioInsersor = veiculo.getUsuarioInsersor().getId();
 		}
-		
-		if(veiculo.getZona() !=null) {
-			this.zona=veiculo.getZona().getZona();
-		}
-		if(veiculo.getUsuarioInsersor() !=null) {
-			this.usuarioInsersor=veiculo.getUsuarioInsersor().getNomeDeUsuario();
-		}
-		if(veiculo.getUltimoUsuarioEditor() !=null) {
-			this.ultimoUsuarioEditor=veiculo.getUltimoUsuarioEditor().getNomeDeUsuario();
+		if (veiculo.getUltimoUsuarioEditor() != null) {
+			this.idUltimoUsuarioEditor = veiculo.getUltimoUsuarioEditor().getId();
 		}
 	}
 
@@ -80,20 +73,20 @@ public class VeiculoSuspeitoDto {
 		return statusDoVeiculo;
 	}
 
-	public String getZona() {
-		return zona;
+	public Long getZona() {
+		return idZona;
 	}
 
-	public String getUsuarioInsersor() {
-		return usuarioInsersor;
+	public Long getUsuarioInsersor() {
+		return idUsuarioInsersor;
 	}
 
-	public String getUltimoUsuarioEditor() {
-		return ultimoUsuarioEditor;
+	public Long getUltimoUsuarioEditor() {
+		return idUltimoUsuarioEditor;
 	}
 
 	public String getJustificativa() {
 		return justificativa;
 	}
-	
+
 }

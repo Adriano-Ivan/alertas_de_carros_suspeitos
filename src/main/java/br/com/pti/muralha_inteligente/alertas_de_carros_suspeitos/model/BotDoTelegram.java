@@ -71,6 +71,10 @@ public class BotDoTelegram {
 	public void setZona(Zona zona) {
 		this.zona = zona;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return "BotDoTelegram [id=" + id + ", denominacao=" + denominacao + ", token=" + token + ", id_do_chat="
+				+ id_do_chat + ", zona=" + zona + "]";
+	}
 }

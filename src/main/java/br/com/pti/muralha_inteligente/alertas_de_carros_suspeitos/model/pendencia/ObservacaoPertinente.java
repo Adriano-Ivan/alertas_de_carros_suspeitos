@@ -18,6 +18,11 @@ public class ObservacaoPertinente extends Pendencia {
 	public void setContemplada(Boolean contemplada) {
 		this.contemplada = contemplada;
 	}
+
+	@Override
+	public String toString() {
+		return "ObservacaoPertinente [contemplada=" + contemplada + ", id=" + id + ", descricao=" + descricao + "]";
+	}
 	
 	
 }

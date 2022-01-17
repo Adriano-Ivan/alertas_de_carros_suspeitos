@@ -21,4 +21,10 @@ public class VeiculoComInfracao extends Veiculo{
 	public void setGravidadeDaInfracao(GravidadeDaInfracao gdi) {
 		this.gravidadeDaInfracao=gdi;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString().replace("próprio_da_filha","gravidade da infração: "+gravidadeDaInfracao.getDescricao());
+	}
+	
 }

@@ -23,4 +23,10 @@ public class VeiculoEmSituacaoIrregular extends Veiculo {
 	public void setMedidaAdministrativa(MedidaAdministrativa medidaAdministrativa) {
 		this.medidaAdministrativa = medidaAdministrativa;
 	}
+
+	@Override
+	public String toString() {
+		return super.toString().replace("próprio_da_filha", "medida administrativa: "+medidaAdministrativa.getDescricao());
+	}
+	
 }
