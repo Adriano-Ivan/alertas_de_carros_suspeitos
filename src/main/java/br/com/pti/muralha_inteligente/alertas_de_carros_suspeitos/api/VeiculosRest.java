@@ -3,14 +3,17 @@ package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.api;
 import java.net.URI;
 import java.util.List;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,6 +48,7 @@ public class VeiculosRest {
 	}
 	
 	@PostMapping("/suspeitos")
+	@Transactional
 	public ResponseEntity<VeiculoSuspeitoDto> cadastar(@RequestBody @Valid VeiculoSuspeitoForm form,
 			UriComponentsBuilder uriBuilder ){
 		VeiculoSuspeito veiculo = form.converter(zonaRepository,usuarioRepository);
@@ -61,5 +65,23 @@ public class VeiculosRest {
 		VeiculoSuspeito veiculo = veiculoSuspeitoRepository.getById(id);
 		
 		return VeiculoSuspeito.converter(veiculo);
+	}
+	
+	@PutMapping("/suspeitos/{id}")
+	@Transactional
+	public ResponseEntity<VeiculoSuspeitoDto> atualizar(@PathVariable("id") Long id,
+			@RequestBody @Valid VeiculoSuspeitoForm form){
+		VeiculoSuspeito veiculo = form.atualizar(id,veiculoSuspeitoRepository,
+				zonaRepository, usuarioRepository);
+		
+		return ResponseEntity.ok(new VeiculoSuspeitoDto(veiculo));
+	}
+	
+	@DeleteMapping("/suspeitos/{id}")
+	@Transactional
+	public ResponseEntity<?> deletar(@PathVariable("id") Long id){
+		veiculoSuspeitoRepository.deleteById(id);
+		
+		return ResponseEntity.ok().build();
 	}
 }

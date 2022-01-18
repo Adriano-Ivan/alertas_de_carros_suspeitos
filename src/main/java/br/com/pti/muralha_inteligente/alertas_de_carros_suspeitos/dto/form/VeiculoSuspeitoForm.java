@@ -12,6 +12,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoSuspeito;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.VeiculoSuspeitoRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 public class VeiculoSuspeitoForm {
@@ -115,6 +116,7 @@ public class VeiculoSuspeitoForm {
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
 	}
+	
 	public VeiculoSuspeito converter(ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
 		Zona zona = zonaOpt.orElse(null);
@@ -128,4 +130,34 @@ public class VeiculoSuspeitoForm {
 		return new VeiculoSuspeito(dono,placa,localDoAlerta,momentoDoAlerta,
 				alertado,nivelDeUrgencia,statusDoVeiculo,justificativa,zona,usuarioEditor,usuarioInsersor);
 	}
+	
+	public VeiculoSuspeito atualizar(Long id, VeiculoSuspeitoRepository veiculoSuspeitoRepository,
+			ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
+		VeiculoSuspeito veiculo = veiculoSuspeitoRepository.getById(id);
+		
+		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
+		Zona zona = zonaOpt.orElse(null);
+		
+		Optional<Usuario> usuarioEditorOpt = usuarioRepository.findById(idUltimoUsuarioEditor);
+		Usuario usuarioEditor = usuarioEditorOpt.orElse(null);
+		
+		Optional<Usuario> usuarioInsersorOpt = usuarioRepository.findById(idUsuarioInsersor);
+		Usuario usuarioInsersor = usuarioInsersorOpt.orElse(null);
+		
+		veiculo.setZona(zona);
+		veiculo.setUltimoUsuarioEditor(usuarioEditor);
+		veiculo.setUsuarioInsersor(usuarioInsersor);
+		
+		veiculo.setAlertado(alertado);
+		veiculo.setLocalDoAlerta(localDoAlerta);
+		veiculo.setDono(dono);
+		veiculo.setMomentoDoAlerta(momentoDoAlerta);
+		veiculo.setStatusDoVeiculo(statusDoVeiculo);
+		veiculo.setPlaca(placa);
+		veiculo.setJustificativa(justificativa);
+		veiculo.setNivelDeUrgencia(nivelDeUrgencia);
+		
+		return veiculo;
+	}
+	
 }
