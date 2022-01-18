@@ -2,6 +2,7 @@ package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.api;
 
 import java.net.URI;
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 import javax.validation.Valid;
@@ -47,6 +48,16 @@ public class VeiculosRest {
 		return VeiculoSuspeito.converter(veiculosSuspeitos);
 	}
 	
+	
+	@GetMapping("/suspeitos/{id}")
+	public ResponseEntity<VeiculoSuspeitoDto> retornarEspecifico(@PathVariable("id") Long id) {
+		Optional<VeiculoSuspeito> veiculo = veiculoSuspeitoRepository.findById(id);
+		if(veiculo.isPresent()) {
+			return ResponseEntity.ok(VeiculoSuspeito.converter(veiculo.get()));
+		}
+		return ResponseEntity.notFound().build();
+	}
+	
 	@PostMapping("/suspeitos")
 	@Transactional
 	public ResponseEntity<VeiculoSuspeitoDto> cadastar(@RequestBody @Valid VeiculoSuspeitoForm form,
@@ -59,29 +70,31 @@ public class VeiculosRest {
 		
 		return ResponseEntity.created(uri).body(new VeiculoSuspeitoDto(veiculo));
 	}
-	
-	@GetMapping("/suspeitos/{id}")
-	public VeiculoSuspeitoDto retornarEspecifico(@PathVariable("id") Long id) {
-		VeiculoSuspeito veiculo = veiculoSuspeitoRepository.getById(id);
-		
-		return VeiculoSuspeito.converter(veiculo);
-	}
+
 	
 	@PutMapping("/suspeitos/{id}")
 	@Transactional
 	public ResponseEntity<VeiculoSuspeitoDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid VeiculoSuspeitoForm form){
-		VeiculoSuspeito veiculo = form.atualizar(id,veiculoSuspeitoRepository,
-				zonaRepository, usuarioRepository);
+		Optional<VeiculoSuspeito> veiculoOpt = veiculoSuspeitoRepository.findById(id);
 		
-		return ResponseEntity.ok(new VeiculoSuspeitoDto(veiculo));
+		if(veiculoOpt.isPresent()) {
+			VeiculoSuspeito veiculo = form.atualizar(id,veiculoSuspeitoRepository,
+					zonaRepository, usuarioRepository);
+			return ResponseEntity.ok(VeiculoSuspeito.converter(veiculo));
+		}
+		return ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("/suspeitos/{id}")
 	@Transactional
 	public ResponseEntity<?> deletar(@PathVariable("id") Long id){
-		veiculoSuspeitoRepository.deleteById(id);
+		Optional<VeiculoSuspeito> veiculoOpt=veiculoSuspeitoRepository.findById(id);
 		
-		return ResponseEntity.ok().build();
+		if(veiculoOpt.isPresent()) {
+			veiculoSuspeitoRepository.deleteById(id);
+			return ResponseEntity.ok().build();
+		}
+		return ResponseEntity.notFound().build();
 	}
 }
