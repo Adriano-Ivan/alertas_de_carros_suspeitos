@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,6 +40,7 @@ public class VeiculosRest {
 	public List<VeiculoSuspeitoDto> listar(){
 		List<VeiculoSuspeito> veiculosSuspeitos = veiculoSuspeitoRepository.findAllOrderByMomentoDoAlerta();
 		
+		
 		return VeiculoSuspeito.converter(veiculosSuspeitos);
 	}
 	
@@ -52,5 +54,12 @@ public class VeiculosRest {
 				.buildAndExpand(veiculo.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new VeiculoSuspeitoDto(veiculo));
+	}
+	
+	@GetMapping("/suspeitos/{id}")
+	public VeiculoSuspeitoDto retornarEspecifico(@PathVariable("id") Long id) {
+		VeiculoSuspeito veiculo = veiculoSuspeitoRepository.getById(id);
+		
+		return VeiculoSuspeito.converter(veiculo);
 	}
 }

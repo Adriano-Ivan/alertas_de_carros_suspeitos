@@ -57,9 +57,14 @@ public class VeiculoSuspeito extends Veiculo {
 				.collect(Collectors.toList());
 	}
 
+	public static VeiculoSuspeitoDto converter(VeiculoSuspeito veiculo) {
+		return new VeiculoSuspeitoDto(veiculo);
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString().replace("próprio_da_filha", "justificativa: "+justificativa);
 	}
+
 	
 }
