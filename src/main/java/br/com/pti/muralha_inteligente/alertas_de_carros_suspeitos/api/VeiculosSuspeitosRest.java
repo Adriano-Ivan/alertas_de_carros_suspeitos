@@ -8,6 +8,11 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -28,8 +34,8 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Vei
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 @RestController
-@RequestMapping("/api/veiculos")
-public class VeiculosRest {
+@RequestMapping("/api/veiculos_suspeitos")
+public class VeiculosSuspeitosRest {
 
 	@Autowired
 	private VeiculoSuspeitoRepository veiculoSuspeitoRepository;
@@ -40,15 +46,25 @@ public class VeiculosRest {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
-	@GetMapping("/suspeitos")
-	public List<VeiculoSuspeitoDto> listar(){
-		List<VeiculoSuspeito> veiculosSuspeitos = veiculoSuspeitoRepository.findAllOrderByMomentoDoAlerta();
-				
-		return VeiculoSuspeito.converter(veiculosSuspeitos);
+	@GetMapping
+	public Page<VeiculoSuspeitoDto> listar(@RequestParam(required=false) String placa,
+			@PageableDefault(sort="momentoDoAlerta",direction=Direction.DESC,
+			page=0,size=10) Pageable paginacao){
+		//Pageable paginacao = PageRequest.of(pagina, qtde);
+		if(placa==null) {
+			Page<VeiculoSuspeito> veiculosSuspeitos = veiculoSuspeitoRepository.findAll(paginacao);
+			
+			return VeiculoSuspeito.converter(veiculosSuspeitos);
+		}else {
+			Page<VeiculoSuspeito> veiculosSuspeitos = veiculoSuspeitoRepository.findByPlaca(placa,
+					paginacao);
+			
+			return VeiculoSuspeito.converter(veiculosSuspeitos);
+		}
 	}
 	
 	
-	@GetMapping("/suspeitos/{id}")
+	@GetMapping("/{id}")
 	public ResponseEntity<VeiculoSuspeitoDto> retornarEspecifico(@PathVariable("id") Long id) {
 		Optional<VeiculoSuspeito> veiculo = veiculoSuspeitoRepository.findById(id);
 		if(veiculo.isPresent()) {
@@ -57,21 +73,21 @@ public class VeiculosRest {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@PostMapping("/suspeitos")
+	@PostMapping
 	@Transactional
 	public ResponseEntity<VeiculoSuspeitoDto> cadastrar(@RequestBody @Valid VeiculoSuspeitoForm form,
 			UriComponentsBuilder uriBuilder ){
 		VeiculoSuspeito veiculo = form.converter(zonaRepository,usuarioRepository);
 		veiculoSuspeitoRepository.save(veiculo);
 		
-		URI uri = uriBuilder.path("/api/veiculos/suspeitos/{id}")
+		URI uri = uriBuilder.path("/api/veiculos_suspeitos/{id}")
 				.buildAndExpand(veiculo.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new VeiculoSuspeitoDto(veiculo));
 	}
 
 	
-	@PutMapping("/suspeitos/{id}")
+	@PutMapping("/{id}")
 	@Transactional
 	public ResponseEntity<VeiculoSuspeitoDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid VeiculoSuspeitoForm form){
@@ -85,7 +101,7 @@ public class VeiculosRest {
 		return ResponseEntity.notFound().build();
 	}
 	
-	@DeleteMapping("/suspeitos/{id}")
+	@DeleteMapping("/{id}")
 	@Transactional
 	public ResponseEntity<?> deletar(@PathVariable("id") Long id){
 		Optional<VeiculoSuspeito> veiculoOpt=veiculoSuspeitoRepository.findById(id);

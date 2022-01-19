@@ -11,6 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.domain.Page;
+
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.veiculo.VeiculoSuspeitoForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.veiculo.VeiculoSuspeitoDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
@@ -41,9 +43,10 @@ public class VeiculoSuspeito extends Veiculo {
 		this.justificativa = justificativa;
 	}
 
-	public static List<VeiculoSuspeitoDto> converter(List<VeiculoSuspeito> veiculosSuspeitos) {
-		return veiculosSuspeitos.stream().map(VeiculoSuspeitoDto::new)
-				.collect(Collectors.toList());
+	public static Page<VeiculoSuspeitoDto> converter(Page<VeiculoSuspeito> veiculosSuspeitos) {
+//		return veiculosSuspeitos.stream().map(VeiculoSuspeitoDto::new)
+//				.collect(Collectors.toList());
+		return veiculosSuspeitos.map(VeiculoSuspeitoDto::new);
 	}
 
 	public static VeiculoSuspeitoDto converter(VeiculoSuspeito veiculo) {

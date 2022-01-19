@@ -2,6 +2,8 @@ package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -16,4 +18,6 @@ public interface VeiculoSuspeitoRepository extends
 	@Query(value="select * from veiculos_suspeitos order by momento_do_alerta DESC",
 			nativeQuery=true)
 	List<VeiculoSuspeito> findAllOrderByMomentoDoAlerta();
+
+	Page<VeiculoSuspeito> findByPlaca(String placa,Pageable paginacao);
 }
