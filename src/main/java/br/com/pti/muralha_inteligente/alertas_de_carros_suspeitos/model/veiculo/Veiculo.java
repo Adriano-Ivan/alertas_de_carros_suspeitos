@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.veiculo.VeiculoForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
@@ -52,7 +53,22 @@ public abstract class Veiculo {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference(value="edited-suspects-movement")
 	protected Usuario ultimoUsuarioEditor;
- 
+	
+	public Veiculo() {}
+	public Veiculo(VeiculoForm veiculoForm,Zona zona, Usuario usuarioEditor,
+			Usuario usuarioInsersor) {
+		this.dono=veiculoForm.getDono();
+		this.placa=veiculoForm.getPlaca();
+		this.localDoAlerta=veiculoForm.getLocalDoAlerta();
+		this.momentoDoAlerta=veiculoForm.getMomentoDoAlerta();
+		this.alertado=veiculoForm.getAlertado();
+		this.nivelDeUrgencia=veiculoForm.getNivelDeUrgencia();
+		this.statusDoVeiculo=veiculoForm.getStatusDoVeiculo();
+		
+		this.zona=zona;
+		this.usuarioInsersor=usuarioInsersor;
+		this.ultimoUsuarioEditor=usuarioEditor;
+	}
 	@JsonBackReference(value="edited-suspects-movement")
 	public Usuario getUltimoUsuarioEditor() {
 		return ultimoUsuarioEditor;

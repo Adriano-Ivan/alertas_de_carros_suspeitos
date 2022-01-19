@@ -5,6 +5,9 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Table;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.veiculo.VeiculoEmSituacaoIrregularForm;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.enumerator.MedidaAdministrativa;
 
 @Entity
@@ -16,6 +19,12 @@ public class VeiculoEmSituacaoIrregular extends Veiculo {
 	
 	public VeiculoEmSituacaoIrregular() {}
 
+	public VeiculoEmSituacaoIrregular(VeiculoEmSituacaoIrregularForm veiculoForm, Zona zona,
+			Usuario usuarioEditor, Usuario usuarioInsersor) {
+		super(veiculoForm,zona,usuarioEditor,usuarioInsersor);
+		this.medidaAdministrativa=veiculoForm.getMedidaAdministrativa();
+	}
+
 	public MedidaAdministrativa getMedidaAdministrativa() {
 		return medidaAdministrativa;
 	}
@@ -26,7 +35,7 @@ public class VeiculoEmSituacaoIrregular extends Veiculo {
 
 	@Override
 	public String toString() {
-		return super.toString().replace("próprio_da_filha", "medida administrativa: "+medidaAdministrativa.getDescricao());
+		return super.toString().replace("próprio_da_filha", "medida administrativa: "+medidaAdministrativa);
 	}
 	
 }

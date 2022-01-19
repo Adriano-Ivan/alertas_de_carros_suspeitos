@@ -4,6 +4,10 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.veiculo.VeiculoRoubadoForm;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
+
 @Entity
 @Table(name="veiculos_roubados")
 public class VeiculoRoubado extends Veiculo{
@@ -12,6 +16,12 @@ public class VeiculoRoubado extends Veiculo{
 	private String localDoRoubo;
 	
 	public VeiculoRoubado() {}
+
+	public VeiculoRoubado(VeiculoRoubadoForm veiculoForm, Zona zona, Usuario usuarioEditor,
+			Usuario usuarioInsersor) {
+		super(veiculoForm,zona,usuarioEditor,usuarioInsersor);
+		this.localDoRoubo=veiculoForm.getLocalDoRoubo();
+	}
 
 	public String getLocalDoRoubo() {
 		return localDoRoubo;

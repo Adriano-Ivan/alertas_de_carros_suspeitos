@@ -20,8 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.VeiculoSuspeitoDto;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.VeiculoSuspeitoForm;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.veiculo.VeiculoSuspeitoForm;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.veiculo.VeiculoSuspeitoDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoSuspeito;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.VeiculoSuspeitoRepository;
@@ -43,8 +43,7 @@ public class VeiculosRest {
 	@GetMapping("/suspeitos")
 	public List<VeiculoSuspeitoDto> listar(){
 		List<VeiculoSuspeito> veiculosSuspeitos = veiculoSuspeitoRepository.findAllOrderByMomentoDoAlerta();
-		
-		
+				
 		return VeiculoSuspeito.converter(veiculosSuspeitos);
 	}
 	
@@ -60,7 +59,7 @@ public class VeiculosRest {
 	
 	@PostMapping("/suspeitos")
 	@Transactional
-	public ResponseEntity<VeiculoSuspeitoDto> cadastar(@RequestBody @Valid VeiculoSuspeitoForm form,
+	public ResponseEntity<VeiculoSuspeitoDto> cadastrar(@RequestBody @Valid VeiculoSuspeitoForm form,
 			UriComponentsBuilder uriBuilder ){
 		VeiculoSuspeito veiculo = form.converter(zonaRepository,usuarioRepository);
 		veiculoSuspeitoRepository.save(veiculo);

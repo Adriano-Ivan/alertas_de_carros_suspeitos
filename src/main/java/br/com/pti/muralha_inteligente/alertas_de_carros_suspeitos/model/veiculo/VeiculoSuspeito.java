@@ -11,7 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.VeiculoSuspeitoDto;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.veiculo.VeiculoSuspeitoForm;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.veiculo.VeiculoSuspeitoDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
@@ -24,24 +25,12 @@ public class VeiculoSuspeito extends Veiculo {
 	
 	public VeiculoSuspeito() {}
 
-	public VeiculoSuspeito(String dono,
-			 String placa,
-			 String localDoAlerta, LocalDateTime momentoDoAlerta,
-			 Boolean alertado, String nivelDeUrgencia,
-		 String statusDoVeiculo,
-			 String justificativa, Zona zona, Usuario usuarioEditor,
+	public VeiculoSuspeito(VeiculoSuspeitoForm veiculoForm, Zona zona, Usuario usuarioEditor,
 			Usuario usuarioInsersor) {
-		this.dono=dono;
-		this.placa=placa;
-		this.localDoAlerta=localDoAlerta;
-		this.momentoDoAlerta=momentoDoAlerta;
-		this.alertado=alertado;
-		this.nivelDeUrgencia=nivelDeUrgencia;
-		this.statusDoVeiculo=statusDoVeiculo;
-		this.justificativa=justificativa;
-		this.zona=zona;
-		this.usuarioInsersor=usuarioInsersor;
-		this.ultimoUsuarioEditor=usuarioEditor;
+		super(veiculoForm, zona,  usuarioEditor,
+			usuarioInsersor);
+		this.justificativa=veiculoForm.getJustificativa();
+
 	}
 
 	public String getJustificativa() {

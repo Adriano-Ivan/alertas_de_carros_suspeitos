@@ -1,32 +1,32 @@
-package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto;
+package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.veiculo;
 
 import java.time.LocalDateTime;
 
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoSuspeito;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.Veiculo;
 
-public class VeiculoSuspeitoDto {
+public abstract class VeiculoDto {
 
-	private Long id;
-	private String dono;
-	private String placa;
-	private String localDoAlerta;
-	private LocalDateTime momentoDoAlerta;
-	private Boolean alertado;
-	private String nivelDeUrgencia;
-	private String statusDoVeiculo;
-	private Long idZona;
-	private Long idUsuarioInsersor;
-	private Long idUltimoUsuarioEditor;
-	private String justificativa;
-
-	public VeiculoSuspeitoDto(VeiculoSuspeito veiculo) {
+	protected Long id;
+	protected String dono;
+	protected String placa;
+	protected String localDoAlerta;
+	protected LocalDateTime momentoDoAlerta;
+	protected Boolean alertado;
+	protected String nivelDeUrgencia;
+	protected String statusDoVeiculo;
+	protected Long idZona;
+	protected Long idUsuarioInsersor;
+	protected Long idUltimoUsuarioEditor;
+		
+	public VeiculoDto() {}
+	public VeiculoDto(Veiculo veiculo) {
 		this.id = veiculo.getId();
 		this.dono = veiculo.getDono();
 		this.placa = veiculo.getPlaca();
 		this.localDoAlerta = veiculo.getLocalDoAlerta();
 		this.momentoDoAlerta = veiculo.getMomentoDoAlerta();
 		this.alertado = veiculo.getAlertado();
-		this.justificativa = veiculo.getJustificativa();
+		
 		this.nivelDeUrgencia = veiculo.getNivelDeUrgencia();
 		this.statusDoVeiculo = veiculo.getStatusDoVeiculo();
 
@@ -40,7 +40,6 @@ public class VeiculoSuspeitoDto {
 			this.idUltimoUsuarioEditor = veiculo.getUltimoUsuarioEditor().getId();
 		}
 	}
-
 	public Long getId() {
 		return id;
 	}
@@ -83,10 +82,6 @@ public class VeiculoSuspeitoDto {
 
 	public Long getUltimoUsuarioEditor() {
 		return idUltimoUsuarioEditor;
-	}
-
-	public String getJustificativa() {
-		return justificativa;
 	}
 
 }
