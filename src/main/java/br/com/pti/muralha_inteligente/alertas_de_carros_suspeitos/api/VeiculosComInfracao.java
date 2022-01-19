@@ -81,7 +81,7 @@ public class VeiculosComInfracao {
 		VeiculoComInfracao veiculo = form.converter(zonaRepository,usuarioRepository);
 		veiculoComInfracaoRepository.save(veiculo);
 		
-		URI uri = uriBuilder.path("/api/veiculos_suspeitos/{id}")
+		URI uri = uriBuilder.path("/api/veiculos_com_infracao/{id}")
 				.buildAndExpand(veiculo.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new VeiculoComInfracaoDto(veiculo));

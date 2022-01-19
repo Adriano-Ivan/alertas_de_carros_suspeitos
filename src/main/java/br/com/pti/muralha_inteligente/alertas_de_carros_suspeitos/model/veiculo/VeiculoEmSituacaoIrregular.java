@@ -29,6 +29,7 @@ public class VeiculoEmSituacaoIrregular extends Veiculo {
 			Usuario usuarioEditor, Usuario usuarioInsersor) {
 		super(veiculoForm,zona,usuarioEditor,usuarioInsersor);
 		this.medidaAdministrativa=veiculoForm.getMedidaAdministrativa();
+		System.out.println(medidaAdministrativa);
 	}
 
 	public MedidaAdministrativa getMedidaAdministrativa() {

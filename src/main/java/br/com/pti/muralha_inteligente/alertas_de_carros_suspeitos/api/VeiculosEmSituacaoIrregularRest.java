@@ -43,6 +43,7 @@ public class VeiculosEmSituacaoIrregularRest {
 	@Autowired
 	private ZonaRepository zonaRepository;
 	
+	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
 
@@ -80,7 +81,7 @@ public class VeiculosEmSituacaoIrregularRest {
 		VeiculoEmSituacaoIrregular veiculo = form.converter(zonaRepository,usuarioRepository);
 		 veiculoEmSituacaoIrregularRepository.save(veiculo);
 		
-		URI uri = uriBuilder.path("/api/veiculos_roubados/{id}")
+		URI uri = uriBuilder.path("/api/veiculos_em_situacao_irregular/{id}")
 				.buildAndExpand(veiculo.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new VeiculoEmSituacaoIrregularDto(veiculo));
