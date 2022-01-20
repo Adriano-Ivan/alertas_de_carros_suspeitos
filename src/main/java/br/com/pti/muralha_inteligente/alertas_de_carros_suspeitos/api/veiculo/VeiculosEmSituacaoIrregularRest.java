@@ -1,4 +1,4 @@
-package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.api;
+package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.api.veiculo;
 
 import java.net.URI;
 import java.util.Optional;
@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -48,6 +50,7 @@ public class VeiculosEmSituacaoIrregularRest {
 	
 
 	@GetMapping
+	@Cacheable(value="veículosEmSituacaoIrregular")
 	public Page<VeiculoEmSituacaoIrregularDto> listar(@RequestParam(required=false) String placa,
 			@PageableDefault(sort="momentoDoAlerta",direction=Direction.DESC,
 			page=0,size=10) Pageable paginacao){
@@ -76,6 +79,8 @@ public class VeiculosEmSituacaoIrregularRest {
 	
 	@PostMapping
 	@Transactional
+	@CacheEvict(value="veículosEmSituacaoIrregular",
+	allEntries=true)
 	public ResponseEntity<VeiculoEmSituacaoIrregularDto> cadastrar(@RequestBody @Valid VeiculoEmSituacaoIrregularForm form,
 			UriComponentsBuilder uriBuilder ){
 		VeiculoEmSituacaoIrregular veiculo = form.converter(zonaRepository,usuarioRepository);
@@ -90,6 +95,8 @@ public class VeiculosEmSituacaoIrregularRest {
 	
 	@PutMapping("/{id}")
 	@Transactional
+	@CacheEvict(value="veículosEmSituacaoIrregular",
+	allEntries=true)
 	public ResponseEntity<VeiculoEmSituacaoIrregularDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid VeiculoEmSituacaoIrregularForm form){
 		Optional<VeiculoEmSituacaoIrregular> veiculoOpt =  veiculoEmSituacaoIrregularRepository.findById(id);
@@ -104,6 +111,8 @@ public class VeiculosEmSituacaoIrregularRest {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
+	@CacheEvict(value="veículosEmSituacaoIrregular",
+	allEntries=true)
 	public ResponseEntity<?> deletar(@PathVariable("id") Long id){
 		Optional<VeiculoEmSituacaoIrregular> veiculoOpt= veiculoEmSituacaoIrregularRepository.findById(id);
 		

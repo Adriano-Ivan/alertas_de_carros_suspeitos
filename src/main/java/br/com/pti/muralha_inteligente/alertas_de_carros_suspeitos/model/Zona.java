@@ -1,6 +1,7 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,11 +12,17 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.data.domain.Page;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.ZonaDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoComInfracao;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoEmSituacaoIrregular;
@@ -69,6 +76,10 @@ public class Zona {
 	@JsonIgnore
 	private Usuario ultimoUsuarioEditor;
 	
+	public Zona() {}
+	public Zona(String zona2) {
+		zona=zona2;
+	}
 	public List<BotDoTelegram> getBotsDoTelegram() {
 		return botsDoTelegram;
 	}
@@ -132,6 +143,12 @@ public class Zona {
 	public String toString() {
 		return "Zona [id=" + id + ", zona=" + zona + ", usuarioInsersor=" + usuarioInsersor + ", ultimoUsuarioEditor="
 				+ ultimoUsuarioEditor + "]";
+	}
+	public static Page<ZonaDto> converter(Page<Zona> zonas) {
+		return zonas.map(ZonaDto::new);
+	}
+	public static ZonaDto converter(Zona zona2) {
+		return new ZonaDto(zona2);
 	}
 	
 }

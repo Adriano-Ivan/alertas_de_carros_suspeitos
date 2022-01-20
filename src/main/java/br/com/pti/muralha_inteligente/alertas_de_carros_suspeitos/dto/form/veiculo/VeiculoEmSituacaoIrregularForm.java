@@ -16,7 +16,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Vei
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 public class VeiculoEmSituacaoIrregularForm extends VeiculoForm{
-
+	 
 	private MedidaAdministrativa medidaAdministrativa;
 
 	public MedidaAdministrativa getMedidaAdministrativa() {

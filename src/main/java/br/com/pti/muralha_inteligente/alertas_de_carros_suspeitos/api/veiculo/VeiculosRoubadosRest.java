@@ -1,4 +1,4 @@
-package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.api;
+package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.api.veiculo;
 
 import java.net.URI;
 import java.util.Optional;
@@ -7,6 +7,8 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -23,23 +25,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.veiculo.VeiculoComInfracaoForm;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.veiculo.VeiculoRoubadoForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.veiculo.VeiculoSuspeitoForm;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.veiculo.VeiculoComInfracaoDto;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.veiculo.VeiculoRoubadoDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.veiculo.VeiculoSuspeitoDto;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoComInfracao;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoRoubado;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoSuspeito;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.VeiculoComInfracaoRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.VeiculoRoubadoRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 @RestController
-@RequestMapping("/api/veiculos_com_infracao")
-public class VeiculosComInfracao {
+@RequestMapping("/api/veiculos_roubados")
+public class VeiculosRoubadosRest {
 
 	@Autowired
-	private VeiculoComInfracaoRepository veiculoComInfracaoRepository;
-	
+	private VeiculoRoubadoRepository veiculoRoubadoRepository;
 	
 	@Autowired
 	private ZonaRepository zonaRepository;
@@ -48,67 +49,74 @@ public class VeiculosComInfracao {
 	private UsuarioRepository usuarioRepository;
 	
 	@GetMapping
-	public Page<VeiculoComInfracaoDto> listar(@RequestParam(required=false) String placa,
+	@Cacheable(value="veículosRoubados")
+	public Page<VeiculoRoubadoDto> listar(@RequestParam(required=false) String placa,
 			@PageableDefault(sort="momentoDoAlerta",direction=Direction.DESC,
 			page=0,size=10) Pageable paginacao){
 		//Pageable paginacao = PageRequest.of(pagina, qtde);
 		if(placa==null) {
-			Page<VeiculoComInfracao> veiculosSuspeitos = veiculoComInfracaoRepository.findAll(paginacao);
+			Page<VeiculoRoubado> veiculosRoubados = veiculoRoubadoRepository.findAll(paginacao);
 			
-			return VeiculoComInfracao.converter(veiculosSuspeitos);
+			return VeiculoRoubado.converter(veiculosRoubados);
 		}else {
-			Page<VeiculoComInfracao> veiculosSuspeitos = veiculoComInfracaoRepository.findByPlaca(placa,
+			Page<VeiculoRoubado> veiculosRoubados = veiculoRoubadoRepository.findByPlaca(placa,
 					paginacao);
 			
-			return VeiculoComInfracao.converter(veiculosSuspeitos);
+			return VeiculoRoubado.converter(veiculosRoubados);
 		}
 	}
 	
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<VeiculoComInfracaoDto> retornarEspecifico(@PathVariable("id") Long id) {
-		Optional<VeiculoComInfracao> veiculo = veiculoComInfracaoRepository.findById(id);
+	public ResponseEntity<VeiculoRoubadoDto> retornarEspecifico(@PathVariable("id") Long id) {
+		Optional<VeiculoRoubado> veiculo = veiculoRoubadoRepository.findById(id);
 		if(veiculo.isPresent()) {
-			return ResponseEntity.ok(VeiculoComInfracao.converter(veiculo.get()));
+			return ResponseEntity.ok(VeiculoRoubado.converter(veiculo.get()));
 		}
 		return ResponseEntity.notFound().build();
 	}
 	
 	@PostMapping
 	@Transactional
-	public ResponseEntity<VeiculoComInfracaoDto> cadastrar(@RequestBody @Valid VeiculoComInfracaoForm form,
+	@CacheEvict(value="veículosRoubados",
+	allEntries=true)
+	public ResponseEntity<VeiculoRoubadoDto> cadastrar(@RequestBody @Valid VeiculoRoubadoForm form,
 			UriComponentsBuilder uriBuilder ){
-		VeiculoComInfracao veiculo = form.converter(zonaRepository,usuarioRepository);
-		veiculoComInfracaoRepository.save(veiculo);
+		VeiculoRoubado veiculo = form.converter(zonaRepository,usuarioRepository);
+		veiculoRoubadoRepository.save(veiculo);
 		
-		URI uri = uriBuilder.path("/api/veiculos_com_infracao/{id}")
+		URI uri = uriBuilder.path("/api/veiculos_roubados/{id}")
 				.buildAndExpand(veiculo.getId()).toUri();
 		
-		return ResponseEntity.created(uri).body(new VeiculoComInfracaoDto(veiculo));
+		return ResponseEntity.created(uri).body(new VeiculoRoubadoDto(veiculo));
 	}
 
 	
 	@PutMapping("/{id}")
 	@Transactional
-	public ResponseEntity<VeiculoComInfracaoDto> atualizar(@PathVariable("id") Long id,
-			@RequestBody @Valid VeiculoComInfracaoForm form){
-		Optional<VeiculoComInfracao> veiculoOpt = veiculoComInfracaoRepository.findById(id);
+	@CacheEvict(value="veículosRoubados",
+	allEntries=true)
+	public ResponseEntity<VeiculoRoubadoDto> atualizar(@PathVariable("id") Long id,
+			@RequestBody @Valid VeiculoRoubadoForm form){
+		Optional<VeiculoRoubado> veiculoOpt = veiculoRoubadoRepository.findById(id);
 		
 		if(veiculoOpt.isPresent()) {
-			VeiculoComInfracao veiculo = form.atualizar(id,veiculoComInfracaoRepository,
+			VeiculoRoubado veiculo = form.atualizar(id,veiculoRoubadoRepository,
 					zonaRepository, usuarioRepository);
-			return ResponseEntity.ok(VeiculoComInfracao.converter(veiculo));
+			return ResponseEntity.ok(VeiculoRoubado.converter(veiculo));
 		}
 		return ResponseEntity.notFound().build();
 	}
 	
 	@DeleteMapping("/{id}")
 	@Transactional
+	@CacheEvict(value="veículosRoubados",
+	allEntries=true)
 	public ResponseEntity<?> deletar(@PathVariable("id") Long id){
-		Optional<VeiculoComInfracao> veiculoOpt=veiculoComInfracaoRepository.findById(id);
+		Optional<VeiculoRoubado> veiculoOpt=veiculoRoubadoRepository.findById(id);
 		
 		if(veiculoOpt.isPresent()) {
-			veiculoComInfracaoRepository.deleteById(id);
+			veiculoRoubadoRepository.deleteById(id);
 			return ResponseEntity.ok().build();
 		}
 		return ResponseEntity.notFound().build();
