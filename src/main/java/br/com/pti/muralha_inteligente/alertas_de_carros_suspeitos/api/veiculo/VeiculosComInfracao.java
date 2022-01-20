@@ -50,7 +50,6 @@ public class VeiculosComInfracao {
 	private UsuarioRepository usuarioRepository;
 	
 	@GetMapping
-	@Cacheable(value="veículosComInfracao")
 	public Page<VeiculoComInfracaoDto> listar(@RequestParam(required=false) String placa,
 			@PageableDefault(sort="momentoDoAlerta",direction=Direction.DESC,
 			page=0,size=10) Pageable paginacao){
@@ -79,8 +78,6 @@ public class VeiculosComInfracao {
 	
 	@PostMapping
 	@Transactional
-	@CacheEvict(value="veículosComInfracao",
-	allEntries=true)
 	public ResponseEntity<VeiculoComInfracaoDto> cadastrar(@RequestBody @Valid VeiculoComInfracaoForm form,
 			UriComponentsBuilder uriBuilder ){
 		VeiculoComInfracao veiculo = form.converter(zonaRepository,usuarioRepository);
@@ -95,8 +92,6 @@ public class VeiculosComInfracao {
 	
 	@PutMapping("/{id}")
 	@Transactional
-	@CacheEvict(value="veículosComInfracao",
-	allEntries=true)
 	public ResponseEntity<VeiculoComInfracaoDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid VeiculoComInfracaoForm form){
 		Optional<VeiculoComInfracao> veiculoOpt = veiculoComInfracaoRepository.findById(id);
@@ -111,8 +106,6 @@ public class VeiculosComInfracao {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	@CacheEvict(value="veículosComInfracao",
-	allEntries=true)
 	public ResponseEntity<?> deletar(@PathVariable("id") Long id){
 		Optional<VeiculoComInfracao> veiculoOpt=veiculoComInfracaoRepository.findById(id);
 		

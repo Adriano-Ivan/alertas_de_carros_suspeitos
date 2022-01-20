@@ -1,5 +1,7 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -34,6 +36,10 @@ public class LocalAlvo {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference
 	private Zona zonaAssociada;
+	
+	protected LocalDateTime createdAt;
+	
+	protected LocalDateTime updatedAt;
 	
 	public Zona getZonaAssociada() {
 		return zonaAssociada;

@@ -54,6 +54,9 @@ public class VeiculoRoubadoForm extends VeiculoForm {
 		Optional<Usuario> usuarioInsersorOpt = usuarioRepository.findById(idUsuarioInsersor);
 		Usuario usuarioInsersor = usuarioInsersorOpt.orElse(null);
 		
+		veiculo.setZona(zona);
+		veiculo.setUltimoUsuarioEditor(usuarioEditor);
+		veiculo.setUsuarioInsersor(usuarioInsersor);
 		super.atualizar(veiculo,zona,usuarioEditor,usuarioInsersor);
 
 		veiculo.setLocalDoRoubo(localDoRoubo);

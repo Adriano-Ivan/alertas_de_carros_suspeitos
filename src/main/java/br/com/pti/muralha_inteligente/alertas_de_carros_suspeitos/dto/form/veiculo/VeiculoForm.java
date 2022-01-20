@@ -103,12 +103,7 @@ public class VeiculoForm {
 	public void setIdUltimoUsuarioEditor(Long idUltimoUsuarioEditor) {
 		this.idUltimoUsuarioEditor = idUltimoUsuarioEditor;
 	}
-	public void atualizar(Veiculo veiculo, Zona zona, Usuario usuarioEditor, Usuario usuarioInsersor) {
-		
-		veiculo.setZona(zona);
-		veiculo.setUltimoUsuarioEditor(usuarioEditor);
-		veiculo.setUsuarioInsersor(usuarioInsersor);
-		
+	public void atualizar(Veiculo veiculo, Zona zona, Usuario usuarioEditor, Usuario usuarioInsersor) {	
 		veiculo.setAlertado(alertado);
 		veiculo.setLocalDoAlerta(localDoAlerta);
 		veiculo.setDono(dono);

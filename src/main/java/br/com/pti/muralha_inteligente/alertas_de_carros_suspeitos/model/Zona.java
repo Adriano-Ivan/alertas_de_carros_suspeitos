@@ -1,5 +1,6 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,6 +41,10 @@ public class Zona {
 	@Column(length=40,nullable=false)
 	private String zona;
 
+	protected LocalDateTime createdAt;
+	
+	protected LocalDateTime updatedAt;
+	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
 	@JsonIgnore
 	private List<Usuario> usuarios;
@@ -49,7 +54,7 @@ public class Zona {
 	private List<LocalAlvo> locaisAlvo;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="zone-movement")
+	@JsonManagedReference(value="zone-suspects-movement")
 	private List<VeiculoSuspeito> veiculosSuspeitos;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)

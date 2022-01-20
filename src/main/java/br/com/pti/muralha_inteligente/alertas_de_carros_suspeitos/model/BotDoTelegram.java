@@ -1,5 +1,7 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -27,6 +29,10 @@ public class BotDoTelegram {
 	
 	@Column(length=256)
 	private String id_do_chat;
+	
+	protected LocalDateTime createdAt;
+	
+	protected LocalDateTime updatedAt;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference

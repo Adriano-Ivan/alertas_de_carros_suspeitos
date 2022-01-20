@@ -29,16 +29,6 @@ public abstract class VeiculoDto {
 		
 		this.nivelDeUrgencia = veiculo.getNivelDeUrgencia();
 		this.statusDoVeiculo = veiculo.getStatusDoVeiculo();
-
-		if (veiculo.getZona() != null) {
-			this.idZona = veiculo.getZona().getId();
-		}
-		if (veiculo.getUsuarioInsersor() != null) {
-			this.idUsuarioInsersor = veiculo.getUsuarioInsersor().getId();
-		}
-		if (veiculo.getUltimoUsuarioEditor() != null) {
-			this.idUltimoUsuarioEditor = veiculo.getUltimoUsuarioEditor().getId();
-		}
 	}
 	public Long getId() {
 		return id;

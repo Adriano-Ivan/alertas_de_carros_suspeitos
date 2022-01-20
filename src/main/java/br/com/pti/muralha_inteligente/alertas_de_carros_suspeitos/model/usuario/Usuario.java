@@ -1,5 +1,6 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -56,6 +57,10 @@ public class Usuario {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonIgnore
 	private Zona zona;
+	
+	protected LocalDateTime createdAt;
+	
+	protected LocalDateTime updatedAt;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
 	@JsonIgnore

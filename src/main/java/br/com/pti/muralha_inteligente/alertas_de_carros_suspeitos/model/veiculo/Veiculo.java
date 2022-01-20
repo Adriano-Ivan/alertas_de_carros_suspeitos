@@ -42,17 +42,9 @@ public abstract class Veiculo {
 
 	protected String statusDoVeiculo;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="zone-movement")
-	protected Zona zona;
+	protected LocalDateTime createdAt;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="inser-suspects-movement")
-	protected Usuario usuarioInsersor;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="edited-suspects-movement")
-	protected Usuario ultimoUsuarioEditor;
+	protected LocalDateTime updatedAt;
 	
 	public Veiculo() {}
 	public Veiculo(VeiculoForm veiculoForm,Zona zona, Usuario usuarioEditor,
@@ -64,19 +56,8 @@ public abstract class Veiculo {
 		this.alertado=veiculoForm.getAlertado();
 		this.nivelDeUrgencia=veiculoForm.getNivelDeUrgencia();
 		this.statusDoVeiculo=veiculoForm.getStatusDoVeiculo();
-		
-		this.zona=zona;
-		this.usuarioInsersor=usuarioInsersor;
-		this.ultimoUsuarioEditor=usuarioEditor;
-	}
-	@JsonBackReference(value="edited-suspects-movement")
-	public Usuario getUltimoUsuarioEditor() {
-		return ultimoUsuarioEditor;
 	}
 
-	public void setUltimoUsuarioEditor(Usuario ultimoUsuarioEditor) {
-		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
-	}
 
 	public Long getId() {
 		return id;
@@ -141,30 +122,13 @@ public abstract class Veiculo {
 	public void setStatusDoVeiculo(String statusDoVeiculo) {
 		this.statusDoVeiculo = statusDoVeiculo;
 	}
-	@JsonBackReference(value="zone-movement")
-	public Zona getZona() {
-		return zona;
-	}
-
-	public void setZona(Zona zona) {
-		this.zona = zona;
-	}
-
-	@JsonBackReference(value="inser-suspects-movement")
-	public Usuario getUsuarioInsersor() {
-		return usuarioInsersor;
-	}
-
-	public void setUsuarioInsersor(Usuario usuarioInsersor) {
-		this.usuarioInsersor = usuarioInsersor;
-	}
 
 	@Override
 	public String toString() {
 		return "Veiculo [id=" + id + ", dono=" + dono + ", placa=" + placa + ", localDoAlerta=" + localDoAlerta
 				+ ", momentoDoAlerta=" + momentoDoAlerta + ", alertado=" + alertado + ", nivelDeUrgencia="
-				+ nivelDeUrgencia + ", statusDoVeiculo=" + statusDoVeiculo + ", zona=" + zona + ", usuarioInsersor="
-				+ usuarioInsersor + ", ultimoUsuarioEditor=" + ultimoUsuarioEditor + ", próprio_da_filha"+"]";
+				+ nivelDeUrgencia + ", statusDoVeiculo=" + statusDoVeiculo + ", zona=" + "zona" + ", usuarioInsersor="
+				+ "insersor" + ", ultimoUsuarioEditor=" + "editor" + ", próprio_da_filha"+"]";
 	}
 	
 	

@@ -6,12 +6,16 @@ import java.util.stream.Collectors;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.data.domain.Page;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.veiculo.VeiculoSuspeitoForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.veiculo.VeiculoSuspeitoDto;
@@ -20,10 +24,22 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.
 
 @Entity
 @Table(name="veiculos_suspeitos")
-public class VeiculoSuspeito extends Veiculo {
+public class VeiculoSuspeito extends Veiculo implements RelacionavelParaJson {
 	
 	@Column(columnDefinition = "TEXT")
 	private String justificativa;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference(value="zone-suspects-movement")
+	protected Zona zona;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference(value="inser-suspects-movement")
+	protected Usuario usuarioInsersor;
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference(value="edited-suspects-movement")
+	protected Usuario ultimoUsuarioEditor;
 	
 	public VeiculoSuspeito() {}
 
@@ -32,7 +48,9 @@ public class VeiculoSuspeito extends Veiculo {
 		super(veiculoForm, zona,  usuarioEditor,
 			usuarioInsersor);
 		this.justificativa=veiculoForm.getJustificativa();
-
+		this.zona=zona;
+		this.usuarioInsersor=usuarioInsersor;
+		this.ultimoUsuarioEditor=usuarioEditor;
 	}
 
 	public String getJustificativa() {
@@ -41,6 +59,31 @@ public class VeiculoSuspeito extends Veiculo {
 
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
+	}
+	@JsonBackReference(value="edited-suspects-movement")
+	public Usuario getUltimoUsuarioEditor() {
+		return ultimoUsuarioEditor;
+	}
+
+	public void setUltimoUsuarioEditor(Usuario ultimoUsuarioEditor) {
+		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
+	}
+	@JsonBackReference(value="zone-suspects-movement")
+	public Zona getZona() {
+		return zona;
+	}
+
+	public void setZona(Zona zona) {
+		this.zona = zona;
+	}
+
+	@JsonBackReference(value="inser-suspects-movement")
+	public Usuario getUsuarioInsersor() {
+		return usuarioInsersor;
+	}
+
+	public void setUsuarioInsersor(Usuario usuarioInsersor) {
+		this.usuarioInsersor = usuarioInsersor;
 	}
 
 	public static Page<VeiculoSuspeitoDto> converter(Page<VeiculoSuspeito> veiculosSuspeitos) {
@@ -55,7 +98,9 @@ public class VeiculoSuspeito extends Veiculo {
 	
 	@Override
 	public String toString() {
-		return super.toString().replace("próprio_da_filha", "justificativa: "+justificativa);
+		return super.toString().replace("próprio_da_filha", "justificativa: "+justificativa)
+				.replace("insersor", usuarioInsersor.toString()).replace("editor",ultimoUsuarioEditor.toString())
+				.replace("zona", zona.toString());
 	}
 
 	

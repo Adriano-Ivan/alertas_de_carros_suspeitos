@@ -64,7 +64,7 @@ public class ZonasRest {
 	
 	@PostMapping
 	@Transactional
-	@CacheEvict(value="listarZonas")
+	@CacheEvict(value="listarZonas",allEntries=true)
 	public ResponseEntity<ZonaDto> cadastrar(@RequestBody @Valid ZonaForm form,
 			UriComponentsBuilder uriBuilder){
 		Zona zona = form.converter();
@@ -78,7 +78,7 @@ public class ZonasRest {
 	
 	@PutMapping("/{id}")
 	@Transactional
-	@CacheEvict(value="listarZonas")
+	@CacheEvict(value="listarZonas",allEntries=true)
 	public ResponseEntity<ZonaDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid ZonaForm form){
 		Optional<Zona> zonaOpt = zonaRepository.findById(id);
@@ -93,7 +93,7 @@ public class ZonasRest {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	@CacheEvict(value="listarZonas")
+	@CacheEvict(value="listarZonas",allEntries=true)
 	public ResponseEntity<?> deletar(@PathVariable("id") Long id){
 		Optional<Zona> zona = zonaRepository.findById(id);
 		

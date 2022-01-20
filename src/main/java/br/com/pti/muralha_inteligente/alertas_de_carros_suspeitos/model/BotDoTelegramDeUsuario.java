@@ -1,5 +1,7 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -29,6 +31,10 @@ public class BotDoTelegramDeUsuario {
 	
 	@ManyToOne
 	private Usuario usuario;
+	
+	protected LocalDateTime createdAt;
+	
+	protected LocalDateTime updatedAt;
 
 	public Long getId() {
 		return id;
