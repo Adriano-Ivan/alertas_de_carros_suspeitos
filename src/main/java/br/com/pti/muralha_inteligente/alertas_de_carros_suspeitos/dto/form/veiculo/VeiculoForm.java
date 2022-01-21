@@ -1,6 +1,7 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.veiculo;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -10,6 +11,8 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.Veiculo;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoSuspeito;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 public class VeiculoForm {
 
@@ -42,6 +45,8 @@ public class VeiculoForm {
 	
 	@NotNull
 	protected Long idUltimoUsuarioEditor;
+	
+	public VeiculoForm() {}
 	
 	public String getDono() {
 		return dono;
@@ -103,16 +108,50 @@ public class VeiculoForm {
 	public void setIdUltimoUsuarioEditor(Long idUltimoUsuarioEditor) {
 		this.idUltimoUsuarioEditor = idUltimoUsuarioEditor;
 	}
-	public void atualizar(Veiculo veiculo, Zona zona, Usuario usuarioEditor, Usuario usuarioInsersor) {	
+	protected Usuario definirUsuarioEditor(UsuarioRepository usuarioRepository) {
+		
+		Optional<Usuario> usuarioEditorOpt = usuarioRepository.findById(idUltimoUsuarioEditor);
+		Usuario usuarioEditor = usuarioEditorOpt.orElse(null);
+		return usuarioEditor;
+	}
+	protected Usuario definirUsuarioInsersor(UsuarioRepository usuarioRepository) {
+		Optional<Usuario> usuarioInsersorOpt = usuarioRepository.findById(idUsuarioInsersor);
+		Usuario usuarioInsersor = usuarioInsersorOpt.orElse(null);
+		return usuarioInsersor;
+	}
+	protected Zona definirZona(ZonaRepository zonaRepository) {
+		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
+		Zona zona = zonaOpt.orElse(null);
+
+		return zona;
+	}
+	public void atualizar(Veiculo veiculo, ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		veiculo.setAlertado(alertado);
 		veiculo.setLocalDoAlerta(localDoAlerta);
 		veiculo.setDono(dono);
 		veiculo.setMomentoDoAlerta(momentoDoAlerta);
 		veiculo.setStatusDoVeiculo(statusDoVeiculo);
 		veiculo.setPlaca(placa);
-		
 		veiculo.setNivelDeUrgencia(nivelDeUrgencia);
+		veiculo.setUpdatedAt(LocalDateTime.now());
+	}
+	public Usuario montarUsuarioInsersor(UsuarioRepository usuarioRepository) {
+		Optional<Usuario> usuarioInsersorOpt = usuarioRepository.findById(idUsuarioInsersor);
+		Usuario usuarioInsersor = usuarioInsersorOpt.orElse(null);
 		
+		return usuarioInsersor;
+	}
+	public Usuario montarUsuarioEditor(UsuarioRepository usuarioRepository) {
+		Optional<Usuario> usuarioEditorOpt = usuarioRepository.findById(idUltimoUsuarioEditor);
+		Usuario usuarioEditor = usuarioEditorOpt.orElse(null);
+		
+		return usuarioEditor;
+	}
+	public Zona montarZona(ZonaRepository zonaRepository) {
+		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
+		Zona zona = zonaOpt.orElse(null);
+		
+		return zona;
 	}
 	
 	

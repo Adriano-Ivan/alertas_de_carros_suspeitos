@@ -11,10 +11,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Usu
 public class MensagemRecebidaForm extends MensagemForm{
 
 	public MensagemRecebida converter(UsuarioRepository usuarioRepository) {
-		Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-		Usuario usr = usuario.orElse(null);
-		this.createdAt=LocalDateTime.now();
-		return new MensagemRecebida(this,usr);
+		return new MensagemRecebida(this,super.delegarUsuarioEdataDeCriacao(usuarioRepository));
 	}
 
 	public MensagemRecebida atualizar(Long id, MensagemRecebidaRepository mensagemRecebidaRepository,

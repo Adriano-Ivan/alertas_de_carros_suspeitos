@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.mensagem.MensagemEnviada;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.mensagem.MensagemRecebida;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.MensagemEnviadaRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
@@ -11,10 +12,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Usu
 public class MensagemEnviadaForm extends MensagemForm{
 
 	public MensagemEnviada converter(UsuarioRepository usuarioRepository) {
-		Optional<Usuario> usrOpt = usuarioRepository.findById(idUsuario);
-		Usuario usuario = usrOpt.orElse(null);
-		this.createdAt=LocalDateTime.now();
-		return new MensagemEnviada(this,usuario);
+		return new MensagemEnviada(this,super.delegarUsuarioEdataDeCriacao(usuarioRepository));
 	}
 
 	public MensagemEnviada atualizar(Long id,MensagemEnviadaRepository mensagemEnviadaRepository,

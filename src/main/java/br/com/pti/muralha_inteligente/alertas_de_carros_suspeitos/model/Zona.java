@@ -84,6 +84,7 @@ public class Zona {
 	public Zona() {}
 	public Zona(String zona2) {
 		zona=zona2;
+		this.createdAt=LocalDateTime.now();
 	}
 	public List<BotDoTelegram> getBotsDoTelegram() {
 		return botsDoTelegram;
@@ -143,11 +144,25 @@ public class Zona {
 
 	public void setZona(String zona) {
 		this.zona = zona;
+		
 	}
 	@Override
 	public String toString() {
 		return "Zona [id=" + id + ", zona=" + zona + ", usuarioInsersor=" + usuarioInsersor + ", ultimoUsuarioEditor="
 				+ ultimoUsuarioEditor + "]";
+	}
+	
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 	public static Page<ZonaDto> converter(Page<Zona> zonas) {
 		return zonas.map(ZonaDto::new);

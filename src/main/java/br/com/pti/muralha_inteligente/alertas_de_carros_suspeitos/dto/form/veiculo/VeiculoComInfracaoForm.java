@@ -25,35 +25,18 @@ public class VeiculoComInfracaoForm extends VeiculoForm {
 	}
 	
 	public VeiculoComInfracao converter(ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
-		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
-		Zona zona = zonaOpt.orElse(null);
-		
-		Optional<Usuario> usuarioEditorOpt = usuarioRepository.findById(idUltimoUsuarioEditor);
-		Usuario usuarioEditor = usuarioEditorOpt.orElse(null);
-		
-		Optional<Usuario> usuarioInsersorOpt = usuarioRepository.findById(idUsuarioInsersor);
-		Usuario usuarioInsersor = usuarioInsersorOpt.orElse(null);
-		
-		return new VeiculoComInfracao(this,zona,usuarioEditor,usuarioInsersor);
+		return new VeiculoComInfracao(this,super.montarZona(zonaRepository),
+				super.montarUsuarioEditor(usuarioRepository), super.montarUsuarioInsersor(usuarioRepository));
 	}
 	
 	public VeiculoComInfracao atualizar(Long id, VeiculoComInfracaoRepository veiculoComInfracaoRepository,
 			ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		VeiculoComInfracao veiculo = veiculoComInfracaoRepository.getById(id);
-		
-		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
-		Zona zona = zonaOpt.orElse(null);
-		
-		Optional<Usuario> usuarioEditorOpt = usuarioRepository.findById(idUltimoUsuarioEditor);
-		Usuario usuarioEditor = usuarioEditorOpt.orElse(null);
-		
-		Optional<Usuario> usuarioInsersorOpt = usuarioRepository.findById(idUsuarioInsersor);
-		Usuario usuarioInsersor = usuarioInsersorOpt.orElse(null);
-		
-		veiculo.setZona(zona);
-		veiculo.setUltimoUsuarioEditor(usuarioEditor);
-		veiculo.setUsuarioInsersor(usuarioInsersor);
-		super.atualizar(veiculo,zona,usuarioEditor,usuarioInsersor);
+
+		veiculo.setZona(super.definirZona(zonaRepository));
+		veiculo.setUltimoUsuarioEditor(super.definirUsuarioEditor(usuarioRepository));
+		veiculo.setUsuarioInsersor(super.definirUsuarioInsersor(usuarioRepository));
+		super.atualizar(veiculo,zonaRepository, usuarioRepository);
 
 		veiculo.setGravidadeDaInfracao(gravidadeDaInfracao);
 		

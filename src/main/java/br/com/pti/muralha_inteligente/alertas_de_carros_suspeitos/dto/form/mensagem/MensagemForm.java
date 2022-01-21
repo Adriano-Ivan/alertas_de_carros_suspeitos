@@ -63,12 +63,19 @@ public class MensagemForm {
 		this.createdAt = createdAt;
 	}
 	
-	public void atualizar(Mensagem msg,Long id,UsuarioRepository usuarioRepository) {
+	protected void atualizar(Mensagem msg,Long id,UsuarioRepository usuarioRepository) {
 		Optional<Usuario> usuario = usuarioRepository.findById(id);
 		Usuario usr = usuario.orElse(null);
 		
 		msg.setMensagem(mensagem);
 		msg.setUpdatedAt(LocalDateTime.now());
 		msg.setUsuario(usr);
+	}
+
+	protected Usuario delegarUsuarioEdataDeCriacao(UsuarioRepository usuarioRepository) {
+		Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
+		Usuario usr = usuario.orElse(null);
+		this.createdAt=LocalDateTime.now();
+		return usr;
 	}
 }

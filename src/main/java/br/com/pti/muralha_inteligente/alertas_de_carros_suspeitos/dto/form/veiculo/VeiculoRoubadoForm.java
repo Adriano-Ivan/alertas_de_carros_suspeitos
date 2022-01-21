@@ -29,35 +29,18 @@ public class VeiculoRoubadoForm extends VeiculoForm {
 	}
 	
 	public VeiculoRoubado converter(ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
-		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
-		Zona zona = zonaOpt.orElse(null);
-		
-		Optional<Usuario> usuarioEditorOpt = usuarioRepository.findById(idUltimoUsuarioEditor);
-		Usuario usuarioEditor = usuarioEditorOpt.orElse(null);
-		
-		Optional<Usuario> usuarioInsersorOpt = usuarioRepository.findById(idUsuarioInsersor);
-		Usuario usuarioInsersor = usuarioInsersorOpt.orElse(null);
-		
-		return new VeiculoRoubado(this,zona,usuarioEditor,usuarioInsersor);
+		return new VeiculoRoubado(this,super.montarZona(zonaRepository),
+				super.montarUsuarioEditor(usuarioRepository), super.montarUsuarioInsersor(usuarioRepository));
 	}
 	
 	public VeiculoRoubado atualizar(Long id, VeiculoRoubadoRepository veiculoRoubadoRepository,
 			ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		VeiculoRoubado veiculo = veiculoRoubadoRepository.getById(id);
 		
-		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
-		Zona zona = zonaOpt.orElse(null);
-		
-		Optional<Usuario> usuarioEditorOpt = usuarioRepository.findById(idUltimoUsuarioEditor);
-		Usuario usuarioEditor = usuarioEditorOpt.orElse(null);
-		
-		Optional<Usuario> usuarioInsersorOpt = usuarioRepository.findById(idUsuarioInsersor);
-		Usuario usuarioInsersor = usuarioInsersorOpt.orElse(null);
-		
-		veiculo.setZona(zona);
-		veiculo.setUltimoUsuarioEditor(usuarioEditor);
-		veiculo.setUsuarioInsersor(usuarioInsersor);
-		super.atualizar(veiculo,zona,usuarioEditor,usuarioInsersor);
+		veiculo.setZona(super.definirZona(zonaRepository));
+		veiculo.setUltimoUsuarioEditor(super.definirUsuarioEditor(usuarioRepository));
+		veiculo.setUsuarioInsersor(super.definirUsuarioInsersor(usuarioRepository));
+		super.atualizar(veiculo,zonaRepository, usuarioRepository);
 
 		veiculo.setLocalDoRoubo(localDoRoubo);
 		

@@ -17,6 +17,10 @@ public abstract class VeiculoDto {
 	protected Long idZona;
 	protected Long idUsuarioInsersor;
 	protected Long idUltimoUsuarioEditor;
+	
+	protected LocalDateTime createdAt;
+	
+	protected LocalDateTime updatedAt;
 		
 	public VeiculoDto() {}
 	public VeiculoDto(Veiculo veiculo) {
@@ -26,7 +30,8 @@ public abstract class VeiculoDto {
 		this.localDoAlerta = veiculo.getLocalDoAlerta();
 		this.momentoDoAlerta = veiculo.getMomentoDoAlerta();
 		this.alertado = veiculo.getAlertado();
-		
+		this.createdAt=veiculo.getCreatedAt();
+		this.updatedAt=veiculo.getUpdatedAt();
 		this.nivelDeUrgencia = veiculo.getNivelDeUrgencia();
 		this.statusDoVeiculo = veiculo.getStatusDoVeiculo();
 	}
@@ -62,16 +67,22 @@ public abstract class VeiculoDto {
 		return statusDoVeiculo;
 	}
 
-	public Long getZona() {
+	public Long getIdZona() {
 		return idZona;
 	}
 
-	public Long getUsuarioInsersor() {
+	public Long getIdUsuarioInsersor() {
 		return idUsuarioInsersor;
 	}
 
-	public Long getUltimoUsuarioEditor() {
+	public Long getIdUltimoUsuarioEditor() {
 		return idUltimoUsuarioEditor;
 	}
-
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+	
 }

@@ -56,6 +56,7 @@ public abstract class Veiculo {
 		this.alertado=veiculoForm.getAlertado();
 		this.nivelDeUrgencia=veiculoForm.getNivelDeUrgencia();
 		this.statusDoVeiculo=veiculoForm.getStatusDoVeiculo();
+		this.createdAt=LocalDateTime.now();
 	}
 
 
@@ -123,6 +124,19 @@ public abstract class Veiculo {
 		this.statusDoVeiculo = statusDoVeiculo;
 	}
 
+	
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 	@Override
 	public String toString() {
 		return "Veiculo [id=" + id + ", dono=" + dono + ", placa=" + placa + ", localDoAlerta=" + localDoAlerta

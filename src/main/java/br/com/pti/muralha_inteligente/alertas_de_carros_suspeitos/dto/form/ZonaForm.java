@@ -1,5 +1,7 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form;
 
+import java.time.LocalDateTime;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -27,6 +29,7 @@ public class ZonaForm {
 	public Zona atualizar(Long id, ZonaRepository zonaRepository) {
 		Zona zonaObj = zonaRepository.getById(id);
 		zonaObj.setZona(zona);
+		zonaObj.setUpdatedAt(LocalDateTime.now());
 		return zonaObj;
 	}
 }
