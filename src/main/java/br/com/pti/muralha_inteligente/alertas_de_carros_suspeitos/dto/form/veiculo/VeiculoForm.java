@@ -14,7 +14,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
-public class VeiculoForm {
+public abstract class VeiculoForm {
 
 	@NotBlank @NotNull @Size(min=2)
 	protected String dono;

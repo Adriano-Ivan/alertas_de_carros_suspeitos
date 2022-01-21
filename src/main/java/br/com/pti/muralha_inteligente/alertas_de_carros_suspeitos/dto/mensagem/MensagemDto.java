@@ -7,6 +7,9 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.mensagem
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
 public class MensagemDto {
+	
+	protected Long id;
+	
 	protected  String mensagem;
 	
 	protected Long idUsuario;
@@ -17,12 +20,16 @@ public class MensagemDto {
 
 	public MensagemDto() {}
 	public MensagemDto(Mensagem mensagemEnt) {
+		this.id=mensagemEnt.getId();
 		this.mensagem=mensagemEnt.getMensagem();
 		this.createdAt=mensagemEnt.getCreatedAt();
 		this.updatedAt=mensagemEnt.getUpdatedAt();
 		this.idUsuario=mensagemEnt.getUsuario().getId();
 	}
 
+	public Long getId() {
+		return id;
+	}
 	public String getMensagem() {
 		return mensagem;
 	}

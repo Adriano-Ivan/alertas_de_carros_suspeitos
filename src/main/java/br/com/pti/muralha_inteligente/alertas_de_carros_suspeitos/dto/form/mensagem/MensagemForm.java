@@ -10,7 +10,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.mensagem
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 
-public class MensagemForm {
+public abstract class MensagemForm {
 
 	@NotNull @NotBlank
 	protected  String mensagem;
