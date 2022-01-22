@@ -8,6 +8,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.domain.Page;
+
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.pendencia.TarefaParaFazerDto;
+
 @Entity
 @Table(name="tarefas_para_fazer")
 public class TarefaParaFazer extends Pendencia{
@@ -32,6 +36,10 @@ public class TarefaParaFazer extends Pendencia{
 	@Override
 	public String toString() {
 		return "TarefaParaFazer [cumprida=" + cumprida + ", id=" + id + ", descricao=" + descricao + "]";
+	}
+
+	public static Page<TarefaParaFazerDto> converter(Page<TarefaParaFazer> tarefasParaFazer) {
+		return tarefasParaFazer.map(TarefaParaFazerDto::new);
 	}
 	
 	

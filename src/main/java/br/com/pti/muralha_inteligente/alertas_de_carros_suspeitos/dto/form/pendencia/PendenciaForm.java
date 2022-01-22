@@ -25,7 +25,6 @@ public abstract class PendenciaForm {
 	public void atualizar(Pendencia pendencia) {
 		pendencia.setDescricao(descricao);
 		pendencia.setUpdatedAt(LocalDateTime.now());
-		
 	}
 	
 }

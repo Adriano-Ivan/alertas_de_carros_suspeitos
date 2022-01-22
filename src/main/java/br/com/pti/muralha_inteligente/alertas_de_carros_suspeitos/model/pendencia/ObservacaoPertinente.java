@@ -8,6 +8,10 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.springframework.data.domain.Page;
+
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.pendencia.ObservacaoPertinenteDto;
+
 @Entity
 @Table(name="observacoes_pertinentes")
 public class ObservacaoPertinente extends Pendencia {
@@ -34,6 +38,14 @@ public class ObservacaoPertinente extends Pendencia {
 	@Override
 	public String toString() {
 		return "ObservacaoPertinente [contemplada=" + contemplada + ", id=" + id + ", descricao=" + descricao + "]";
+	}
+
+	public static Page<ObservacaoPertinenteDto> converter(Page<ObservacaoPertinente> observacoesPertinentes) {
+		return observacoesPertinentes.map(ObservacaoPertinenteDto::new);
+	}
+
+	public static ObservacaoPertinenteDto converter(ObservacaoPertinente observacaoPertinente) {
+		return new ObservacaoPertinenteDto(observacaoPertinente);
 	}
 	
 	

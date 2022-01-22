@@ -8,7 +8,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Tar
 
 public class TarefaParaFazerForm extends PendenciaForm{
 
-	@NotNull @NotBlank
+	@NotNull
 	private Boolean cumprida;
 
 	public Boolean getCumprida() {
@@ -19,11 +19,11 @@ public class TarefaParaFazerForm extends PendenciaForm{
 		this.cumprida = cumprida;
 	}
 	
-	private TarefaParaFazer converter() {
+	public TarefaParaFazer converter() {
 		return new TarefaParaFazer(descricao, cumprida);
 	}
 	
-	private TarefaParaFazer atualizar(Long id, TarefaParaFazerRepository tarefaParaFazerRepository) {
+	public TarefaParaFazer atualizar(Long id, TarefaParaFazerRepository tarefaParaFazerRepository) {
 		TarefaParaFazer tarefaParaFazer = tarefaParaFazerRepository.getById(id);
 		super.atualizar(tarefaParaFazer);
 		tarefaParaFazer.setCumprida(cumprida);
