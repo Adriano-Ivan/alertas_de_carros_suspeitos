@@ -75,15 +75,15 @@ public class Usuario {
 	private List<LocalAlvo> locaisAlvoEditados;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonIgnore
+	@JsonManagedReference(value="local-user-movement")
 	private List<Zona> zonasInseridas;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonIgnore
+	@JsonManagedReference(value="local-user-edited-movement")
 	private List<Zona> zonasEditadas;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonIgnore
+	@JsonManagedReference(value="inser-infr-movement")
 	private List<VeiculoComInfracao> veiculosComInfracaoInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
@@ -91,7 +91,7 @@ public class Usuario {
 	private List<VeiculoComInfracao> veiculosComInfracaoEditados;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonIgnore
+	@JsonManagedReference(value="inser-irrmovement")
 	private List<VeiculoEmSituacaoIrregular> veiculosEmSituacoaIrregularInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
@@ -99,7 +99,7 @@ public class Usuario {
 	private List<VeiculoEmSituacaoIrregular> veiculosEmSituacoaIrregularEditados;
 
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonIgnore
+	@JsonManagedReference(value="inser-stolen-movement")
 	private List<VeiculoRoubado> veiculosRoubadosInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)

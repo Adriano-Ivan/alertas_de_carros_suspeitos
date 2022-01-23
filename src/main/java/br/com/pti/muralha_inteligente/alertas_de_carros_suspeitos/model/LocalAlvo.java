@@ -10,9 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.springframework.data.domain.Page;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.LocalAlvoDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
 @Entity
@@ -26,21 +32,28 @@ public class LocalAlvo {
 	private String local;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference
+	@JsonBackReference(value="local-user-movement")
 	private Usuario usuarioInsersor;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference
+	@JsonBackReference(value="local-user-edited-movement")
 	private Usuario ultimoUsuarioEditor;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference
+	@JsonBackReference(value="local-zone-movement")
 	private Zona zonaAssociada;
 	
 	protected LocalDateTime createdAt;
 	
 	protected LocalDateTime updatedAt;
 	
+	public LocalAlvo(String local, Usuario usuarioInsersor, Zona zonaAssociada) {
+		this.local=local;
+		this.usuarioInsersor=usuarioInsersor;
+		this.zonaAssociada=zonaAssociada;
+		this.createdAt=LocalDateTime.now();
+	}
+
 	public Zona getZonaAssociada() {
 		return zonaAssociada;
 	}
@@ -75,7 +88,7 @@ public class LocalAlvo {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
+	@JsonBackReference(value="local-zone-movement")
 	public String getLocal() {
 		return local;
 	}
@@ -104,6 +117,14 @@ public class LocalAlvo {
 	public String toString() {
 		return "LocalAlvo [id=" + id + ", local=" + local + ", usuarioInsersor=" + usuarioInsersor
 				+ ", ultimoUsuarioEditor=" + ultimoUsuarioEditor + ", zonaAssociada=" + zonaAssociada + "]";
+	}
+
+	public static Page<LocalAlvoDto> converter(Page<LocalAlvo> locaisAlvo) {
+		return locaisAlvo.map(LocalAlvoDto::new);
+	}
+
+	public static LocalAlvoDto converter(LocalAlvo localAlvo) {
+		return new LocalAlvoDto(localAlvo);
 	}
 	
 	

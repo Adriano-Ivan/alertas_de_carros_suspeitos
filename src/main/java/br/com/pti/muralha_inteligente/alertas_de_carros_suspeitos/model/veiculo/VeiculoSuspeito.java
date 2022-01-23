@@ -43,14 +43,13 @@ public class VeiculoSuspeito extends Veiculo implements RelacionavelParaJson {
 	
 	public VeiculoSuspeito() {}
 
-	public VeiculoSuspeito(VeiculoSuspeitoForm veiculoForm, Zona zona, Usuario usuarioEditor,
+	public VeiculoSuspeito(VeiculoSuspeitoForm veiculoForm, Zona zona, 
 			Usuario usuarioInsersor) {
-		super(veiculoForm, zona,  usuarioEditor,
-			usuarioInsersor);
+		super(veiculoForm, zona);
 		this.justificativa=veiculoForm.getJustificativa();
 		this.zona=zona;
 		this.usuarioInsersor=usuarioInsersor;
-		this.ultimoUsuarioEditor=usuarioEditor;
+	//	this.ultimoUsuarioEditor=usuarioEditor;
 	}
 
 	public String getJustificativa() {

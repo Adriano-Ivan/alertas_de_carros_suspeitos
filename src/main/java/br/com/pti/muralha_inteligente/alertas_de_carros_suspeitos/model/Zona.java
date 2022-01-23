@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.ZonaDto;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.ZonaForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoComInfracao;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoEmSituacaoIrregular;
@@ -50,7 +51,7 @@ public class Zona {
 	private List<Usuario> usuarios;
 	
 	@OneToMany(mappedBy="zonaAssociada",fetch=FetchType.LAZY)
-	@JsonIgnore
+	@JsonManagedReference(value="local-zone-movement")
 	private List<LocalAlvo> locaisAlvo;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
@@ -82,8 +83,9 @@ public class Zona {
 	private Usuario ultimoUsuarioEditor;
 	
 	public Zona() {}
-	public Zona(String zona2) {
-		zona=zona2;
+	public Zona(ZonaForm zonaForm,Usuario usuario) {
+		zona=zonaForm.getZona();
+		usuarioInsersor=usuario;
 		this.createdAt=LocalDateTime.now();
 	}
 	public List<BotDoTelegram> getBotsDoTelegram() {

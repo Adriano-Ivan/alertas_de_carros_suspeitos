@@ -28,6 +28,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.ZonaDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.ZonaForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 @RestController
@@ -36,6 +37,8 @@ public class ZonasRest {
 
 	@Autowired
 	private ZonaRepository zonaRepository;
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@GetMapping
 	@Cacheable(value="listarZonas")
@@ -67,7 +70,7 @@ public class ZonasRest {
 	@CacheEvict(value="listarZonas",allEntries=true)
 	public ResponseEntity<ZonaDto> cadastrar(@RequestBody @Valid ZonaForm form,
 			UriComponentsBuilder uriBuilder){
-		Zona zona = form.converter();
+		Zona zona = form.converter(usuarioRepository);
 		zonaRepository.save(zona);
 		
 		URI uri = uriBuilder.path("/api/zonas/{id}")
@@ -84,7 +87,7 @@ public class ZonasRest {
 		Optional<Zona> zonaOpt = zonaRepository.findById(id);
 		
 		if(zonaOpt.isPresent()) {
-			Zona zona = form.atualizar(id,zonaRepository);
+			Zona zona = form.atualizar(id,zonaRepository,usuarioRepository);
 			return ResponseEntity.ok(Zona.converter(zona));
 		}
 		

@@ -26,17 +26,17 @@ public class VeiculoComInfracaoForm extends VeiculoForm {
 	
 	public VeiculoComInfracao converter(ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		return new VeiculoComInfracao(this,super.montarZona(zonaRepository),
-				super.montarUsuarioEditor(usuarioRepository), super.montarUsuarioInsersor(usuarioRepository));
+				 super.montarUsuarioInsersor(usuarioRepository));
 	}
 	
 	public VeiculoComInfracao atualizar(Long id, VeiculoComInfracaoRepository veiculoComInfracaoRepository,
 			ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		VeiculoComInfracao veiculo = veiculoComInfracaoRepository.getById(id);
 
-		veiculo.setZona(super.definirZona(zonaRepository));
-		veiculo.setUltimoUsuarioEditor(super.definirUsuarioEditor(usuarioRepository));
-		veiculo.setUsuarioInsersor(super.definirUsuarioInsersor(usuarioRepository));
-		super.atualizar(veiculo,zonaRepository, usuarioRepository);
+		veiculo.setZona(super.montarZona(zonaRepository));
+		veiculo.setUltimoUsuarioEditor(super.montarUsuarioEditor(usuarioRepository));
+		//veiculo.setUsuarioInsersor(super.montarUsuarioInsersor(usuarioRepository));
+		super.atualizar(veiculo,zonaRepository);
 
 		veiculo.setGravidadeDaInfracao(gravidadeDaInfracao);
 		

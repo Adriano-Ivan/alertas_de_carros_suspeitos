@@ -29,7 +29,7 @@ public class VeiculoSuspeitoForm extends VeiculoForm{
 	
 	public VeiculoSuspeito converter(ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		return new VeiculoSuspeito(this,super.montarZona(zonaRepository),
-				super.montarUsuarioEditor(usuarioRepository), super.montarUsuarioInsersor(usuarioRepository));
+				super.montarUsuarioInsersor(usuarioRepository));
 		
 	}
 	
@@ -37,10 +37,10 @@ public class VeiculoSuspeitoForm extends VeiculoForm{
 			ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		VeiculoSuspeito veiculo = veiculoSuspeitoRepository.getById(id);
 		
-		veiculo.setZona(super.definirZona(zonaRepository));
-		veiculo.setUltimoUsuarioEditor(super.definirUsuarioEditor(usuarioRepository));
-		veiculo.setUsuarioInsersor(super.definirUsuarioInsersor(usuarioRepository));
-		super.atualizar(veiculo,zonaRepository,usuarioRepository);
+		veiculo.setZona(super.montarZona(zonaRepository));
+		veiculo.setUltimoUsuarioEditor(super.montarUsuarioEditor(usuarioRepository));
+		//veiculo.setUsuarioInsersor(super.montarUsuarioInsersor(usuarioRepository));
+		super.atualizar(veiculo,zonaRepository);
 
 		veiculo.setJustificativa(justificativa);
 		

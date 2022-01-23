@@ -29,17 +29,17 @@ public class VeiculoEmSituacaoIrregularForm extends VeiculoForm{
 	
 	public VeiculoEmSituacaoIrregular converter(ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		return new VeiculoEmSituacaoIrregular(this,super.montarZona(zonaRepository),
-				super.montarUsuarioEditor(usuarioRepository), super.montarUsuarioInsersor(usuarioRepository));
+				 super.montarUsuarioInsersor(usuarioRepository));
 	}
 	
 	public VeiculoEmSituacaoIrregular atualizar(Long id, VeiculoEmSituacaoIrregularRepository veiculoEmSituacaoIrregularRepository,
 			ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		VeiculoEmSituacaoIrregular veiculo = veiculoEmSituacaoIrregularRepository.getById(id);
 		
-		veiculo.setZona(super.definirZona(zonaRepository));
-		veiculo.setUltimoUsuarioEditor(super.definirUsuarioEditor(usuarioRepository));
-		veiculo.setUsuarioInsersor(super.definirUsuarioInsersor(usuarioRepository));
-		super.atualizar(veiculo,zonaRepository, usuarioRepository);
+		veiculo.setZona(super.montarZona(zonaRepository));
+		veiculo.setUltimoUsuarioEditor(super.montarUsuarioEditor(usuarioRepository));
+		//veiculo.setUsuarioInsersor(super.montarUsuarioInsersor(usuarioRepository));
+		super.atualizar(veiculo,zonaRepository);
 
 		veiculo.setMedidaAdministrativa(medidaAdministrativa);
 		

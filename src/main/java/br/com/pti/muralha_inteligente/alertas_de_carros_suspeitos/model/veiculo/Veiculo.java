@@ -47,8 +47,7 @@ public abstract class Veiculo {
 	protected LocalDateTime updatedAt;
 	
 	public Veiculo() {}
-	public Veiculo(VeiculoForm veiculoForm,Zona zona, Usuario usuarioEditor,
-			Usuario usuarioInsersor) {
+	public Veiculo(VeiculoForm veiculoForm,Zona zona) {
 		this.dono=veiculoForm.getDono();
 		this.placa=veiculoForm.getPlaca();
 		this.localDoAlerta=veiculoForm.getLocalDoAlerta();

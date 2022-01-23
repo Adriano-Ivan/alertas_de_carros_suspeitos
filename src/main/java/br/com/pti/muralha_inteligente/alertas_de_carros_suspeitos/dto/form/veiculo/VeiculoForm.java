@@ -39,11 +39,9 @@ public abstract class VeiculoForm {
 	
 	@NotNull
 	protected Long idZona;
-	
-	@NotNull
+
 	protected Long idUsuarioInsersor;
-	
-	@NotNull
+
 	protected Long idUltimoUsuarioEditor;
 	
 	public VeiculoForm() {}
@@ -108,24 +106,8 @@ public abstract class VeiculoForm {
 	public void setIdUltimoUsuarioEditor(Long idUltimoUsuarioEditor) {
 		this.idUltimoUsuarioEditor = idUltimoUsuarioEditor;
 	}
-	protected Usuario definirUsuarioEditor(UsuarioRepository usuarioRepository) {
-		
-		Optional<Usuario> usuarioEditorOpt = usuarioRepository.findById(idUltimoUsuarioEditor);
-		Usuario usuarioEditor = usuarioEditorOpt.orElse(null);
-		return usuarioEditor;
-	}
-	protected Usuario definirUsuarioInsersor(UsuarioRepository usuarioRepository) {
-		Optional<Usuario> usuarioInsersorOpt = usuarioRepository.findById(idUsuarioInsersor);
-		Usuario usuarioInsersor = usuarioInsersorOpt.orElse(null);
-		return usuarioInsersor;
-	}
-	protected Zona definirZona(ZonaRepository zonaRepository) {
-		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
-		Zona zona = zonaOpt.orElse(null);
 
-		return zona;
-	}
-	public void atualizar(Veiculo veiculo, ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
+	public void atualizar(Veiculo veiculo, ZonaRepository zonaRepository) {
 		veiculo.setAlertado(alertado);
 		veiculo.setLocalDoAlerta(localDoAlerta);
 		veiculo.setDono(dono);

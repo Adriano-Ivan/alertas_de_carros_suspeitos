@@ -26,7 +26,7 @@ public abstract class Mensagem {
 	@Column(columnDefinition="TEXT")
 	protected String mensagem;
 	
-	protected LocalDateTime createdAt=LocalDateTime.now();
+	protected LocalDateTime createdAt;
 	
 	protected LocalDateTime updatedAt;
 	

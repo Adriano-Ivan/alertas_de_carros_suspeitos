@@ -39,13 +39,13 @@ public class VeiculoComInfracao extends Veiculo implements RelacionavelParaJson{
 	
 	public VeiculoComInfracao() {}
 	
-	public VeiculoComInfracao(VeiculoComInfracaoForm veiculoForm, Zona zona, Usuario usuarioEditor,
+	public VeiculoComInfracao(VeiculoComInfracaoForm veiculoForm, Zona zona,
 			Usuario usuarioInsersor) {
-		super(veiculoForm,zona,usuarioEditor,usuarioInsersor);
+		super(veiculoForm,zona);
 		this.gravidadeDaInfracao=veiculoForm.getGravidadeDaInfracao();
 		this.zona=zona;
 		this.usuarioInsersor=usuarioInsersor;
-		this.ultimoUsuarioEditor=usuarioEditor;
+		//this.ultimoUsuarioEditor=usuarioEditor;
 	}
 
 	public GravidadeDaInfracao getGravidadeDaInfracao() {
@@ -91,7 +91,4 @@ public class VeiculoComInfracao extends Veiculo implements RelacionavelParaJson{
 	public static Page<VeiculoComInfracaoDto> converter(Page<VeiculoComInfracao> veiculosSuspeitos) {
 		return veiculosSuspeitos.map(VeiculoComInfracaoDto::new);
 	}
-
-	
-	
 }

@@ -30,17 +30,17 @@ public class VeiculoRoubadoForm extends VeiculoForm {
 	
 	public VeiculoRoubado converter(ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		return new VeiculoRoubado(this,super.montarZona(zonaRepository),
-				super.montarUsuarioEditor(usuarioRepository), super.montarUsuarioInsersor(usuarioRepository));
+				 super.montarUsuarioInsersor(usuarioRepository));
 	}
 	
 	public VeiculoRoubado atualizar(Long id, VeiculoRoubadoRepository veiculoRoubadoRepository,
 			ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		VeiculoRoubado veiculo = veiculoRoubadoRepository.getById(id);
 		
-		veiculo.setZona(super.definirZona(zonaRepository));
-		veiculo.setUltimoUsuarioEditor(super.definirUsuarioEditor(usuarioRepository));
-		veiculo.setUsuarioInsersor(super.definirUsuarioInsersor(usuarioRepository));
-		super.atualizar(veiculo,zonaRepository, usuarioRepository);
+		veiculo.setZona(super.montarZona(zonaRepository));
+		veiculo.setUltimoUsuarioEditor(super.montarUsuarioEditor(usuarioRepository));
+		//veiculo.setUsuarioInsersor(super.montarUsuarioInsersor(usuarioRepository));
+		super.atualizar(veiculo,zonaRepository);
 
 		veiculo.setLocalDoRoubo(localDoRoubo);
 		

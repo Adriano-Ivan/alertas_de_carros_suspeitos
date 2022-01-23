@@ -36,13 +36,13 @@ public class VeiculoRoubado extends Veiculo implements RelacionavelParaJson{
 	
 	public VeiculoRoubado() {}
 
-	public VeiculoRoubado(VeiculoRoubadoForm veiculoForm, Zona zona, Usuario usuarioEditor,
+	public VeiculoRoubado(VeiculoRoubadoForm veiculoForm, Zona zona,
 			Usuario usuarioInsersor) {
-		super(veiculoForm,zona,usuarioEditor,usuarioInsersor);
+		super(veiculoForm,zona);
 		this.localDoRoubo=veiculoForm.getLocalDoRoubo();
 		this.zona=zona;
 		this.usuarioInsersor=usuarioInsersor;
-		this.ultimoUsuarioEditor=usuarioEditor;
+		//this.ultimoUsuarioEditor=usuarioEditor;
 	}
 
 	public String getLocalDoRoubo() {

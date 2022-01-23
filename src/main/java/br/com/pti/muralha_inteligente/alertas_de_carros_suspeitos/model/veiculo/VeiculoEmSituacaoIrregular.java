@@ -43,12 +43,12 @@ public class VeiculoEmSituacaoIrregular extends Veiculo implements RelacionavelP
 	public VeiculoEmSituacaoIrregular() {}
 
 	public VeiculoEmSituacaoIrregular(VeiculoEmSituacaoIrregularForm veiculoForm, Zona zona,
-			Usuario usuarioEditor, Usuario usuarioInsersor) {
-		super(veiculoForm,zona,usuarioEditor,usuarioInsersor);
+			Usuario usuarioInsersor) {
+		super(veiculoForm,zona);
 		this.medidaAdministrativa=veiculoForm.getMedidaAdministrativa();
 		this.zona=zona;
 		this.usuarioInsersor=usuarioInsersor;
-		this.ultimoUsuarioEditor=usuarioEditor;
+		//this.ultimoUsuarioEditor=usuarioEditor;
 	}
 
 	public MedidaAdministrativa getMedidaAdministrativa() {

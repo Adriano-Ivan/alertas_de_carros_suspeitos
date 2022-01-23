@@ -22,9 +22,16 @@ public class MensagemDto {
 	public MensagemDto(Mensagem mensagemEnt) {
 		this.id=mensagemEnt.getId();
 		this.mensagem=mensagemEnt.getMensagem();
-		this.createdAt=mensagemEnt.getCreatedAt();
-		this.updatedAt=mensagemEnt.getUpdatedAt();
-		this.idUsuario=mensagemEnt.getUsuario().getId();
+		
+		if(mensagemEnt.getCreatedAt()!=null) {
+			this.createdAt=mensagemEnt.getCreatedAt();
+		}
+		if(mensagemEnt.getUpdatedAt()!=null) {
+			this.updatedAt=mensagemEnt.getUpdatedAt();
+		}
+		if(mensagemEnt.getUsuario()!=null) {
+			this.idUsuario=mensagemEnt.getUsuario().getId();
+		}
 	}
 
 	public Long getId() {
