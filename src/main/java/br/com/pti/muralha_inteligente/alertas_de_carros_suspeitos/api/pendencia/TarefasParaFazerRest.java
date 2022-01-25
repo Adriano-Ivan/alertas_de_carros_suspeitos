@@ -29,7 +29,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendenci
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.TarefaParaFazerRepository;
 
 @RestController
-@RequestMapping("/api/tarefas_para_fazer")
+@RequestMapping("/api/v1/tarefas_para_fazer")
 public class TarefasParaFazerRest {
 
 	@Autowired
@@ -65,7 +65,7 @@ public class TarefasParaFazerRest {
 		TarefaParaFazer tarefaParaFazer = form.converter();
 		tarefaParaFazerRepository.save(tarefaParaFazer);
 		
-		URI uri = uriBuilder.path("/api/tarefas_para_fazer")
+		URI uri = uriBuilder.path("/api/v1/tarefas_para_fazer")
 				.buildAndExpand(tarefaParaFazer.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new TarefaParaFazerDto(tarefaParaFazer));

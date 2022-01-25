@@ -11,7 +11,12 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.domain.Page;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.BotDoTelegramDto;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.BotDoTelegramForm;
 
 @Entity
 @Table(name="bots_do_telegram")
@@ -28,7 +33,7 @@ public class BotDoTelegram {
 	private String token;
 	
 	@Column(length=256)
-	private String id_do_chat;
+	private String idDoChat;
 	
 	protected LocalDateTime createdAt;
 	
@@ -37,6 +42,16 @@ public class BotDoTelegram {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference
 	private Zona zona;
+	
+	public BotDoTelegram() {}
+	
+	public BotDoTelegram(BotDoTelegramForm botDoTelegramForm, Zona zona) {
+		this.denominacao=botDoTelegramForm.getDenominacao();
+		this.token=botDoTelegramForm.getToken();
+		this.idDoChat=botDoTelegramForm.getIdDoChat();
+		this.zona=zona;
+		this.createdAt=LocalDateTime.now();
+	}
 
 	public Long getId() {
 		return id;
@@ -62,12 +77,12 @@ public class BotDoTelegram {
 		this.token = token;
 	}
 
-	public String getId_do_chat() {
-		return id_do_chat;
+	public String getIdDoChat() {
+		return idDoChat;
 	}
 
-	public void setId_do_chat(String id_do_chat) {
-		this.id_do_chat = id_do_chat;
+	public void setIdDoChat(String idDoChat) {
+		this.idDoChat = idDoChat;
 	}
 
 	public Zona getZona() {
@@ -97,6 +112,14 @@ public class BotDoTelegram {
 	@Override
 	public String toString() {
 		return "BotDoTelegram [id=" + id + ", denominacao=" + denominacao + ", token=" + token + ", id_do_chat="
-				+ id_do_chat + ", zona=" + zona + "]";
+				+ idDoChat + ", zona=" + zona + "]";
+	}
+
+	public static Page<BotDoTelegramDto> converter(Page<BotDoTelegram> botsDoTelegram) {
+		return botsDoTelegram.map(BotDoTelegramDto::new);
+	}
+	
+	public static BotDoTelegramDto converter(BotDoTelegram botDoTelegram) {
+		return new BotDoTelegramDto(botDoTelegram);
 	}
 }

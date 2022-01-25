@@ -36,7 +36,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Vei
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 @RestController
-@RequestMapping("/api/veiculos_roubados")
+@RequestMapping("/api/v1/veiculos_roubados")
 public class VeiculosRoubadosRest {
 
 	@Autowired
@@ -85,7 +85,7 @@ public class VeiculosRoubadosRest {
 		VeiculoRoubado veiculo = form.converter(zonaRepository,usuarioRepository);
 		veiculoRoubadoRepository.save(veiculo);
 		
-		URI uri = uriBuilder.path("/api/veiculos_roubados/{id}")
+		URI uri = uriBuilder.path("/api/v1/veiculos_roubados/{id}")
 				.buildAndExpand(veiculo.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new VeiculoRoubadoDto(veiculo));

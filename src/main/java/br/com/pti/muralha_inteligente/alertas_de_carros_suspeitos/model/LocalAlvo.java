@@ -47,6 +47,8 @@ public class LocalAlvo {
 	
 	protected LocalDateTime updatedAt;
 	
+	public LocalAlvo() {}
+	
 	public LocalAlvo(String local, Usuario usuarioInsersor, Zona zonaAssociada) {
 		this.local=local;
 		this.usuarioInsersor=usuarioInsersor;

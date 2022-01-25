@@ -29,7 +29,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendenci
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ObservacaoPertinenteRepository;
 
 @RestController
-@RequestMapping("/api/observacoes_pertinentes")
+@RequestMapping("/api/v1/observacoes_pertinentes")
 public class ObservacoesPertinentesRest {
 
 	@Autowired
@@ -66,7 +66,7 @@ public class ObservacoesPertinentesRest {
 		ObservacaoPertinente observacaoPertinente = form.converter();
 		observacaoPertinenteRepository.save(observacaoPertinente);
 		
-		URI uri = uriBuilder.path("/api/observacoes_pertinentes/{id}")
+		URI uri = uriBuilder.path("/api/v1/observacoes_pertinentes/{id}")
 				.buildAndExpand(observacaoPertinente.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new ObservacaoPertinenteDto(observacaoPertinente));

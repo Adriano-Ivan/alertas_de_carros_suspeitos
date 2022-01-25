@@ -44,25 +44,27 @@ public class ZonaForm {
 		this.idUltimoUsuarioEditor = idUltimoUsuarioEditor;
 	}
 
+	private Usuario definirUsuario(Long id,UsuarioRepository usuarioRepository) {
+		Optional<Usuario> usuarioOpt=usuarioRepository.findById(id);
+		Usuario usuario = usuarioOpt.orElse(null);
+		return usuario;
+	}
 	public Zona converter(UsuarioRepository usuarioRepository) {
 		if(idUsuarioInsersor==null) {
 			idUsuarioInsersor=(long) 0;
 		}
-		Optional<Usuario> usuarioOpt=usuarioRepository.findById(idUsuarioInsersor);
-		Usuario usuario = usuarioOpt.orElse(null);
+		Usuario usuario = definirUsuario(idUsuarioInsersor,usuarioRepository);
 		
-		if(usuario!=null) {
-			return new Zona(this,usuario);
-		}else {
-			return new Zona(this,null);
-		}
+		return new Zona(this,usuario);
 	}
 
 	public Zona atualizar(Long id, ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		Zona zonaObj = zonaRepository.getById(id);
-		
-		Optional<Usuario> usuarioOpt=usuarioRepository.findById(idUsuarioInsersor);
-		Usuario usuario = usuarioOpt.orElse(null);
+
+		if(idUltimoUsuarioEditor==null) {
+			idUltimoUsuarioEditor=(long) 0;
+		}
+		Usuario usuario = definirUsuario(idUltimoUsuarioEditor,usuarioRepository);
 
 		zonaObj.setUltimoUsuarioEditor(usuario);
 

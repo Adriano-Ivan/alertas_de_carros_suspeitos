@@ -31,7 +31,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Usu
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 @RestController
-@RequestMapping("/api/locais_alvo")
+@RequestMapping("/api/v1/locais_alvo")
 public class LocaisAlvoRest {
 	
 	@Autowired
@@ -57,7 +57,7 @@ public class LocaisAlvoRest {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<LocalAlvoDto> encontrarEspecifico(@PathVariable("id") Long id){
+	public ResponseEntity<LocalAlvoDto> retornarEspecifico(@PathVariable("id") Long id){
 		Optional<LocalAlvo> localAlvoOpt = localAlvoRepository.findById(id);
 		
 		if(localAlvoOpt.isPresent()) {
@@ -74,7 +74,7 @@ public class LocaisAlvoRest {
 		LocalAlvo localAlvo = form.converter(zonaRepository, usuarioRepository);
 		localAlvoRepository.save(localAlvo);
 		
-		URI uri = uriBuilder.path("/api/locais_alvo/{id}")
+		URI uri = uriBuilder.path("/api/v1/locais_alvo/{id}")
 				.buildAndExpand(localAlvo.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new LocalAlvoDto(localAlvo));

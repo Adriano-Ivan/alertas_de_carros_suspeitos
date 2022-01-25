@@ -54,4 +54,5 @@ public class ZonaDto {
 	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
 	}
+	
 }

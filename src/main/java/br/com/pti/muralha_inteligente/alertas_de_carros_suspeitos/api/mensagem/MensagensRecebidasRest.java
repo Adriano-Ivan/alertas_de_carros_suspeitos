@@ -30,7 +30,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Men
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 
 @RestController
-@RequestMapping("/api/mensagens_recebidas")
+@RequestMapping("/api/v1/mensagens_recebidas")
 public class MensagensRecebidasRest {
 
 	@Autowired
@@ -68,7 +68,7 @@ public class MensagensRecebidasRest {
 		MensagemRecebida mensagemRecebida = form.converter(usuarioRepository);
 		mensagemRecebidaRepository.save(mensagemRecebida);
 		
-		URI uri = uriBuilder.path("/api/mensagens_recebidas/{id}")
+		URI uri = uriBuilder.path("/api/v1/mensagens_recebidas/{id}")
 				.buildAndExpand(mensagemRecebida.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new MensagemRecebidaDto(mensagemRecebida));
