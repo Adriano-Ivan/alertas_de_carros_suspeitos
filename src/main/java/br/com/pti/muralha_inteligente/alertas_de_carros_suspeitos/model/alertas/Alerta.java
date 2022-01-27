@@ -26,6 +26,8 @@ public class Alerta {
 	@Column(length=130)
 	protected String nomeDeUsuario;
 	
+	protected Boolean alerta_emitido;
+	
 	public Alerta() {}
 
 	public Long getId() {
@@ -58,6 +60,14 @@ public class Alerta {
 
 	public void setNomeDeUsuario(String nomeDeUsuario) {
 		this.nomeDeUsuario = nomeDeUsuario;
+	}
+
+	public Boolean getAlerta_emitido() {
+		return alerta_emitido;
+	}
+
+	public void setAlerta_emitido(Boolean alerta_emitido) {
+		this.alerta_emitido = alerta_emitido;
 	}
 
 	@Override
