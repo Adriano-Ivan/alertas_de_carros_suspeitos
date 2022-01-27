@@ -4,11 +4,14 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
@@ -26,10 +29,12 @@ public class BotDoTelegramDeUsuario {
 	@Column(length=80)
 	private String nomeDoBot;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference(value="bot-user-bot-movement")
 	private BotDoTelegram botDoTelegram;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JsonBackReference(value="bot-user-user-movement")
 	private Usuario usuario;
 	
 	protected LocalDateTime createdAt;

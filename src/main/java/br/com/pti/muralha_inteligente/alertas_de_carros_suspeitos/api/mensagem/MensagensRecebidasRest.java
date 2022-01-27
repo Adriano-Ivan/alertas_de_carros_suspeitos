@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.mensagem.MensagemRecebidaDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.mensagem.MensagemRecebidaForm;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.mensagem.MensagemRecebidaDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.mensagem.MensagemRecebida;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.MensagemRecebidaRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.mensagem.MensagemRecebidaRepository;
 
 @RestController
 @RequestMapping("/api/v1/mensagens_recebidas")

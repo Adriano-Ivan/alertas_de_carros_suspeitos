@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.mensagem.MensagemRecebida;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.MensagemRecebidaRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.mensagem.MensagemRecebidaRepository;
 
 public class MensagemRecebidaForm extends MensagemForm{
 

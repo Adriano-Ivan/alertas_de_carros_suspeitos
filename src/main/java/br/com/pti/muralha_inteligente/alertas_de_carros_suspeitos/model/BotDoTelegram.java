@@ -1,7 +1,9 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -9,13 +11,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.springframework.data.domain.Page;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.BotDoTelegramDto;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.BotDoTelegramDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.BotDoTelegramForm;
 
 @Entity
@@ -42,6 +46,10 @@ public class BotDoTelegram {
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference
 	private Zona zona;
+	
+	@OneToMany(mappedBy="botDoTelegram",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
+	@JsonManagedReference(value="bot-user-bot-movement")
+	private List<BotDoTelegramDeUsuario> botsDoTelegramDeUsuarios;
 	
 	public BotDoTelegram() {}
 	

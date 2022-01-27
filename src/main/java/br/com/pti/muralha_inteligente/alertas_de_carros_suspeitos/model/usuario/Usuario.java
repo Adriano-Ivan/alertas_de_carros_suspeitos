@@ -23,11 +23,11 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.BotDoTelegramDeUsuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.LocalAlvo;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroComInfracao;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroEmSituacaoIrregular;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroRoubado;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroSuspeito;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.enumerator.TipoAutoridade;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoComInfracao;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoEmSituacaoIrregular;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoRoubado;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoSuspeito;
 
 @Entity
 @Table(name="usuarios")
@@ -62,93 +62,93 @@ public class Usuario {
 	
 	protected LocalDateTime updatedAt;
 	
-	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<LocalAlvo> locaisAlvoInseridos;
-	
 	@OneToMany(mappedBy="usuario",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JsonIgnore
+	@JsonManagedReference(value="bot-user-user-movement")
 	private List<BotDoTelegramDeUsuario> botsDoTelegramDeUsuario;
-	
-	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<LocalAlvo> locaisAlvoEditados;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
 	@JsonManagedReference(value="local-user-movement")
-	private List<Zona> zonasInseridas;
+	private List<LocalAlvo> locaisAlvoInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
 	@JsonManagedReference(value="local-user-edited-movement")
+	private List<LocalAlvo> locaisAlvoEditados;
+	
+	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
+	@JsonManagedReference(value="zone-user-movement")
+	private List<Zona> zonasInseridas;
+	
+	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
+	@JsonManagedReference(value="zone-user-edited-movement")
 	private List<Zona> zonasEditadas;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
 	@JsonManagedReference(value="inser-infr-movement")
-	private List<VeiculoComInfracao> veiculosComInfracaoInseridos;
+	private List<CarroComInfracao> carrosComInfracaoInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<VeiculoComInfracao> veiculosComInfracaoEditados;
+	@JsonManagedReference(value="edited-infr-movement")
+	private List<CarroComInfracao> carrosComInfracaoEditados;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="inser-irrmovement")
-	private List<VeiculoEmSituacaoIrregular> veiculosEmSituacoaIrregularInseridos;
+	@JsonManagedReference(value="inser-irr-movement")
+	private List<CarroEmSituacaoIrregular> carrosEmSituacoaIrregularInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<VeiculoEmSituacaoIrregular> veiculosEmSituacoaIrregularEditados;
+	@JsonManagedReference(value="edited-irr-movement")
+	private List<CarroEmSituacaoIrregular> carrosEmSituacoaIrregularEditados;
 
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
 	@JsonManagedReference(value="inser-stolen-movement")
-	private List<VeiculoRoubado> veiculosRoubadosInseridos;
+	private List<CarroRoubado> carrosRoubadosInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<VeiculoRoubado> veiculosRoubadosEditados;
+	@JsonManagedReference(value="edited-stolen-movement")
+	private List<CarroRoubado> carrosRoubadosEditados;
 	
 	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
 	@JsonManagedReference(value="inser-suspects-movement")
-	private List<VeiculoSuspeito> veiculosSuspeitosInseridos;
+	private List<CarroSuspeito> carrosSuspeitosInseridos;
 	
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
 	@JsonManagedReference(value="edited-suspects-movement")
-	private List<VeiculoSuspeito> veiculosSuspeitosEditados;
+	private List<CarroSuspeito> carrosSuspeitosEditados;
 
 	
-	public List<VeiculoComInfracao> getVeiculosComInfracaoInseridos() {
-		return veiculosComInfracaoInseridos;
+	public List<CarroComInfracao> getCarrosComInfracaoInseridos() {
+		return carrosComInfracaoInseridos;
 	}
 
-	public List<VeiculoComInfracao> getVeiculosComInfracaoEditados() {
-		return veiculosComInfracaoEditados;
+	public List<CarroComInfracao> getCarrosComInfracaoEditados() {
+		return carrosComInfracaoEditados;
 	}
 
-	public List<VeiculoEmSituacaoIrregular> getVeiculosEmSituacoaIrregularInseridos() {
-		return veiculosEmSituacoaIrregularInseridos;
+	public List<CarroEmSituacaoIrregular> getCarrosEmSituacoaIrregularInseridos() {
+		return carrosEmSituacoaIrregularInseridos;
 	}
 
-	public List<VeiculoEmSituacaoIrregular> getVeiculosEmSituacoaIrregularEditados() {
-		return veiculosEmSituacoaIrregularEditados;
+	public List<CarroEmSituacaoIrregular> getCarrosEmSituacoaIrregularEditados() {
+		return carrosEmSituacoaIrregularEditados;
 	}
 
 	public List<BotDoTelegramDeUsuario> getBotsDoTelegramDeUsuario() {
 		return botsDoTelegramDeUsuario;
 	}
 
-	public List<VeiculoRoubado> getVeiculosRoubadosInseridos() {
-		return veiculosRoubadosInseridos;
+	public List<CarroRoubado> getCarrosRoubadosInseridos() {
+		return carrosRoubadosInseridos;
 	}
 
-	public List<VeiculoRoubado> getVeiculosRoubadosEditados() {
-		return veiculosRoubadosEditados;
+	public List<CarroRoubado> getCarrosRoubadosEditados() {
+		return carrosRoubadosEditados;
 	}
 	@JsonManagedReference(value="inser-suspects-movement")
-	public List<VeiculoSuspeito> getVeiculosSuspeitosInseridos() {
-		return veiculosSuspeitosInseridos;
+	public List<CarroSuspeito> getCarrosSuspeitosInseridos() {
+		return carrosSuspeitosInseridos;
 	}
 	@JsonManagedReference(value="edited-suspects-movement")
-	public List<VeiculoSuspeito> getVeiculosSuspeitosEditados() {
-		return veiculosSuspeitosEditados;
+	public List<CarroSuspeito> getCarrosSuspeitosEditados() {
+		return carrosSuspeitosEditados;
 	}
 
 	public Long getId() {

@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.pendencia.ObservacaoPertinenteDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.pendencia.ObservacaoPertinenteForm;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.pendencia.ObservacaoPertinenteDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendencia.ObservacaoPertinente;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ObservacaoPertinenteRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.pendencia.ObservacaoPertinenteRepository;
 
 @RestController
 @RequestMapping("/api/v1/observacoes_pertinentes")

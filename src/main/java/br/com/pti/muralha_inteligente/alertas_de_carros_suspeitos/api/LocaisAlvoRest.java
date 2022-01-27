@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.LocalAlvoDto;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.LocalAlvoDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.LocalAlvoForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.LocalAlvo;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.LocalAlvoRepository;

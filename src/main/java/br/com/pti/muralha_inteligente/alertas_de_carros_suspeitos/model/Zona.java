@@ -23,13 +23,13 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.ZonaDto;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.ZonaDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.ZonaForm;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroComInfracao;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroEmSituacaoIrregular;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroRoubado;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroSuspeito;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoComInfracao;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoEmSituacaoIrregular;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoRoubado;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.veiculo.VeiculoSuspeito;
 
 @Entity
 @Table(name="zonas")
@@ -56,30 +56,30 @@ public class Zona {
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
 	@JsonManagedReference(value="zone-suspects-movement")
-	private List<VeiculoSuspeito> veiculosSuspeitos;
+	private List<CarroSuspeito> veiculosSuspeitos;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
 	@JsonIgnore
-	private List<VeiculoRoubado> veiculosRoubados;
+	private List<CarroRoubado> veiculosRoubados;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
 	@JsonIgnore
-	private List<VeiculoEmSituacaoIrregular> veiculosEmSituacaoIrregular;
+	private List<CarroEmSituacaoIrregular> veiculosEmSituacaoIrregular;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
 	@JsonIgnore
-	private List<VeiculoComInfracao> veiculosComInfracao;
+	private List<CarroComInfracao> veiculosComInfracao;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
 	@JsonIgnore
 	private List<BotDoTelegram> botsDoTelegram;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonIgnore
+	@JsonBackReference(value="zone-user-movement")
 	private Usuario usuarioInsersor;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonIgnore
+	@JsonBackReference(value="zone-user-edited-movement")
 	private Usuario ultimoUsuarioEditor;
 	
 	public Zona() {}
@@ -92,16 +92,16 @@ public class Zona {
 		return botsDoTelegram;
 	}
 	@JsonManagedReference(value="zone-movement")
-	public List<VeiculoSuspeito> getVeiculosSuspeitos() {
+	public List<CarroSuspeito> getCarrosSuspeitos() {
 		return veiculosSuspeitos;
 	}
-	public List<VeiculoRoubado> getVeiculosRoubados() {
+	public List<CarroRoubado> getCarrosRoubados() {
 		return veiculosRoubados;
 	}
-	public List<VeiculoEmSituacaoIrregular> getVeiculosEmSituacaoIrregular() {
+	public List<CarroEmSituacaoIrregular> getCarrosEmSituacaoIrregular() {
 		return veiculosEmSituacaoIrregular;
 	}
-	public List<VeiculoComInfracao> getVeiculosComInfracao() {
+	public List<CarroComInfracao> getCarrosComInfracao() {
 		return veiculosComInfracao;
 	}
 	public List<LocalAlvo> getLocaisAlvo() {

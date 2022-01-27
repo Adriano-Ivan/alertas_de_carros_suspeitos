@@ -5,7 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendencia.ObservacaoPertinente;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ObservacaoPertinenteRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.pendencia.ObservacaoPertinenteRepository;
 
 public class ObservacaoPertinenteForm extends PendenciaForm {
 

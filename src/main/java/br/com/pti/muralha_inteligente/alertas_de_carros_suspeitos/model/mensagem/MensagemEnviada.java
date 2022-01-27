@@ -5,9 +5,9 @@ import javax.persistence.Table;
 
 import org.springframework.data.domain.Page;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.mensagem.MensagemEnviadaDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.mensagem.MensagemEnviadaForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.mensagem.MensagemRecebidaForm;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.mensagem.MensagemEnviadaDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
 @Entity

@@ -23,10 +23,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.pendencia.TarefaParaFazerDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.pendencia.TarefaParaFazerForm;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.pendencia.TarefaParaFazerDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendencia.TarefaParaFazer;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.TarefaParaFazerRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.pendencia.TarefaParaFazerRepository;
 
 @RestController
 @RequestMapping("/api/v1/tarefas_para_fazer")

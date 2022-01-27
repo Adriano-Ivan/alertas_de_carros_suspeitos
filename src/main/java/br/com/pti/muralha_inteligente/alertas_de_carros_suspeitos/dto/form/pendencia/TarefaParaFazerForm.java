@@ -4,7 +4,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendencia.TarefaParaFazer;
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.TarefaParaFazerRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.pendencia.TarefaParaFazerRepository;
 
 public class TarefaParaFazerForm extends PendenciaForm{
 

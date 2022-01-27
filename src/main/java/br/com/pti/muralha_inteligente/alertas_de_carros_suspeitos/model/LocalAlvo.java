@@ -18,12 +18,13 @@ import org.springframework.data.domain.Page;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.LocalAlvoDto;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.LocalAlvoDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
 @Entity
 @Table(name="locais_alvo")
 public class LocalAlvo {
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
