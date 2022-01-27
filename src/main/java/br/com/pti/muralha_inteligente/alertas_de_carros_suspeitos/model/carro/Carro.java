@@ -46,6 +46,10 @@ public abstract class Carro {
 	
 	protected LocalDateTime updatedAt;
 	
+	protected String latitude;
+	
+	protected String longitude;
+	
 	public Carro() {}
 	public Carro(CarroForm veiculoForm,Zona zona) {
 		this.dono=veiculoForm.getDono();
@@ -56,6 +60,13 @@ public abstract class Carro {
 		this.nivelDeUrgencia=veiculoForm.getNivelDeUrgencia();
 		this.statusDoVeiculo=veiculoForm.getStatusDoVeiculo();
 		this.createdAt=LocalDateTime.now();
+	
+		if(veiculoForm.getLatitude()!=null) {
+			this.latitude=veiculoForm.getLatitude();
+		}
+		if(veiculoForm.getLongitude()!=null) {
+			this.longitude=veiculoForm.getLongitude();
+		}
 	}
 
 
@@ -67,6 +78,18 @@ public abstract class Carro {
 		this.id = id;
 	}
 
+	public String getLatitude() {
+		return latitude;
+	}
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+	public String getLongitude() {
+		return longitude;
+	}
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
 	public String getDono() {
 		return dono;
 	}

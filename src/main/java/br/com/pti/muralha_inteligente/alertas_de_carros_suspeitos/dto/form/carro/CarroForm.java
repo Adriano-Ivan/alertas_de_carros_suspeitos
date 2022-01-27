@@ -17,32 +17,36 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Zon
 public abstract class CarroForm {
 
 	@NotBlank @NotNull @Size(min=2)
-	protected String dono;
+	private String dono;
 	
 	@NotBlank @NotNull @Size(min=7, max=7, message="campo deve ter 7 caracteres")
-	protected String placa;
+	private String placa;
 	
 	@NotBlank @NotNull @Size(min=2)
-	protected String localDoAlerta;
+	private String localDoAlerta;
 	
 	@NotNull
-	protected LocalDateTime momentoDoAlerta;
+	private LocalDateTime momentoDoAlerta;
 	
 	@NotNull 
-	protected Boolean alertado;
+	private Boolean alertado;
 	
 	@NotNull @NotBlank @Size(min=2)
-	protected String nivelDeUrgencia;
+	private String nivelDeUrgencia;
 	
 	@NotNull @NotBlank @Size(min=2)
-	protected String statusDoVeiculo;
+	private String statusDoVeiculo;
 	
 	@NotNull
-	protected Long idZona;
+	private Long idZona;
 
-	protected Long idUsuarioInsersor;
+	private String latitude;
+	
+	private String longitude;
+	
+	private Long idUsuarioInsersor;
 
-	protected Long idUltimoUsuarioEditor;
+	private Long idUltimoUsuarioEditor;
 	
 	public CarroForm() {}
 	
@@ -107,7 +111,23 @@ public abstract class CarroForm {
 		this.idUltimoUsuarioEditor = idUltimoUsuarioEditor;
 	}
 
-	public void atualizar(Carro veiculo, ZonaRepository zonaRepository) {
+	public String getLatitude() {
+		return latitude;
+	}
+
+	public void setLatitude(String latitude) {
+		this.latitude = latitude;
+	}
+
+	public String getLongitude() {
+		return longitude;
+	}
+
+	public void setLongitude(String longitude) {
+		this.longitude = longitude;
+	}
+
+	public void atualizar(Carro veiculo) {
 		veiculo.setAlertado(alertado);
 		veiculo.setLocalDoAlerta(localDoAlerta);
 		veiculo.setDono(dono);

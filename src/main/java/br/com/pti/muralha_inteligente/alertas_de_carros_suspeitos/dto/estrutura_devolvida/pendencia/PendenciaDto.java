@@ -6,10 +6,10 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendenci
 
 public class PendenciaDto {
 
-	protected Long id;
-	protected String descricao;
-	protected LocalDateTime createdAt;
-	protected LocalDateTime updatedAt;
+	private Long id;
+	private String descricao;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 	
 	public PendenciaDto() {}
 	

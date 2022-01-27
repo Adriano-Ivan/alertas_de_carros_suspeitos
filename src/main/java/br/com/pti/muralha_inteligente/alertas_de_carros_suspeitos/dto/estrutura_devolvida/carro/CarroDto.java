@@ -6,21 +6,22 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.Ca
 
 public abstract class CarroDto {
 
-	protected Long id;
-	protected String dono;
-	protected String placa;
-	protected String localDoAlerta;
-	protected LocalDateTime momentoDoAlerta;
-	protected Boolean alertado;
-	protected String nivelDeUrgencia;
-	protected String statusDoVeiculo;
+	private Long id;
+	private String dono;
+	private String placa;
+	private String latitude;
+	private String longitude;
+	private String localDoAlerta;
+	private LocalDateTime momentoDoAlerta;
+	private Boolean alertado;
+	private String nivelDeUrgencia;
+	private String statusDoVeiculo;
 	protected Long idZona;
 	protected Long idUsuarioInsersor;
 	protected Long idUltimoUsuarioEditor;
-	protected LocalDateTime createdAt;
-	protected LocalDateTime updatedAt;
+	private LocalDateTime createdAt;
+	private LocalDateTime updatedAt;
 		
-	public CarroDto() {}
 	public CarroDto(Carro veiculo) {
 		this.id = veiculo.getId();
 		this.dono = veiculo.getDono();
@@ -32,6 +33,8 @@ public abstract class CarroDto {
 		this.updatedAt=veiculo.getUpdatedAt();
 		this.nivelDeUrgencia = veiculo.getNivelDeUrgencia();
 		this.statusDoVeiculo = veiculo.getStatusDoVeiculo();
+		this.latitude=veiculo.getLatitude();
+		this.longitude=veiculo.getLongitude();
 		
 		if(veiculo.getCreatedAt()!=null) {
 			createdAt=veiculo.getCreatedAt();
@@ -39,6 +42,13 @@ public abstract class CarroDto {
 		if(veiculo.getUpdatedAt()!=null) {
 			updatedAt=veiculo.getUpdatedAt();
 		}
+	}
+	
+	public String getLatitude() {
+		return latitude;
+	}
+	public String getLongitude() {
+		return longitude;
 	}
 	public Long getId() {
 		return id;

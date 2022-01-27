@@ -38,8 +38,8 @@ public class CarroEmSituacaoIrregularForm extends CarroForm{
 		
 		veiculo.setZona(super.montarZona(zonaRepository));
 		veiculo.setUltimoUsuarioEditor(super.montarUsuarioEditor(usuarioRepository));
-		//veiculo.setUsuarioInsersor(super.montarUsuarioInsersor(usuarioRepository));
-		super.atualizar(veiculo,zonaRepository);
+		
+		super.atualizar(veiculo);
 
 		veiculo.setMedidaAdministrativa(medidaAdministrativa);
 		

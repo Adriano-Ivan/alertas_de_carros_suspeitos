@@ -8,15 +8,15 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.
 
 public class MensagemDto {
 	
-	protected Long id;
+	private Long id;
 	
-	protected  String mensagem;
+	private  String mensagem;
 	
-	protected Long idUsuario;
+	private Long idUsuario;
 	
-	protected LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 	
-	protected LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 
 	public MensagemDto() {}
 	public MensagemDto(Mensagem mensagemEnt) {
