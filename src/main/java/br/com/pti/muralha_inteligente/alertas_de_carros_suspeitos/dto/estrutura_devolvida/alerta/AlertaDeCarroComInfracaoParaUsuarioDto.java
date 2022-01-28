@@ -1,18 +1,19 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.alerta;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.carro.CarroComInfracaoDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.alertas.AlertaDeCarroComInfracaoParaUsuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroComInfracao;
 
 public class AlertaDeCarroComInfracaoParaUsuarioDto extends AlertaDto {
 
-	private CarroComInfracao carroComInfracao;
+	private CarroComInfracaoDto carroComInfracaoDto;
 	
 	public AlertaDeCarroComInfracaoParaUsuarioDto(AlertaDeCarroComInfracaoParaUsuario alerta) {
 		super(alerta);
-		this.carroComInfracao=alerta.getCarroComInfracao();
+		this.carroComInfracaoDto=new CarroComInfracaoDto(alerta.getCarroComInfracao());
 	}
 
-	public CarroComInfracao getCarroComInfracao() {
-		return carroComInfracao;
+	public CarroComInfracaoDto getCarroComInfracao() {
+		return carroComInfracaoDto;
 	}
 }

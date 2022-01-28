@@ -61,7 +61,7 @@ public abstract class AlertaParaUsuarioForm {
 		Optional<Usuario> usuarioOpt=usuarioRepository.findById(idUsuario);
 		Usuario usuario = usuarioOpt.orElse(null);
 		
-		return null;
+		return usuario;
 	}
 	public boolean validarUsuario(UsuarioRepository usuarioRepository) {
 		Usuario usuario = encontrarUsuario(usuarioRepository);

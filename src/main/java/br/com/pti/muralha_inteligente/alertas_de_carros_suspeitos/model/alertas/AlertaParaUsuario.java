@@ -22,7 +22,7 @@ public abstract class AlertaParaUsuario {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	protected Long id;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	protected Usuario usuario;
 	
 	@Column(length=7)

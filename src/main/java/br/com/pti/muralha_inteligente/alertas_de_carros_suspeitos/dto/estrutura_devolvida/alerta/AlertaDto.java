@@ -15,7 +15,7 @@ public abstract class AlertaDto {
 	
 	private Boolean alertaEmitido;
 	
-	private Usuario usuario;
+	private String nomeDeUsuario;
 	
 	private LocalDateTime updatedAt;
 	
@@ -26,7 +26,7 @@ public abstract class AlertaDto {
 		this.latitude=alerta.getLatitude();
 		this.longitude=alerta.getLongitude();
 		this.alertaEmitido=alerta.getAlertaEmitido();
-		this.usuario=alerta.getUsuario();
+		this.nomeDeUsuario=alerta.getUsuario().getNomeDeUsuario();
 	
 		if(alerta.getCreatedAt() !=null) {
 			this.createdAt=alerta.getCreatedAt();
@@ -61,8 +61,8 @@ public abstract class AlertaDto {
 		return alertaEmitido;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
+	public String getNomeDeUsuario() {
+		return nomeDeUsuario;
 	}
 	
 }

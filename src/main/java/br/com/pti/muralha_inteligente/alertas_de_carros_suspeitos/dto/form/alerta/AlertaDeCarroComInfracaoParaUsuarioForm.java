@@ -41,6 +41,10 @@ public class AlertaDeCarroComInfracaoParaUsuarioForm extends AlertaParaUsuarioFo
 		return true;
 	}
 	
+	public boolean validarCarroComInfracaoEusuario(CarroComInfracaoRepository
+			carroComInfracaoRepository,UsuarioRepository usuarioRepository ) {
+		return validarCarroComInfracao(carroComInfracaoRepository) && validarUsuario(usuarioRepository);
+	}
 	public AlertaDeCarroComInfracaoParaUsuario converter(CarroComInfracaoRepository 
 			carroComInfracaoRepository, UsuarioRepository usuarioRepository) {
 		return new AlertaDeCarroComInfracaoParaUsuario(this,super.encontrarUsuario(usuarioRepository),

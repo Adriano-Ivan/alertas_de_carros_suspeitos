@@ -37,7 +37,7 @@ public class Usuario {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(length=130)
+	@Column(length=130,unique=true)
 	private String nomeDeUsuario;
 	
 	@Column(length=130)
