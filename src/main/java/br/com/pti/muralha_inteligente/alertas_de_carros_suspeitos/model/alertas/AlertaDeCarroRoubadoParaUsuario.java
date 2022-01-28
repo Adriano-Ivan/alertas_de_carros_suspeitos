@@ -5,6 +5,9 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.domain.Page;
+
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.alerta.AlertaDeCarroRoubadoParaUsuarioDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.alerta.AlertaDeCarroRoubadoParaUsuarioForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.alerta.AlertaDeCarroSuspeitoParaUsuarioForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroRoubado;
@@ -32,5 +35,13 @@ public class AlertaDeCarroRoubadoParaUsuario extends AlertaParaUsuario {
 
 	public void setCarroRoubado(CarroRoubado carroRoubado) {
 		this.carroRoubado = carroRoubado;
+	}
+
+	public static Page<AlertaDeCarroRoubadoParaUsuarioDto> converter(Page<AlertaDeCarroRoubadoParaUsuario> alertas) {
+		return alertas.map(AlertaDeCarroRoubadoParaUsuarioDto::new);
+	}
+
+	public static AlertaDeCarroRoubadoParaUsuarioDto converter(AlertaDeCarroRoubadoParaUsuario alertaDeCarroRoubadoParaUsuario) {
+		return new AlertaDeCarroRoubadoParaUsuarioDto(alertaDeCarroRoubadoParaUsuario);
 	}
 }

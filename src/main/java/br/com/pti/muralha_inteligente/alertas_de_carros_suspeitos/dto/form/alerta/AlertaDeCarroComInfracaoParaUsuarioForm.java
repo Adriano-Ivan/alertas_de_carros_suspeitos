@@ -31,7 +31,7 @@ public class AlertaDeCarroComInfracaoParaUsuarioForm extends AlertaParaUsuarioFo
 		return carroComInfracao;
 	}
 	
-	public boolean validarCarroComInfracao(CarroComInfracaoRepository
+	private boolean validarCarroComInfracao(CarroComInfracaoRepository
 			carroComInfracaoRepository) {
 		CarroComInfracao carroComInfracao=encontrarCarroComInfracao(carroComInfracaoRepository);
 		

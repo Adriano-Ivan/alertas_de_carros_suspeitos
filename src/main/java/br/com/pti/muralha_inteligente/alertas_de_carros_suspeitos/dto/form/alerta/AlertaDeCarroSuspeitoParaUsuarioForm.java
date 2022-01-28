@@ -31,7 +31,7 @@ public class AlertaDeCarroSuspeitoParaUsuarioForm extends AlertaParaUsuarioForm 
 		return carroSuspeito;
 	}
 
-	public boolean validarCarroSuspeito(CarroSuspeitoRepository carroSuspeitoRepository) {
+	private boolean validarCarroSuspeito(CarroSuspeitoRepository carroSuspeitoRepository) {
 		CarroSuspeito carroSuspeito = encontrarCarroSuspeito(carroSuspeitoRepository);
 		
 		if(carroSuspeito == null) {
@@ -39,6 +39,11 @@ public class AlertaDeCarroSuspeitoParaUsuarioForm extends AlertaParaUsuarioForm 
 		}
 		
 		return true;
+	}
+	
+	public boolean validarCarroSuspeitoEusuario(CarroSuspeitoRepository carroSuspeitoRepository,
+			UsuarioRepository usuarioRepository) {
+		return validarCarroSuspeito(carroSuspeitoRepository) && validarUsuario(usuarioRepository);
 	}
 	
 	public AlertaDeCarroSuspeitoParaUsuario converter(CarroSuspeitoRepository carroSuspeitoRepository,

@@ -70,7 +70,7 @@ public class AlertasDeCarrosComInfracaoParaUsuariosRest {
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<AlertaDeCarroComInfracaoParaUsuarioDto> encontrarEspecifico(@PathVariable("id") Long id){
+	public ResponseEntity<AlertaDeCarroComInfracaoParaUsuarioDto> retornarEspecifico(@PathVariable("id") Long id){
 		Optional<AlertaDeCarroComInfracaoParaUsuario> alertaOpt = alertaDeCarroComInfracaoParaUsuarioRepository
 				.findById(id);
 		
@@ -121,6 +121,7 @@ public class AlertasDeCarrosComInfracaoParaUsuariosRest {
 	}
 	
 	@DeleteMapping("/{id}")
+	@Transactional
 	public ResponseEntity<?> deletar(@PathVariable("id") Long id){
 		Optional<AlertaDeCarroComInfracaoParaUsuario> alertaOpt = alertaDeCarroComInfracaoParaUsuarioRepository
 				.findById(id);

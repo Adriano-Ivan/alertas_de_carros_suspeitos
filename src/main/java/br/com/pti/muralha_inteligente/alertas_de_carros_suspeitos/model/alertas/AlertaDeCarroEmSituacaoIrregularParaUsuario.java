@@ -5,6 +5,9 @@ import javax.persistence.FetchType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.domain.Page;
+
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.alerta.AlertaDeCarroEmSituacaoIrregularParaUsuarioDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.alerta.AlertaDeCarroEmSituacaoIrregularParaUsuarioForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.alerta.AlertaDeCarroRoubadoParaUsuarioForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroEmSituacaoIrregular;
@@ -32,5 +35,15 @@ public class AlertaDeCarroEmSituacaoIrregularParaUsuario extends AlertaParaUsuar
 
 	public void setCarroEmSituacaoIrregular(CarroEmSituacaoIrregular carroEmSituacaoIrregular) {
 		this.carroEmSituacaoIrregular = carroEmSituacaoIrregular;
+	}
+
+	public static Page<AlertaDeCarroEmSituacaoIrregularParaUsuarioDto> converter(
+			Page<AlertaDeCarroEmSituacaoIrregularParaUsuario> alertas) {
+		return alertas.map(AlertaDeCarroEmSituacaoIrregularParaUsuarioDto::new);
+	}
+
+	public static AlertaDeCarroEmSituacaoIrregularParaUsuarioDto converter(
+			AlertaDeCarroEmSituacaoIrregularParaUsuario alertaDeCarroEmSituacaoIrregularParaUsuario) {
+		return new AlertaDeCarroEmSituacaoIrregularParaUsuarioDto(alertaDeCarroEmSituacaoIrregularParaUsuario);
 	}
 }

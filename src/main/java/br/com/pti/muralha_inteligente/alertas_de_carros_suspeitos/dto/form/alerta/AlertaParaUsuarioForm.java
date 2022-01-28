@@ -63,7 +63,7 @@ public abstract class AlertaParaUsuarioForm {
 		
 		return usuario;
 	}
-	public boolean validarUsuario(UsuarioRepository usuarioRepository) {
+	protected boolean validarUsuario(UsuarioRepository usuarioRepository) {
 		Usuario usuario = encontrarUsuario(usuarioRepository);
 		
 		if(usuario == null) { 

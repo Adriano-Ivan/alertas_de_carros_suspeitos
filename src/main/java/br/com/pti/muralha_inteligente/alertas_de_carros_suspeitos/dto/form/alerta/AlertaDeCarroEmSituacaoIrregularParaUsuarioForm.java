@@ -8,6 +8,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.alertas.
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroEmSituacaoIrregular;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.alerta.AlertaDeCarroEmSituacaoIrregularParaUsuarioRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.carro.CarroComInfracaoRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.carro.CarroEmSituacaoIrregularRepository;
 
 public class AlertaDeCarroEmSituacaoIrregularParaUsuarioForm extends AlertaParaUsuarioForm{
@@ -33,7 +34,7 @@ public class AlertaDeCarroEmSituacaoIrregularParaUsuarioForm extends AlertaParaU
 		return carroEmSituacaoIrregular;
 	}
 	
-	public boolean validarCarroEmSituacaoIrregular(CarroEmSituacaoIrregularRepository
+	private boolean validarCarroEmSituacaoIrregular(CarroEmSituacaoIrregularRepository
 			carroEmSituacaoIrregularRepository) {
 		CarroEmSituacaoIrregular carroEmSituacaoIrregular = encontrarCarroEmSituacaoIrregular(carroEmSituacaoIrregularRepository);
 		
@@ -42,6 +43,11 @@ public class AlertaDeCarroEmSituacaoIrregularParaUsuarioForm extends AlertaParaU
 		}
 		
 		return true;
+	}
+	
+	public boolean validarCarroEmSituacaoIrregularEusuario(CarroEmSituacaoIrregularRepository
+			carroEmSituacaoIrregularRepository,UsuarioRepository usuarioRepository ) {
+		return validarCarroEmSituacaoIrregular(carroEmSituacaoIrregularRepository) && validarUsuario(usuarioRepository);
 	}
 	
 	public AlertaDeCarroEmSituacaoIrregularParaUsuario converter(CarroEmSituacaoIrregularRepository

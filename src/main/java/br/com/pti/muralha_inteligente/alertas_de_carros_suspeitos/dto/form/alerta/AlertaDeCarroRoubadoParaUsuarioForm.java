@@ -30,7 +30,7 @@ public class AlertaDeCarroRoubadoParaUsuarioForm extends AlertaParaUsuarioForm{
 		return carroRoubado;
 	}
 	
-	public boolean validarCarroRoubado(CarroRoubadoRepository carroRoubadoRepository) {
+	private boolean validarCarroRoubado(CarroRoubadoRepository carroRoubadoRepository) {
 		CarroRoubado carroRoubado = encontrarCarroRoubado(carroRoubadoRepository);
 		
 		if(carroRoubado == null) {
@@ -39,6 +39,12 @@ public class AlertaDeCarroRoubadoParaUsuarioForm extends AlertaParaUsuarioForm{
 		
 		return true;
 	}
+	
+	public boolean validarCarroRoubadoEusuario(CarroRoubadoRepository carroRoubadoRepository,
+			UsuarioRepository usuarioRepository) {
+		return validarCarroRoubado(carroRoubadoRepository) && validarUsuario(usuarioRepository);
+	}
+
 	
 	public AlertaDeCarroRoubadoParaUsuario converter(CarroRoubadoRepository carroRoubadoRepository,
 			UsuarioRepository usuarioRepository) {
