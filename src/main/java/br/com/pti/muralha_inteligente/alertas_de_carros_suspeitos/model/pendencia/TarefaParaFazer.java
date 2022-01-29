@@ -11,18 +11,17 @@ import javax.validation.constraints.Size;
 import org.springframework.data.domain.Page;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.pendencia.TarefaParaFazerDto;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.pendencia.TarefaParaFazerForm;
 
 @Entity
 @Table(name="tarefas_para_fazer")
 public class TarefaParaFazer extends Pendencia{
-	private Boolean cumprida;
 	
-	public TarefaParaFazer() {}
+	private Boolean cumprida;
 
-	public TarefaParaFazer(String descricao, Boolean cumprida) {
-		this.descricao=descricao;
-		this.cumprida=cumprida;
-		this.createdAt=LocalDateTime.now();
+	public TarefaParaFazer(TarefaParaFazerForm form) {
+		super(form);
+		this.cumprida=form.getCumprida();
 	}
 
 	public Boolean getCumprida() {
@@ -35,7 +34,7 @@ public class TarefaParaFazer extends Pendencia{
 
 	@Override
 	public String toString() {
-		return "TarefaParaFazer [cumprida=" + cumprida + ", id=" + id + ", descricao=" + descricao + "]";
+		return "TarefaParaFazer [cumprida=" + cumprida + ", id=" +this.getId() + ", descricao=" + this.getDescricao()+ "]";
 	}
 
 	public static Page<TarefaParaFazerDto> converter(Page<TarefaParaFazer> tarefasParaFazer) {

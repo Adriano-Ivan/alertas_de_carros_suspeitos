@@ -44,9 +44,9 @@ public class LocalAlvo {
 	@JsonBackReference(value="local-zone-movement")
 	private Zona zonaAssociada;
 	
-	protected LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 	
-	protected LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 	
 	public LocalAlvo() {}
 	

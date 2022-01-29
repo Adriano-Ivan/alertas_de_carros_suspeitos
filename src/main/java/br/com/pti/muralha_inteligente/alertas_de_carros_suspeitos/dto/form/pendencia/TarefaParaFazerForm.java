@@ -20,7 +20,7 @@ public class TarefaParaFazerForm extends PendenciaForm{
 	}
 	
 	public TarefaParaFazer converter() {
-		return new TarefaParaFazer(descricao, cumprida);
+		return new TarefaParaFazer(this);
 	}
 	
 	public TarefaParaFazer atualizar(Long id, TarefaParaFazerRepository tarefaParaFazerRepository) {

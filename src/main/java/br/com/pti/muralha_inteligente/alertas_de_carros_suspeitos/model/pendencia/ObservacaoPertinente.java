@@ -11,20 +11,17 @@ import javax.validation.constraints.Size;
 import org.springframework.data.domain.Page;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.pendencia.ObservacaoPertinenteDto;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.pendencia.ObservacaoPertinenteForm;
 
 @Entity
 @Table(name="observacoes_pertinentes")
 public class ObservacaoPertinente extends Pendencia {
 
 	private Boolean contemplada;
-	
-	public ObservacaoPertinente() {}
 
-	public ObservacaoPertinente( String descricao,
-			 Boolean contemplada) {
-		this.descricao=descricao;
-		this.contemplada=contemplada;
-		this.createdAt=LocalDateTime.now();
+	public ObservacaoPertinente( ObservacaoPertinenteForm form) {
+		super(form);
+		this.contemplada=form.getContemplada();
 	}
 
 	public Boolean getContemplada() {
@@ -37,7 +34,7 @@ public class ObservacaoPertinente extends Pendencia {
 
 	@Override
 	public String toString() {
-		return "ObservacaoPertinente [contemplada=" + contemplada + ", id=" + id + ", descricao=" + descricao + "]";
+		return "ObservacaoPertinente [contemplada=" + contemplada + ", id=" + this.getId() + ", descricao=" + this.getDescricao() + "]";
 	}
 
 	public static Page<ObservacaoPertinenteDto> converter(Page<ObservacaoPertinente> observacoesPertinentes) {

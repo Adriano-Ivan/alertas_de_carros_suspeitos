@@ -45,4 +45,9 @@ public class AlertaDeCarroComInfracaoParaUsuario extends AlertaParaUsuario{
 			alertaDeCarroComInfracaoParaUsuario) {
 		return new AlertaDeCarroComInfracaoParaUsuarioDto(alertaDeCarroComInfracaoParaUsuario);
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString().replace("classe_filha", this.getCarroComInfracao().toString());
+	}
 }

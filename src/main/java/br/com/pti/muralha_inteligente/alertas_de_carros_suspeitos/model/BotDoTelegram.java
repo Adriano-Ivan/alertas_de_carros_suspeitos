@@ -39,9 +39,9 @@ public class BotDoTelegram {
 	@Column(length=256)
 	private String idDoChat;
 	
-	protected LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 	
-	protected LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JsonBackReference

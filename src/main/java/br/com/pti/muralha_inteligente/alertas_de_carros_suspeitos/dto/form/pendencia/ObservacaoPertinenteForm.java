@@ -21,7 +21,7 @@ public class ObservacaoPertinenteForm extends PendenciaForm {
 	}
 	
 	public ObservacaoPertinente converter() {
-		return new ObservacaoPertinente(descricao,contemplada);
+		return new ObservacaoPertinente(this);
 	}
 	public ObservacaoPertinente atualizar(Long id, ObservacaoPertinenteRepository observacaoPertinenteRepository) {
 		ObservacaoPertinente observacaoPertinenteObjeto= observacaoPertinenteRepository.getById(id);

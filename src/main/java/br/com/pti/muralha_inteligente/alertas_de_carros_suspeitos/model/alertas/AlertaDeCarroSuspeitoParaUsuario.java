@@ -45,5 +45,8 @@ public class AlertaDeCarroSuspeitoParaUsuario extends AlertaParaUsuario {
 		return new AlertaDeCarroSuspeitoParaUsuarioDto(alertaDeCarroSuspeitoParaUsuario);
 	}
 	
-	
+	@Override
+	public String toString() {
+		return super.toString().replace("classe_filha", this.getCarroSuspeito().toString());
+	}
 }

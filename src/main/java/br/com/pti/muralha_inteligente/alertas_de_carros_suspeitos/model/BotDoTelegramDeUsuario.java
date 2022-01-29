@@ -14,6 +14,8 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.BotDoTelegramRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 
 @Entity
 @Table(name="bots_do_telegram_de_usuarios")
@@ -29,17 +31,27 @@ public class BotDoTelegramDeUsuario {
 	@Column(length=80)
 	private String nomeDoBot;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JsonBackReference(value="bot-user-bot-movement")
 	private BotDoTelegram botDoTelegram;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JsonBackReference(value="bot-user-user-movement")
 	private Usuario usuario;
 	
-	protected LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 	
-	protected LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
+
+	public BotDoTelegramDeUsuario() {}	
+
+	public BotDoTelegramDeUsuario(Usuario usuario, BotDoTelegram botDoTelegram) {
+		this.usuario=usuario;
+		this.botDoTelegram=botDoTelegram;
+		this.nomeDoBot=botDoTelegram.getDenominacao();
+		this.nomeDoUsuario=usuario.getNomeDeUsuario();
+		this.createdAt=LocalDateTime.now();
+	}
 
 	public Long getId() {
 		return id;

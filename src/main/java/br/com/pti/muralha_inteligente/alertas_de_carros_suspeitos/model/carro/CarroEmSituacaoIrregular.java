@@ -83,11 +83,7 @@ public class CarroEmSituacaoIrregular extends Carro implements RelacionavelParaJ
 	public void setUsuarioInsersor(Usuario usuarioInsersor) {
 		this.usuarioInsersor = usuarioInsersor;
 	}
-	@Override
-	public String toString() {
-		return super.toString().replace("próprio_da_filha", "medida administrativa: "+medidaAdministrativa);
-	}
-
+	
 	public static Page<CarroEmSituacaoIrregularDto> converter(Page<CarroEmSituacaoIrregular> veiculosEmSituacaoIrregular) {
 		return veiculosEmSituacaoIrregular.map(CarroEmSituacaoIrregularDto::new);
 	}
@@ -95,6 +91,11 @@ public class CarroEmSituacaoIrregular extends Carro implements RelacionavelParaJ
 	public static CarroEmSituacaoIrregularDto converter(CarroEmSituacaoIrregular veiculoEmSituacaoIrregular) {
 		// TODO Auto-generated method stub
 		return new CarroEmSituacaoIrregularDto(veiculoEmSituacaoIrregular);
+	}
+
+	@Override
+	public String toString() {
+		return super.toString().replace("próprio_da_filha", "medida administrativa: "+medidaAdministrativa);
 	}
 
 }

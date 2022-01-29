@@ -44,4 +44,9 @@ public class AlertaDeCarroRoubadoParaUsuario extends AlertaParaUsuario {
 	public static AlertaDeCarroRoubadoParaUsuarioDto converter(AlertaDeCarroRoubadoParaUsuario alertaDeCarroRoubadoParaUsuario) {
 		return new AlertaDeCarroRoubadoParaUsuarioDto(alertaDeCarroRoubadoParaUsuario);
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString().replace("classe_filha", this.getCarroRoubado().toString());
+	}
 }

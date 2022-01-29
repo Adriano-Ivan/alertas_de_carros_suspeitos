@@ -79,11 +79,7 @@ public class CarroComInfracao extends Carro implements RelacionavelParaJson{
 	public void setUsuarioInsersor(Usuario usuarioInsersor) {
 		this.usuarioInsersor = usuarioInsersor;
 	}
-	@Override
-	public String toString() {
-		return super.toString().replace("próprio_da_filha","gravidade da infração: "+gravidadeDaInfracao);
-	}
-
+	
 	public static CarroComInfracaoDto converter(CarroComInfracao veiculo) {
 		return new CarroComInfracaoDto(veiculo);
 	}
@@ -91,4 +87,10 @@ public class CarroComInfracao extends Carro implements RelacionavelParaJson{
 	public static Page<CarroComInfracaoDto> converter(Page<CarroComInfracao> veiculosSuspeitos) {
 		return veiculosSuspeitos.map(CarroComInfracaoDto::new);
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString().replace("próprio_da_filha","gravidade da infração: "+gravidadeDaInfracao);
+	}
+
 }

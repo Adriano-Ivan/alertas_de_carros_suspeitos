@@ -46,4 +46,9 @@ public class AlertaDeCarroEmSituacaoIrregularParaUsuario extends AlertaParaUsuar
 			AlertaDeCarroEmSituacaoIrregularParaUsuario alertaDeCarroEmSituacaoIrregularParaUsuario) {
 		return new AlertaDeCarroEmSituacaoIrregularParaUsuarioDto(alertaDeCarroEmSituacaoIrregularParaUsuario);
 	}
+	
+	@Override
+	public String toString() {
+		return super.toString().replace("classe_filha", this.getCarroEmSituacaoIrregular().toString());
+	}
 }

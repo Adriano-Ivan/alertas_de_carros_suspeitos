@@ -81,6 +81,12 @@ public class CarroRoubado extends Carro implements RelacionavelParaJson{
 	public static Page<CarroRoubadoDto> converter(Page<CarroRoubado> veiculosSuspeitos) {
 		return veiculosSuspeitos.map(CarroRoubadoDto::new);
 	}
+
+	public static CarroRoubadoDto converter(CarroRoubado veiculoRoubado) {
+		// TODO Auto-generated method stub
+		return new CarroRoubadoDto(veiculoRoubado);
+	}
+	
 	@Override
 	public String toString() {
 		return super.toString().replace("próprio_da_filha", "local do roubo: "+localDoRoubo)
@@ -88,10 +94,4 @@ public class CarroRoubado extends Carro implements RelacionavelParaJson{
 				.replace("zona", zona.toString());
 	}
 
-	public static CarroRoubadoDto converter(CarroRoubado veiculoRoubado) {
-		// TODO Auto-generated method stub
-		return new CarroRoubadoDto(veiculoRoubado);
-	}
-	
-	
 }

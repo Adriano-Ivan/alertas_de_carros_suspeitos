@@ -42,9 +42,9 @@ public class Zona {
 	@Column(length=40,nullable=false)
 	private String zona;
 
-	protected LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 	
-	protected LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 	
 	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
 	@JsonIgnore

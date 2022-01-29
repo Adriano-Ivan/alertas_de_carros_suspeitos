@@ -20,26 +20,26 @@ public abstract class AlertaParaUsuario {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	protected Usuario usuario;
+	private Usuario usuario;
 	
 	@Column(length=7)
-	protected String placa;
+	private String placa;
 	
 	@Column(length=130)
-	protected String nomeDeUsuario;
+	private String nomeDeUsuario;
 	
-	protected String latitude;
+	private String latitude;
 	
-	protected String longitude;
+	private String longitude;
 	
-	protected Boolean alertaEmitido;
+	private Boolean alertaEmitido;
 	
-	protected LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 	
-	protected LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 	
 	public AlertaParaUsuario() {}
 

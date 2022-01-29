@@ -8,20 +8,26 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.pendencia.PendenciaForm;
+
 @MappedSuperclass
 public abstract class Pendencia {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 	
 	@Column(columnDefinition="TEXT")
-	protected String descricao;
+	private String descricao;
 	
-	protected LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 	
-	protected LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 
+	public Pendencia(PendenciaForm pendenciaForm) {
+		this.descricao=pendenciaForm.getDescricao();
+		this.createdAt=LocalDateTime.now();
+	}
 	public Long getId() {
 		return id;
 	}

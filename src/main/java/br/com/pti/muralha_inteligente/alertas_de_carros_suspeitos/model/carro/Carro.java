@@ -23,32 +23,32 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.
 public abstract class Carro {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 	
 	@Column(length=100)
-	protected String dono;
+	private String dono;
 	
 	@Column(length=7)
-	protected String placa;
+	private String placa;
 	
 	@Column(length=80)
-	protected String localDoAlerta;
+	private String localDoAlerta;
 	
-	protected LocalDateTime momentoDoAlerta=LocalDateTime.now();
+	private LocalDateTime momentoDoAlerta=LocalDateTime.now();
 	
-	protected Boolean alertado;
+	private Boolean alertado;
 
-	protected String nivelDeUrgencia;
+	private String nivelDeUrgencia;
 
-	protected String statusDoVeiculo;
+	private String statusDoVeiculo;
 	
-	protected LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 	
-	protected LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 	
-	protected String latitude;
+	private String latitude;
 	
-	protected String longitude;
+	private String longitude;
 	
 	public Carro() {}
 	public Carro(CarroForm veiculoForm,Zona zona) {

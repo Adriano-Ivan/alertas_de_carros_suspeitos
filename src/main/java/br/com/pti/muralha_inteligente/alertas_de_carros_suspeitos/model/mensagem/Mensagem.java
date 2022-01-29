@@ -18,17 +18,17 @@ public abstract class Mensagem {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	protected Long id;
+	private Long id;
 	
 	@ManyToOne
-	protected Usuario usuario;
+	private Usuario usuario;
 	
 	@Column(columnDefinition="TEXT")
-	protected String mensagem;
+	private String mensagem;
 	
-	protected LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 	
-	protected LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 	
 	public Mensagem() {}
 	public Mensagem(MensagemForm mensagemRecebidaForm, Usuario usuario2) {
