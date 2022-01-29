@@ -9,7 +9,7 @@ public class BotDoTelegramDeUsuarioDto {
 	private Long id;
 	private Long idDoUsuario;
 	private Long idDoBotDoTelegram;
-	private String nomeDeUsuario;
+	private String nomeDoUsuario;
 	private String denominacaoDoBotDoTelegram;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
@@ -18,7 +18,7 @@ public class BotDoTelegramDeUsuarioDto {
 		this.id=botDoTelegramDeUsuario.getId();
 		this.idDoBotDoTelegram=botDoTelegramDeUsuario.getBotDoTelegram().getId();
 		this.idDoUsuario=botDoTelegramDeUsuario.getUsuario().getId();
-		this.nomeDeUsuario=botDoTelegramDeUsuario.getNomeDoUsuario();
+		this.nomeDoUsuario=botDoTelegramDeUsuario.getNomeDoUsuario();
 		this.denominacaoDoBotDoTelegram=botDoTelegramDeUsuario.getNomeDoBot();
 		
 		if(botDoTelegramDeUsuario.getCreatedAt()!=null) {
@@ -42,7 +42,7 @@ public class BotDoTelegramDeUsuarioDto {
 	}
 
 	public String getNomeDeUsuario() {
-		return nomeDeUsuario;
+		return nomeDoUsuario;
 	}
 
 	public String getDenominacaoDoBotDoTelegram() {

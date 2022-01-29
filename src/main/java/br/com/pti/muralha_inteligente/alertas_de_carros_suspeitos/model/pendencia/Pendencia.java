@@ -24,6 +24,8 @@ public abstract class Pendencia {
 	
 	private LocalDateTime updatedAt;
 
+	public Pendencia() {}
+	
 	public Pendencia(PendenciaForm pendenciaForm) {
 		this.descricao=pendenciaForm.getDescricao();
 		this.createdAt=LocalDateTime.now();

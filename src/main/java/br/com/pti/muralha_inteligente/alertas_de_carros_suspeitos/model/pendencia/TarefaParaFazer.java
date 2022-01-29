@@ -19,6 +19,8 @@ public class TarefaParaFazer extends Pendencia{
 	
 	private Boolean cumprida;
 
+	public TarefaParaFazer() {}
+	
 	public TarefaParaFazer(TarefaParaFazerForm form) {
 		super(form);
 		this.cumprida=form.getCumprida();

@@ -19,6 +19,7 @@ public class ObservacaoPertinente extends Pendencia {
 
 	private Boolean contemplada;
 
+	public ObservacaoPertinente() {}
 	public ObservacaoPertinente( ObservacaoPertinenteForm form) {
 		super(form);
 		this.contemplada=form.getContemplada();

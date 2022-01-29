@@ -11,8 +11,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.springframework.data.domain.Page;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.BotDoTelegramDeUsuarioDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.BotDoTelegramRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
@@ -113,6 +116,14 @@ public class BotDoTelegramDeUsuario {
 	public String toString() {
 		return "BotDoTelegramDeUsuario [id=" + id + ", nomeDoUsuario=" + nomeDoUsuario + ", nomeDoBot=" + nomeDoBot
 				+ "]";
+	}
+
+	public static Page<BotDoTelegramDeUsuarioDto> converter(Page<BotDoTelegramDeUsuario> botsDoTelegramDeUsuarios) {
+		return botsDoTelegramDeUsuarios.map(BotDoTelegramDeUsuarioDto::new);
+	}
+
+	public static BotDoTelegramDeUsuarioDto converter(BotDoTelegramDeUsuario botDoTelegramDeUsuario) {
+		return new BotDoTelegramDeUsuarioDto(botDoTelegramDeUsuario);
 	}
 	
 }
