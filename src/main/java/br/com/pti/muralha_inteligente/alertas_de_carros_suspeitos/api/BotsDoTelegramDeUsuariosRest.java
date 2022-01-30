@@ -31,7 +31,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Bot
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 
 @RestController
-@RequestMapping("/api/v1/bots_do_telegram_de_usuarios")
+@RequestMapping("${alertas_de_carros_suspeitos.api.base_servico}/bots_do_telegram_de_usuarios")
 public class BotsDoTelegramDeUsuariosRest {
 
 	@Autowired
@@ -91,7 +91,7 @@ public class BotsDoTelegramDeUsuariosRest {
 		
 		BotDoTelegramDeUsuario botDoTelegramDeUsuario = form.converter(botDoTelegramRepository, usuarioRepository);
 		botDoTelegramDeUsuarioRepository.save(botDoTelegramDeUsuario);
-		URI uri = uriBuilder.path("/api/v1/bots_do_telegram_de_usuarios/{id}")
+		URI uri = uriBuilder.path("${alertas_de_carros_suspeitos.api.base_servico}/bots_do_telegram_de_usuarios/{id}")
 				.buildAndExpand(botDoTelegramDeUsuario.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new BotDoTelegramDeUsuarioDto(botDoTelegramDeUsuario));

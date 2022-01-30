@@ -1,6 +1,8 @@
 package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -12,9 +14,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -31,7 +37,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.
 
 @Entity
 @Table(name="usuarios")
-public class Usuario {
+public class Usuario implements UserDetails{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -40,7 +46,7 @@ public class Usuario {
 	@Column(length=130,unique=true)
 	private String nomeDeUsuario;
 	
-	@Column(length=130)
+	@Column(length=130,unique=true)
 	private String email;
 	
 	@Column(length=256)
@@ -113,6 +119,9 @@ public class Usuario {
 	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
 	@JsonManagedReference(value="edited-suspects-movement")
 	private List<CarroSuspeito> carrosSuspeitosEditados;
+
+	@ManyToMany(fetch=FetchType.EAGER)
+	private List<Perfil> perfis = new ArrayList<>();
 
 	
 	public List<CarroComInfracao> getCarrosComInfracaoInseridos() {
@@ -235,6 +244,41 @@ public class Usuario {
 	public String toString() {
 		return "Usuario [id=" + id + ", nomeDeUsuario=" + nomeDeUsuario + ", email=" + email + ", autoridade="
 				+ autoridade + ", insercoes=" + insercoes + ", zona=" + zona + "]";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.perfis ;
+	}
+
+	@Override
+	public String getPassword() {
+		return this.senha;
+	}
+
+	@Override
+	public String getUsername() {
+		return this.nomeDeUsuario;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return true;
 	}
 	
 }

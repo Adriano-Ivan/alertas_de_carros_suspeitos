@@ -36,7 +36,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Zon
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.carro.CarroEmSituacaoIrregularRepository;
 
 @RestController
-@RequestMapping("/api/v1/carros_em_situacao_irregular")
+@RequestMapping("${alertas_de_carros_suspeitos.api.base_servico}/carros_em_situacao_irregular")
 public class CarrosEmSituacaoIrregularRest {
 	
 	@Autowired
@@ -86,7 +86,7 @@ public class CarrosEmSituacaoIrregularRest {
 		CarroEmSituacaoIrregular veiculo = form.converter(zonaRepository,usuarioRepository);
 		 carroEmSituacaoIrregularRepository.save(veiculo);
 		
-		URI uri = uriBuilder.path("/api/v1/veiculos_em_situacao_irregular/{id}")
+		URI uri = uriBuilder.path("${alertas_de_carros_suspeitos.api.base_servico}/veiculos_em_situacao_irregular/{id}")
 				.buildAndExpand(veiculo.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new CarroEmSituacaoIrregularDto(veiculo));

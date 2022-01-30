@@ -30,7 +30,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Bot
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 @RestController
-@RequestMapping("/api/v1/bots_do_telegram")
+@RequestMapping("${alertas_de_carros_suspeitos.api.base_servico}/bots_do_telegram")
 public class BotsDoTelegramRest {
 
 	@Autowired
@@ -70,7 +70,7 @@ public class BotsDoTelegramRest {
 		BotDoTelegram botDoTelegram = form.converter(zonaRepository);
 		botDoTelegramRepository.save(botDoTelegram);
 		
-		URI uri = uriBuilder.path("/api/v1/bots_do_telgram/{id})")
+		URI uri = uriBuilder.path("${alertas_de_carros_suspeitos.api.base_servico}/bots_do_telgram/{id})")
 				.buildAndExpand(botDoTelegram.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new BotDoTelegramDto(botDoTelegram));
