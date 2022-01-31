@@ -21,15 +21,6 @@ public abstract class MensagemForm {
 	protected LocalDateTime updatedAt;
 	
 	protected LocalDateTime createdAt;
-	
-	
-	public Long getIdUsuario() {
-		return idUsuario;
-	}
-
-	public void setIdUsuario(Long idUsuario) {
-		this.idUsuario = idUsuario;
-	}
 
 	public String getMensagem() {
 		return mensagem;
@@ -39,11 +30,11 @@ public abstract class MensagemForm {
 		this.mensagem = mensagem;
 	}
 
-	public Long getUsuario() {
+	public Long getIdUsuario() {
 		return idUsuario;
 	}
 
-	public void setUsuario(Long idUsuario) {
+	public void setIdUsuario(Long idUsuario) {
 		this.idUsuario = idUsuario;
 	}
 
@@ -63,19 +54,33 @@ public abstract class MensagemForm {
 		this.createdAt = createdAt;
 	}
 	
+	private Usuario encontrarUsuario(UsuarioRepository usuarioRepository) {
+		Optional<Usuario> usuarioOpt=usuarioRepository.findById(idUsuario);
+		Usuario usuario = usuarioOpt.orElse(null);
+		
+		return usuario;
+	}
+	
+	public boolean validarUsuario(UsuarioRepository usuarioRepository) {
+		Usuario usuario = encontrarUsuario(usuarioRepository);
+		
+		if(usuario == null) { 
+			return false;
+		}
+		return true;
+	}
+	
 	protected void atualizar(Mensagem msg,Long id,UsuarioRepository usuarioRepository) {
-		Optional<Usuario> usuario = usuarioRepository.findById(id);
-		Usuario usr = usuario.orElse(null);
+		Usuario usuario = encontrarUsuario(usuarioRepository);
 		
 		msg.setMensagem(mensagem);
 		msg.setUpdatedAt(LocalDateTime.now());
-		msg.setUsuario(usr);
+		msg.setUsuario(usuario);
 	}
 
 	protected Usuario delegarUsuarioEdataDeCriacao(UsuarioRepository usuarioRepository) {
-		Optional<Usuario> usuario = usuarioRepository.findById(idUsuario);
-		Usuario usr = usuario.orElse(null);
+		Usuario usuario = encontrarUsuario(usuarioRepository);
 		this.createdAt=LocalDateTime.now();
-		return usr;
+		return usuario;
 	}
 }

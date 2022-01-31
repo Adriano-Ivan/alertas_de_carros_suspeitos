@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -34,6 +35,10 @@ public class ObservacoesPertinentesRest {
 
 	@Autowired
 	private ObservacaoPertinenteRepository observacaoPertinenteRepository;
+	
+	@Value("${alertas_de_carros_suspeitos.api.base_servico}")
+	private String base_da_url_do_servico;
+	
 	
 	@GetMapping
 	public Page<ObservacaoPertinenteDto> listar(@RequestParam(required=false) String descricao,
@@ -66,7 +71,7 @@ public class ObservacoesPertinentesRest {
 		ObservacaoPertinente observacaoPertinente = form.converter();
 		observacaoPertinenteRepository.save(observacaoPertinente);
 		
-		URI uri = uriBuilder.path("${alertas_de_carros_suspeitos.api.base_servico}/observacoes_pertinentes/{id}")
+		URI uri = uriBuilder.path(base_da_url_do_servico+"/observacoes_pertinentes/{id}")
 				.buildAndExpand(observacaoPertinente.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new ObservacaoPertinenteDto(observacaoPertinente));

@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -39,6 +40,10 @@ public class MensagensEnviadasRest {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Value("${alertas_de_carros_suspeitos.api.base_servico}")
+	private String base_da_url_do_servico;
+	
+	
 	@GetMapping
 	public Page<MensagemEnviadaDto> listar(@RequestParam(required=false) String mensagem,
 			@PageableDefault(sort="createdAt",page=0,
@@ -67,10 +72,15 @@ public class MensagensEnviadasRest {
 	@Transactional
 	public ResponseEntity<MensagemEnviadaDto> cadastrar(@RequestBody @Valid MensagemEnviadaForm form, 
 			UriComponentsBuilder uriBuilder){
+		
+		if(!form.validarUsuario(usuarioRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		MensagemEnviada mensagem = form.converter(usuarioRepository);
 		mensagemEnviadaRepository.save(mensagem);
 		
-		URI uri = uriBuilder.path("${alertas_de_carros_suspeitos.api.base_servico}/mensagens_enviadas/{id}")
+		URI uri = uriBuilder.path(base_da_url_do_servico+"/mensagens_enviadas/{id}")
 				.buildAndExpand(mensagem.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new MensagemEnviadaDto(mensagem));
@@ -80,6 +90,11 @@ public class MensagensEnviadasRest {
 	@Transactional
 	public ResponseEntity<MensagemEnviadaDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid MensagemEnviadaForm form){
+		
+		if(!form.validarUsuario(usuarioRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		Optional<MensagemEnviada> mensagemOpt=mensagemEnviadaRepository.findById(id);
 		
 		if(mensagemOpt.isPresent()) {

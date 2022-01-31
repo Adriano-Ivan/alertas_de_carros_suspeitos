@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -37,8 +38,12 @@ public class ZonasRest {
 
 	@Autowired
 	private ZonaRepository zonaRepository;
+	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Value("${alertas_de_carros_suspeitos.api.base_servico}")
+	private String base_da_url_do_servico;
 	
 	@GetMapping
 	@Cacheable(value="listarZonas")
@@ -73,7 +78,7 @@ public class ZonasRest {
 		Zona zona = form.converter(usuarioRepository);
 		zonaRepository.save(zona);
 		
-		URI uri = uriBuilder.path("${alertas_de_carros_suspeitos.api.base_servico}/zonas/{id}")
+		URI uri = uriBuilder.path(base_da_url_do_servico+"/zonas/{id}")
 				.buildAndExpand(zona.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new ZonaDto(zona));

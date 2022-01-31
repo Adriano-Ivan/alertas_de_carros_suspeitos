@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -43,6 +44,9 @@ public class LocaisAlvoRest {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Value("${alertas_de_carros_suspeitos.api.base_servico}")
+	private String base_da_url_do_servico;
+	
 	@GetMapping
 	public Page<LocalAlvoDto> listar(@RequestParam(required=false) String local,
 			@PageableDefault(sort="createdAt",page=0,size=10,
@@ -74,7 +78,7 @@ public class LocaisAlvoRest {
 		LocalAlvo localAlvo = form.converter(zonaRepository, usuarioRepository);
 		localAlvoRepository.save(localAlvo);
 		
-		URI uri = uriBuilder.path("${alertas_de_carros_suspeitos.api.base_servico}/locais_alvo/{id}")
+		URI uri = uriBuilder.path(base_da_url_do_servico+"/locais_alvo/{id}")
 				.buildAndExpand(localAlvo.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new LocalAlvoDto(localAlvo));

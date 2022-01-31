@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
@@ -43,6 +44,9 @@ public class AlertasDeCarrosSuspeitosParaUsuariosRest {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Value("${alertas_de_carros_suspeitos.api.base_servico}")
+	private String base_da_url_do_servico;
 	
 	@GetMapping
 	public Page<AlertaDeCarroSuspeitoParaUsuarioDto> listar(@RequestParam(required=false) String nomeDeUsuario,
@@ -95,7 +99,7 @@ public class AlertasDeCarrosSuspeitosParaUsuariosRest {
 		AlertaDeCarroSuspeitoParaUsuario alerta = form.converter(carroComInfracaoRepository, usuarioRepository);
 		alertaDeCarroSuspeitoParaUsuarioRepository.save(alerta);
 		
-		URI uri = uriBuilder.path("${alertas_de_carros_suspeitos.api.base_servico}/alertas_de_carros_suspeitos_para_usuarios/{id}")
+		URI uri = uriBuilder.path(base_da_url_do_servico+"/alertas_de_carros_suspeitos_para_usuarios/{id}")
 				.buildAndExpand(alerta.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new AlertaDeCarroSuspeitoParaUsuarioDto(alerta));

@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -48,6 +49,9 @@ public class CarrosSuspeitosRest {
 	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
+	@Value("${alertas_de_carros_suspeitos.api.base_servico}")
+	private String base_da_url_do_servico;
+	
 	@GetMapping
 	@Cacheable(value="veículosSuspeitos")
 	public Page<CarroSuspeitoDto> listar(@RequestParam(required=false) String placa,
@@ -85,7 +89,7 @@ public class CarrosSuspeitosRest {
 		CarroSuspeito veiculo = form.converter(zonaRepository,usuarioRepository);
 		carroSuspeitoRepository.save(veiculo);
 		
-		URI uri = uriBuilder.path("${alertas_de_carros_suspeitos.api.base_servico}/veiculos_suspeitos/{id}")
+		URI uri = uriBuilder.path(base_da_url_do_servico+"/veiculos_suspeitos/{id}")
 				.buildAndExpand(veiculo.getId()).toUri();
 		
 		return ResponseEntity.created(uri).body(new CarroSuspeitoDto(veiculo));
