@@ -21,6 +21,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.BotDoTelegramDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.BotDoTelegramForm;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
 @Entity
 @Table(name="bots_do_telegram")
@@ -43,7 +44,13 @@ public class BotDoTelegram {
 	
 	private LocalDateTime updatedAt;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Usuario usuarioInsersor;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Usuario ultimoUsuarioEditor;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JsonBackReference
 	private Zona zona;
 	
@@ -53,12 +60,29 @@ public class BotDoTelegram {
 	
 	public BotDoTelegram() {}
 	
-	public BotDoTelegram(BotDoTelegramForm botDoTelegramForm, Zona zona) {
+	public BotDoTelegram(BotDoTelegramForm botDoTelegramForm, Zona zona,Usuario usuarioInsersor) {
 		this.denominacao=botDoTelegramForm.getDenominacao();
 		this.token=botDoTelegramForm.getToken();
 		this.idDoChat=botDoTelegramForm.getIdDoChat();
 		this.zona=zona;
+		this.usuarioInsersor=usuarioInsersor;
 		this.createdAt=LocalDateTime.now();
+	}
+
+	public Usuario getUsuarioInsersor() {
+		return usuarioInsersor;
+	}
+
+	public void setUsuarioInsersor(Usuario usuarioInsersor) {
+		this.usuarioInsersor = usuarioInsersor;
+	}
+
+	public Usuario getUltimoUsuarioEditor() {
+		return ultimoUsuarioEditor;
+	}
+
+	public void setUltimoUsuarioEditor(Usuario ultimoUsuarioEditor) {
+		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
 	}
 
 	public Long getId() {

@@ -53,7 +53,6 @@ public class CarrosEmSituacaoIrregularRest {
 	private String base_da_url_do_servico;
 	
 	@GetMapping
-	@Cacheable(value="veículosEmSituacaoIrregular")
 	public Page<CarroEmSituacaoIrregularDto> listar(@RequestParam(required=false) String placa,
 			@PageableDefault(sort="momentoDoAlerta",direction=Direction.DESC,
 			page=0,size=10) Pageable paginacao){
@@ -82,10 +81,12 @@ public class CarrosEmSituacaoIrregularRest {
 	
 	@PostMapping
 	@Transactional
-	@CacheEvict(value="veículosEmSituacaoIrregular",
-	allEntries=true)
 	public ResponseEntity<CarroEmSituacaoIrregularDto> cadastrar(@RequestBody @Valid CarroEmSituacaoIrregularForm form,
 			UriComponentsBuilder uriBuilder ){
+		if(!form.validarUsuarioInsersorEzona(usuarioRepository, zonaRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		CarroEmSituacaoIrregular veiculo = form.converter(zonaRepository,usuarioRepository);
 		 carroEmSituacaoIrregularRepository.save(veiculo);
 		
@@ -95,13 +96,14 @@ public class CarrosEmSituacaoIrregularRest {
 		return ResponseEntity.created(uri).body(new CarroEmSituacaoIrregularDto(veiculo));
 	}
 
-	
 	@PutMapping("/{id}")
 	@Transactional
-	@CacheEvict(value="veículosEmSituacaoIrregular",
-	allEntries=true)
 	public ResponseEntity<CarroEmSituacaoIrregularDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid CarroEmSituacaoIrregularForm form){
+		if(!form.validarUsuarioEditorEzona(usuarioRepository, zonaRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		Optional<CarroEmSituacaoIrregular> veiculoOpt =  carroEmSituacaoIrregularRepository.findById(id);
 		
 		if(veiculoOpt.isPresent()) {
@@ -114,8 +116,6 @@ public class CarrosEmSituacaoIrregularRest {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	@CacheEvict(value="veículosEmSituacaoIrregular",
-	allEntries=true)
 	public ResponseEntity<?> deletar(@PathVariable("id") Long id){
 		Optional<CarroEmSituacaoIrregular> veiculoOpt= carroEmSituacaoIrregularRepository.findById(id);
 		

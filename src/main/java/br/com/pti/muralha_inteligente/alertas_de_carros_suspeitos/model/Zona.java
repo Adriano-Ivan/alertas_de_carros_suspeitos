@@ -74,11 +74,11 @@ public class Zona {
 	@JsonIgnore
 	private List<BotDoTelegram> botsDoTelegram;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JsonBackReference(value="zone-user-movement")
 	private Usuario usuarioInsersor;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
+	@ManyToOne(fetch=FetchType.EAGER)
 	@JsonBackReference(value="zone-user-edited-movement")
 	private Usuario ultimoUsuarioEditor;
 	

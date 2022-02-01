@@ -34,7 +34,7 @@ public class CarroComInfracaoForm extends CarroForm {
 		CarroComInfracao veiculo = veiculoComInfracaoRepository.getById(id);
 
 		veiculo.setZona(super.montarZona(zonaRepository));
-		veiculo.setUltimoUsuarioEditor(super.montarUsuarioEditor(usuarioRepository));
+		veiculo.setUltimoUsuarioEditor(super.montarUltimoUsuarioEditor(usuarioRepository));
 		
 		super.atualizar(veiculo);
 

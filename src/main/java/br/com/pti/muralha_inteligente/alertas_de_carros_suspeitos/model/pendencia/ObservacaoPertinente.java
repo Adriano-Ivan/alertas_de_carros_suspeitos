@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.pendencia.ObservacaoPertinenteDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.pendencia.ObservacaoPertinenteForm;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
 @Entity
 @Table(name="observacoes_pertinentes")
@@ -20,8 +21,8 @@ public class ObservacaoPertinente extends Pendencia {
 	private Boolean contemplada;
 
 	public ObservacaoPertinente() {}
-	public ObservacaoPertinente( ObservacaoPertinenteForm form) {
-		super(form);
+	public ObservacaoPertinente( ObservacaoPertinenteForm form,Usuario usuarioInsersor) {
+		super(form,usuarioInsersor);
 		this.contemplada=form.getContemplada();
 	}
 

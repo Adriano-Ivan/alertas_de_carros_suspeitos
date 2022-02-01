@@ -75,6 +75,10 @@ public class ZonasRest {
 	@CacheEvict(value="listarZonas",allEntries=true)
 	public ResponseEntity<ZonaDto> cadastrar(@RequestBody @Valid ZonaForm form,
 			UriComponentsBuilder uriBuilder){
+		if(!form.validarUsuarioInsersor(usuarioRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		Zona zona = form.converter(usuarioRepository);
 		zonaRepository.save(zona);
 		
@@ -89,6 +93,9 @@ public class ZonasRest {
 	@CacheEvict(value="listarZonas",allEntries=true)
 	public ResponseEntity<ZonaDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid ZonaForm form){
+		if(!form.validarUltimoUsuarioEditor(usuarioRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
 		Optional<Zona> zonaOpt = zonaRepository.findById(id);
 		
 		if(zonaOpt.isPresent()) {

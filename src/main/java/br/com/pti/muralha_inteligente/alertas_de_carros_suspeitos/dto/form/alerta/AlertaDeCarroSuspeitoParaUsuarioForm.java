@@ -48,7 +48,7 @@ public class AlertaDeCarroSuspeitoParaUsuarioForm extends AlertaParaUsuarioForm 
 	
 	public AlertaDeCarroSuspeitoParaUsuario converter(CarroSuspeitoRepository carroSuspeitoRepository,
 			UsuarioRepository usuarioRepository) {
-		return new AlertaDeCarroSuspeitoParaUsuario(this,super.encontrarUsuario(usuarioRepository),
+		return new AlertaDeCarroSuspeitoParaUsuario(this,super.montarUsuario(usuarioRepository),
 				encontrarCarroSuspeito(carroSuspeitoRepository));
 	}
 	

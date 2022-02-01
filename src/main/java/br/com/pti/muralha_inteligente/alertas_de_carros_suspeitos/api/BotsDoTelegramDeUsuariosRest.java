@@ -90,7 +90,8 @@ public class BotsDoTelegramDeUsuariosRest {
 	@Transactional
 	public ResponseEntity<BotDoTelegramDeUsuarioDto> cadastrar(@RequestBody @Valid BotDoTelegramDeUsuarioForm 
 			form, UriComponentsBuilder uriBuilder){
-		if(!form.validarBotDoTelegramEusuario(botDoTelegramRepository, usuarioRepository)) {
+		if(!form.validarBotDoTelegramEusuario(botDoTelegramRepository, usuarioRepository) ||
+				!form.validarUsuarioInsersor(usuarioRepository)) {
 			return ResponseEntity.badRequest().build();
 		}
 		
@@ -107,7 +108,11 @@ public class BotsDoTelegramDeUsuariosRest {
 	public ResponseEntity<BotDoTelegramDeUsuarioDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid BotDoTelegramDeUsuarioForm 
 			form){
-		if(!form.validarBotDoTelegramEusuario(botDoTelegramRepository, usuarioRepository)) {
+		System.out.println(form.validarBotDoTelegramEusuario(botDoTelegramRepository, usuarioRepository));
+		System.out.println(form.validarUltimoUsuarioEditor(usuarioRepository) );
+		if(!form.validarBotDoTelegramEusuario(botDoTelegramRepository, usuarioRepository) ||
+				!form.validarUltimoUsuarioEditor(usuarioRepository) 
+				) {
 			return ResponseEntity.badRequest().build();
 		}
 		

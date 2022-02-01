@@ -53,7 +53,7 @@ public class AlertaDeCarroEmSituacaoIrregularParaUsuarioForm extends AlertaParaU
 	public AlertaDeCarroEmSituacaoIrregularParaUsuario converter(CarroEmSituacaoIrregularRepository
 			carroEmSituacaoIrregularRepository,  UsuarioRepository usuarioRepository) {
 		return new AlertaDeCarroEmSituacaoIrregularParaUsuario(this, super
-				.encontrarUsuario(usuarioRepository), encontrarCarroEmSituacaoIrregular(carroEmSituacaoIrregularRepository));
+				.montarUsuario(usuarioRepository), encontrarCarroEmSituacaoIrregular(carroEmSituacaoIrregularRepository));
 	}
 	
 	public AlertaDeCarroEmSituacaoIrregularParaUsuario atualizar(Long id,

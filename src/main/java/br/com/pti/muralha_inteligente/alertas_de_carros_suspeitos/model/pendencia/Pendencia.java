@@ -3,12 +3,15 @@ package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendenc
 import java.time.LocalDateTime;
 
 import javax.persistence.Column;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.MappedSuperclass;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.pendencia.PendenciaForm;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
 @MappedSuperclass
 public abstract class Pendencia {
@@ -24,11 +27,18 @@ public abstract class Pendencia {
 	
 	private LocalDateTime updatedAt;
 
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Usuario usuarioInsersor;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Usuario ultimoUsuarioEditor;
+	
 	public Pendencia() {}
 	
-	public Pendencia(PendenciaForm pendenciaForm) {
+	public Pendencia(PendenciaForm pendenciaForm,Usuario usuarioInsersor) {
 		this.descricao=pendenciaForm.getDescricao();
 		this.createdAt=LocalDateTime.now();
+		this.usuarioInsersor=usuarioInsersor;
 	}
 	public Long getId() {
 		return id;
@@ -61,6 +71,21 @@ public abstract class Pendencia {
 	public void setUpdatedAt(LocalDateTime updatedAt) {
 		this.updatedAt = updatedAt;
 	}
-	
+
+	public Usuario getUsuarioInsersor() {
+		return usuarioInsersor;
+	}
+
+	public void setUsuarioInsersor(Usuario usuarioInsersor) {
+		this.usuarioInsersor = usuarioInsersor;
+	}
+
+	public Usuario getUltimoUsuarioEditor() {
+		return ultimoUsuarioEditor;
+	}
+
+	public void setUltimoUsuarioEditor(Usuario ultimoUsuarioEditor) {
+		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
+	}
 	
 }

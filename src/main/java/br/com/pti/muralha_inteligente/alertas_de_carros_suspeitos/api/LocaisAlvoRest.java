@@ -75,6 +75,9 @@ public class LocaisAlvoRest {
 	@Transactional
 	public ResponseEntity<LocalAlvoDto> cadastrar(@RequestBody @Valid LocalAlvoForm form,
 			UriComponentsBuilder uriBuilder){
+		if(!form.validarZonaAssociadaEUsuarioInsersor(zonaRepository, usuarioRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
 		LocalAlvo localAlvo = form.converter(zonaRepository, usuarioRepository);
 		localAlvoRepository.save(localAlvo);
 		
@@ -88,6 +91,9 @@ public class LocaisAlvoRest {
 	@Transactional
 	public ResponseEntity<LocalAlvoDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid LocalAlvoForm form){
+		if(!form.validarZonaAssociadaEultimoUsuarioEditor(zonaRepository, usuarioRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
 		Optional<LocalAlvo> localAlvoOpt = localAlvoRepository.findById(id);
 		
 		if(localAlvoOpt.isPresent()) {

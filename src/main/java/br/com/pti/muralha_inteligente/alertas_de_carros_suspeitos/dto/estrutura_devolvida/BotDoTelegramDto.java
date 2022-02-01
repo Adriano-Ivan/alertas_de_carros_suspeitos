@@ -13,6 +13,8 @@ public class BotDoTelegramDto {
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
 	private Long idDaZona;
+	private Long idUsuarioInsersor;
+	private Long idUltimoUsuarioEditor;
 	
 	public BotDoTelegramDto(BotDoTelegram botDoTelegram) {
 		this.id=botDoTelegram.getId();
@@ -29,7 +31,29 @@ public class BotDoTelegramDto {
 		if(botDoTelegram.getZona()!=null) {
 			this.idDaZona=botDoTelegram.getZona().getId();
 		}
+		if(botDoTelegram.getUsuarioInsersor()!=null) {
+			this.idUsuarioInsersor=botDoTelegram.getUsuarioInsersor().getId();
+		}
+		if(botDoTelegram.getUltimoUsuarioEditor()!=null) {
+			this.idUltimoUsuarioEditor=botDoTelegram.getUltimoUsuarioEditor().getId();
+		}
 	}
+
+	
+	public Long getIdDaZona() {
+		return idDaZona;
+	}
+
+
+	public Long getIdUsuarioInsersor() {
+		return idUsuarioInsersor;
+	}
+
+
+	public Long getIdUltimoUsuarioEditor() {
+		return idUltimoUsuarioEditor;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -55,7 +79,4 @@ public class BotDoTelegramDto {
 		return updatedAt;
 	}
 
-	public Long getIdZona() {
-		return idDaZona;
-	}
 }

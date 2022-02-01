@@ -7,12 +7,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.form_util.MontadorEValidadorDeUsuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.BotDoTelegram;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.BotDoTelegramRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
-public class BotDoTelegramForm {
+public class BotDoTelegramForm extends MontadorEValidadorDeUsuario {
 
 	@NotNull @NotBlank @Size(min=4)
 	private String denominacao;
@@ -58,22 +60,43 @@ public class BotDoTelegramForm {
 		this.idZona = idZona;
 	}
 	
-	private Zona definirZona(ZonaRepository zonaRepository) {
+	private Zona montarZona(ZonaRepository zonaRepository) {
 		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
 		Zona zona = zonaOpt.orElse(null);
 		return zona;
 	}
-	public BotDoTelegram converter(ZonaRepository zonaRepository) {
-		Zona zona = definirZona(zonaRepository);
+	
+	private boolean validarZona(ZonaRepository zonaRepository) {
+		if(idZona==null) return false;
 		
-		return new BotDoTelegram(this,zona);
+		Zona zona = montarZona(zonaRepository);
+		
+		if(zona==null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean validarZonaEusuarioInsersor(UsuarioRepository usuarioRepository,ZonaRepository zonaRepository) {
+		return validarZona(zonaRepository)  && validarUsuarioInsersor(usuarioRepository);
+	}
+	
+	public boolean validarZonaEultimoUsuarioEditor(UsuarioRepository usuarioRepository,ZonaRepository zonaRepository) {
+		return validarZona(zonaRepository) && validarUltimoUsuarioEditor(usuarioRepository);
+	}
+	public BotDoTelegram converter(ZonaRepository zonaRepository,UsuarioRepository usuarioRepository) {
+		Zona zona = montarZona(zonaRepository);
+		
+		return new BotDoTelegram(this,zona,montarUsuarioInsersor(usuarioRepository));
 	}
 	
 	public BotDoTelegram atualizar(Long id,BotDoTelegramRepository botDoTelegramRepository,
-			ZonaRepository zonaRepository) {
+			ZonaRepository zonaRepository,UsuarioRepository usuarioRepository) {
 		BotDoTelegram botDoTelegram = botDoTelegramRepository.getById(id);
-		Zona zona = definirZona(zonaRepository);
+		Zona zona = montarZona(zonaRepository);
 		
+		botDoTelegram.setUltimoUsuarioEditor(montarUltimoUsuarioEditor(usuarioRepository));
 		botDoTelegram.setDenominacao(denominacao);
 		botDoTelegram.setIdDoChat(idDoChat);
 		botDoTelegram.setToken(token);

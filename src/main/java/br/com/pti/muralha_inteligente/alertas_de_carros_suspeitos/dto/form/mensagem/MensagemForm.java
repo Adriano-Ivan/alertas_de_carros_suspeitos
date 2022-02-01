@@ -13,15 +13,16 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Usu
 public abstract class MensagemForm {
 
 	@NotNull @NotBlank
-	protected  String mensagem;
+	private  String mensagem;
 	
 	@NotNull
-	protected Long idUsuario;
+	private Long idUsuario;
 	
-	protected LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 	
-	protected LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 
+	
 	public String getMensagem() {
 		return mensagem;
 	}
@@ -54,7 +55,7 @@ public abstract class MensagemForm {
 		this.createdAt = createdAt;
 	}
 	
-	private Usuario encontrarUsuario(UsuarioRepository usuarioRepository) {
+	private Usuario montarUsuario(UsuarioRepository usuarioRepository) {
 		Optional<Usuario> usuarioOpt=usuarioRepository.findById(idUsuario);
 		Usuario usuario = usuarioOpt.orElse(null);
 		
@@ -62,7 +63,7 @@ public abstract class MensagemForm {
 	}
 	
 	public boolean validarUsuario(UsuarioRepository usuarioRepository) {
-		Usuario usuario = encontrarUsuario(usuarioRepository);
+		Usuario usuario = montarUsuario(usuarioRepository);
 		
 		if(usuario == null) { 
 			return false;
@@ -71,7 +72,7 @@ public abstract class MensagemForm {
 	}
 	
 	protected void atualizar(Mensagem msg,Long id,UsuarioRepository usuarioRepository) {
-		Usuario usuario = encontrarUsuario(usuarioRepository);
+		Usuario usuario = montarUsuario(usuarioRepository);
 		
 		msg.setMensagem(mensagem);
 		msg.setUpdatedAt(LocalDateTime.now());
@@ -79,7 +80,7 @@ public abstract class MensagemForm {
 	}
 
 	protected Usuario delegarUsuarioEdataDeCriacao(UsuarioRepository usuarioRepository) {
-		Usuario usuario = encontrarUsuario(usuarioRepository);
+		Usuario usuario = montarUsuario(usuarioRepository);
 		this.createdAt=LocalDateTime.now();
 		return usuario;
 	}

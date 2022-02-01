@@ -53,7 +53,6 @@ public class CarrosSuspeitosRest {
 	private String base_da_url_do_servico;
 	
 	@GetMapping
-	@Cacheable(value="veículosSuspeitos")
 	public Page<CarroSuspeitoDto> listar(@RequestParam(required=false) String placa,
 			@PageableDefault(sort="momentoDoAlerta",direction=Direction.DESC,
 			page=0,size=10) Pageable paginacao){
@@ -82,10 +81,12 @@ public class CarrosSuspeitosRest {
 	
 	@PostMapping
 	@Transactional
-	@CacheEvict(value="veículosSuspeitos",
-	allEntries=true)
 	public ResponseEntity<CarroSuspeitoDto> cadastrar(@RequestBody @Valid CarroSuspeitoForm form,
 			UriComponentsBuilder uriBuilder ){
+		if(!form.validarUsuarioInsersorEzona(usuarioRepository, zonaRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		CarroSuspeito veiculo = form.converter(zonaRepository,usuarioRepository);
 		carroSuspeitoRepository.save(veiculo);
 		
@@ -98,10 +99,12 @@ public class CarrosSuspeitosRest {
 	
 	@PutMapping("/{id}")
 	@Transactional
-	@CacheEvict(value="veículosSuspeitos",
-	allEntries=true)
 	public ResponseEntity<CarroSuspeitoDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid CarroSuspeitoForm form){
+		if(!form.validarUsuarioEditorEzona(usuarioRepository, zonaRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		Optional<CarroSuspeito> veiculoOpt = carroSuspeitoRepository.findById(id);
 		
 		if(veiculoOpt.isPresent()) {
@@ -114,8 +117,6 @@ public class CarrosSuspeitosRest {
 	
 	@DeleteMapping("/{id}")
 	@Transactional
-	@CacheEvict(value="veículosSuspeitos",
-	allEntries=true)
 	public ResponseEntity<?> deletar(@PathVariable("id") Long id){
 		Optional<CarroSuspeito> veiculoOpt=carroSuspeitoRepository.findById(id);
 		

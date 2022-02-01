@@ -45,15 +45,39 @@ public class BotDoTelegramDeUsuario {
 	private LocalDateTime createdAt;
 	
 	private LocalDateTime updatedAt;
-
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Usuario usuarioInsersor;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Usuario ultimoUsuarioEditor;
+	
 	public BotDoTelegramDeUsuario() {}	
 
-	public BotDoTelegramDeUsuario(Usuario usuario, BotDoTelegram botDoTelegram) {
+	public BotDoTelegramDeUsuario(Usuario usuario, BotDoTelegram botDoTelegram,Usuario usuarioInsersor) {
 		this.usuario=usuario;
 		this.botDoTelegram=botDoTelegram;
 		this.nomeDoBot=botDoTelegram.getDenominacao();
 		this.nomeDoUsuario=usuario.getNomeDeUsuario();
+		this.usuarioInsersor=usuarioInsersor;
 		this.createdAt=LocalDateTime.now();
+	}
+
+	
+	public Usuario getUsuarioInsersor() {
+		return usuarioInsersor;
+	}
+
+	public void setUsuarioInsersor(Usuario usuarioInsersor) {
+		this.usuarioInsersor = usuarioInsersor;
+	}
+
+	public Usuario getUltimoUsuarioEditor() {
+		return ultimoUsuarioEditor;
+	}
+
+	public void setUltimoUsuarioEditor(Usuario ultimoUsuarioEditor) {
+		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
 	}
 
 	public Long getId() {

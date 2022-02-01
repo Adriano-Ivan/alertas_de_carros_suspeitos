@@ -48,7 +48,7 @@ public class AlertaDeCarroRoubadoParaUsuarioForm extends AlertaParaUsuarioForm{
 	
 	public AlertaDeCarroRoubadoParaUsuario converter(CarroRoubadoRepository carroRoubadoRepository,
 			UsuarioRepository usuarioRepository) {
-		return new AlertaDeCarroRoubadoParaUsuario(this,super.encontrarUsuario(usuarioRepository),
+		return new AlertaDeCarroRoubadoParaUsuario(this,super.montarUsuario(usuarioRepository),
 				encontrarCarroRoubado(carroRoubadoRepository));
 	}
 	

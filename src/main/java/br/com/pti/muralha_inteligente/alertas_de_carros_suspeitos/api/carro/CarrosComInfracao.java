@@ -84,6 +84,10 @@ public class CarrosComInfracao {
 	@Transactional
 	public ResponseEntity<CarroComInfracaoDto> cadastrar(@RequestBody @Valid CarroComInfracaoForm form,
 			UriComponentsBuilder uriBuilder ){
+		if(!form.validarUsuarioInsersorEzona(usuarioRepository, zonaRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		CarroComInfracao veiculo = form.converter(zonaRepository,usuarioRepository);
 		carroComInfracaoRepository.save(veiculo);
 		
@@ -98,6 +102,10 @@ public class CarrosComInfracao {
 	@Transactional
 	public ResponseEntity<CarroComInfracaoDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid CarroComInfracaoForm form){
+		if(!form.validarUsuarioEditorEzona(usuarioRepository, zonaRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		Optional<CarroComInfracao> veiculoOpt = carroComInfracaoRepository.findById(id);
 		
 		if(veiculoOpt.isPresent()) {
@@ -105,6 +113,7 @@ public class CarrosComInfracao {
 					zonaRepository, usuarioRepository);
 			return ResponseEntity.ok(CarroComInfracao.converter(veiculo));
 		}
+		
 		return ResponseEntity.notFound().build();
 	}
 	

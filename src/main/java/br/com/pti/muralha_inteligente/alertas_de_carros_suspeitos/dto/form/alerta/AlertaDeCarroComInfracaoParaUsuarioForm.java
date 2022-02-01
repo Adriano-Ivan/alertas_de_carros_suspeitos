@@ -47,7 +47,7 @@ public class AlertaDeCarroComInfracaoParaUsuarioForm extends AlertaParaUsuarioFo
 	}
 	public AlertaDeCarroComInfracaoParaUsuario converter(CarroComInfracaoRepository 
 			carroComInfracaoRepository, UsuarioRepository usuarioRepository) {
-		return new AlertaDeCarroComInfracaoParaUsuario(this,super.encontrarUsuario(usuarioRepository),
+		return new AlertaDeCarroComInfracaoParaUsuario(this,super.montarUsuario(usuarioRepository),
 				encontrarCarroComInfracao(carroComInfracaoRepository));		
 	}
 	

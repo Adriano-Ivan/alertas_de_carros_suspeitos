@@ -7,11 +7,21 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.BotDoTel
 public class BotDoTelegramDeUsuarioDto {
 
 	private Long id;
+	
 	private Long idDoUsuario;
+	
 	private Long idDoBotDoTelegram;
+	
+	private Long idUsuarioInsersor;
+	
+	private Long idUltimoUsuarioEditor;
+	
 	private String nomeDoUsuario;
+	
 	private String denominacaoDoBotDoTelegram;
+	
 	private LocalDateTime createdAt;
+	
 	private LocalDateTime updatedAt;
 	
 	public BotDoTelegramDeUsuarioDto(BotDoTelegramDeUsuario botDoTelegramDeUsuario) {
@@ -27,7 +37,29 @@ public class BotDoTelegramDeUsuarioDto {
 		if(botDoTelegramDeUsuario.getUpdatedAt()!=null) {
 			this.updatedAt=botDoTelegramDeUsuario.getUpdatedAt();
 		}
+		if(botDoTelegramDeUsuario.getUltimoUsuarioEditor()!=null) {
+			this.idUltimoUsuarioEditor=botDoTelegramDeUsuario.getUltimoUsuarioEditor().getId();
+		}
+		if(botDoTelegramDeUsuario.getUsuarioInsersor()!=null) {
+			this.idUsuarioInsersor=botDoTelegramDeUsuario.getUsuarioInsersor().getId();
+		}
 	}
+
+	
+	public Long getIdUsuarioInsersor() {
+		return idUsuarioInsersor;
+	}
+
+
+	public Long getIdUltimoUsuarioEditor() {
+		return idUltimoUsuarioEditor;
+	}
+
+
+	public String getNomeDoUsuario() {
+		return nomeDoUsuario;
+	}
+
 
 	public Long getId() {
 		return id;
@@ -39,10 +71,6 @@ public class BotDoTelegramDeUsuarioDto {
 
 	public Long getIdDoBotDoTelegram() {
 		return idDoBotDoTelegram;
-	}
-
-	public String getNomeDeUsuario() {
-		return nomeDoUsuario;
 	}
 
 	public String getDenominacaoDoBotDoTelegram() {

@@ -28,6 +28,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.BotDoTelegramForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.BotDoTelegram;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.BotDoTelegramRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 @RestController
@@ -39,6 +40,9 @@ public class BotsDoTelegramRest {
 	
 	@Autowired
 	private ZonaRepository zonaRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@Value("${alertas_de_carros_suspeitos.api.base_servico}")
 	private String base_da_url_do_servico;
@@ -72,7 +76,11 @@ public class BotsDoTelegramRest {
 	@Transactional
 	public ResponseEntity<BotDoTelegramDto> cadastrar(@RequestBody @Valid BotDoTelegramForm form,
 			UriComponentsBuilder uriBuilder){
-		BotDoTelegram botDoTelegram = form.converter(zonaRepository);
+		if(!form.validarZonaEusuarioInsersor(usuarioRepository, zonaRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		BotDoTelegram botDoTelegram = form.converter(zonaRepository,usuarioRepository);
 		botDoTelegramRepository.save(botDoTelegram);
 		
 		URI uri = uriBuilder.path(base_da_url_do_servico+"/bots_do_telgram/{id})")
@@ -85,10 +93,14 @@ public class BotsDoTelegramRest {
 	@Transactional
 	public ResponseEntity<BotDoTelegramDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid BotDoTelegramForm form){
+		if(!form.validarZonaEultimoUsuarioEditor(usuarioRepository, zonaRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		Optional<BotDoTelegram> botDoTelegramOpt = botDoTelegramRepository.findById(id);
 		
 		if(botDoTelegramOpt.isPresent()) {
-			BotDoTelegram botDoTelegram = form.atualizar(id, botDoTelegramRepository, zonaRepository);
+			BotDoTelegram botDoTelegram = form.atualizar(id, botDoTelegramRepository, zonaRepository,usuarioRepository);
 			return ResponseEntity.ok(new BotDoTelegramDto(botDoTelegram));
 		}
 		

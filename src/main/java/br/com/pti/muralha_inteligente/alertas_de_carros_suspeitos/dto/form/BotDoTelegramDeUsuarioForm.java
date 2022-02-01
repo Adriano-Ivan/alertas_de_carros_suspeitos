@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.form_util.MontadorEValidadorDeUsuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.BotDoTelegram;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.BotDoTelegramDeUsuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
@@ -12,7 +13,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Bot
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.BotDoTelegramRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 
-public class BotDoTelegramDeUsuarioForm {
+public class BotDoTelegramDeUsuarioForm extends MontadorEValidadorDeUsuario{
 
 	@NotNull
 	private Long idUsuario;
@@ -36,32 +37,37 @@ public class BotDoTelegramDeUsuarioForm {
 		this.idBotDoTelegram = idBotDoTelegram;
 	}
 	
-	public BotDoTelegram definirBotDoTelegram(BotDoTelegramRepository botDoTelegramRepository) {
+	public BotDoTelegram montarBotDoTelegram(BotDoTelegramRepository botDoTelegramRepository) {
 		Optional<BotDoTelegram> botDoTelegramOpt=botDoTelegramRepository.findById(idBotDoTelegram);
 		BotDoTelegram botDoTelegram=botDoTelegramOpt.orElse(null);
 		
 		return botDoTelegram;
 	}
-	
-	public Usuario definirUsuario(UsuarioRepository usuarioRepository) {
-		Optional<Usuario> usuarioOpt = usuarioRepository.findById(idUsuario);
-		Usuario usuario = usuarioOpt.orElse(null);
+
+	private boolean validarBotDoTelegram(BotDoTelegramRepository botDoTelegramRepository) {
+		if(idBotDoTelegram == null) return false;
 		
-		return usuario;
-	}
-	
-	public boolean validarBotDoTelegram(BotDoTelegramRepository botDoTelegramRepository) {
-		BotDoTelegram botDoTelegram = definirBotDoTelegram(botDoTelegramRepository);
+		BotDoTelegram botDoTelegram = montarBotDoTelegram(botDoTelegramRepository);
 		
 		if(botDoTelegram == null) {
+			System.out.println("ENTROU");
 			return false;
 		}
 		
 		return true;
 	}
 	
-	public boolean validarUsuario(UsuarioRepository usuarioRepository) {
-		Usuario usuario = definirUsuario(usuarioRepository);
+	private Usuario montarUsuarioAlertado(UsuarioRepository usuarioRepository) {
+		Optional<Usuario> usuarioOpt = usuarioRepository.findById(idUsuario);
+		Usuario usuario = usuarioOpt.orElse(null);
+		
+		return usuario;
+	}
+	
+	private boolean validarUsuarioAlertado(UsuarioRepository usuarioRepository) {
+		if(idUsuario==null) return false;
+		
+		Usuario usuario = montarUsuarioAlertado(usuarioRepository);
 		
 		if(usuario == null) {
 			return false;
@@ -69,15 +75,15 @@ public class BotDoTelegramDeUsuarioForm {
 		
 		return true;
 	}
-	
 	public boolean validarBotDoTelegramEusuario(BotDoTelegramRepository botDoTelegramRepository,
 			UsuarioRepository usuarioRepository) {
-		return validarBotDoTelegram(botDoTelegramRepository) && validarUsuario(usuarioRepository);
+		return validarBotDoTelegram(botDoTelegramRepository) && validarUsuarioAlertado(usuarioRepository);
 	}
 	
 	public BotDoTelegramDeUsuario converter(BotDoTelegramRepository botDoTelegramRepository,
 			UsuarioRepository usuarioRepository) {
-		return new BotDoTelegramDeUsuario(definirUsuario(usuarioRepository), definirBotDoTelegram(botDoTelegramRepository));
+		return new BotDoTelegramDeUsuario(montarUsuarioAlertado(usuarioRepository), montarBotDoTelegram(botDoTelegramRepository),
+				montarUsuarioInsersor(usuarioRepository));
 	}
 	
 	public BotDoTelegramDeUsuario atualizar(Long id,BotDoTelegramDeUsuarioRepository botDoTelegramDeUsuarioRepository,
@@ -85,9 +91,10 @@ public class BotDoTelegramDeUsuarioForm {
 			UsuarioRepository usuarioRepository) {
 		BotDoTelegramDeUsuario botDoTelegramDeUsuario = botDoTelegramDeUsuarioRepository.getById(id);
 		
-		BotDoTelegram botDoTelegram = definirBotDoTelegram(botDoTelegramRepository);
-		Usuario usuario = definirUsuario(usuarioRepository);
+		BotDoTelegram botDoTelegram = montarBotDoTelegram(botDoTelegramRepository);
+		Usuario usuario = montarUsuarioAlertado(usuarioRepository);
 		
+		botDoTelegramDeUsuario.setUltimoUsuarioEditor(montarUltimoUsuarioEditor(usuarioRepository));
 		botDoTelegramDeUsuario.setBotDoTelegram(botDoTelegram);
 		botDoTelegramDeUsuario.setUsuario(usuario);
 		botDoTelegramDeUsuario.setNomeDoBot(botDoTelegram.getDenominacao());

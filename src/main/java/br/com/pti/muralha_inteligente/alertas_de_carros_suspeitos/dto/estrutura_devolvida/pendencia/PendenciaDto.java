@@ -10,6 +10,8 @@ public class PendenciaDto {
 	private String descricao;
 	private LocalDateTime createdAt;
 	private LocalDateTime updatedAt;
+	private Long idUsuarioInsersor;
+	private Long idUltimoUsuarioEditor;
 	
 	public PendenciaDto() {}
 	
@@ -18,6 +20,14 @@ public class PendenciaDto {
 		this.descricao=pendencia.getDescricao();
 		this.createdAt=pendencia.getCreatedAt();
 		this.updatedAt=pendencia.getUpdatedAt();
+		
+		if(pendencia.getUltimoUsuarioEditor() != null) {
+			this.idUltimoUsuarioEditor=pendencia.getUltimoUsuarioEditor().getId();
+		}
+		
+		if(pendencia.getUsuarioInsersor() != null) {
+			this.idUsuarioInsersor=pendencia.getUsuarioInsersor().getId();
+		}
 	}
 
 	public Long getId() {
@@ -34,6 +44,14 @@ public class PendenciaDto {
 
 	public LocalDateTime getUpdatedAt() {
 		return updatedAt;
+	}
+
+	public Long getIdUsuarioInsersor() {
+		return idUsuarioInsersor;
+	}
+
+	public Long getIdUltimoUsuarioEditor() {
+		return idUltimoUsuarioEditor;
 	}
 
 }

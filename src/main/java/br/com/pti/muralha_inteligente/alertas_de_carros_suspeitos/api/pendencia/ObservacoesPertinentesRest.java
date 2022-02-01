@@ -27,6 +27,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.pendencia.ObservacaoPertinenteDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.pendencia.ObservacaoPertinenteForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendencia.ObservacaoPertinente;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.pendencia.ObservacaoPertinenteRepository;
 
 @RestController
@@ -35,6 +36,9 @@ public class ObservacoesPertinentesRest {
 
 	@Autowired
 	private ObservacaoPertinenteRepository observacaoPertinenteRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@Value("${alertas_de_carros_suspeitos.api.base_servico}")
 	private String base_da_url_do_servico;
@@ -68,7 +72,12 @@ public class ObservacoesPertinentesRest {
 	@Transactional
 	public ResponseEntity<ObservacaoPertinenteDto> cadastrar(@RequestBody @Valid ObservacaoPertinenteForm form,
 			UriComponentsBuilder uriBuilder){
-		ObservacaoPertinente observacaoPertinente = form.converter();
+		
+		if(!form.validarUsuarioInsersor(usuarioRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		ObservacaoPertinente observacaoPertinente = form.converter(usuarioRepository);
 		observacaoPertinenteRepository.save(observacaoPertinente);
 		
 		URI uri = uriBuilder.path(base_da_url_do_servico+"/observacoes_pertinentes/{id}")
@@ -81,10 +90,16 @@ public class ObservacoesPertinentesRest {
 	@Transactional
 	public ResponseEntity<ObservacaoPertinenteDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid ObservacaoPertinenteForm form){
+		
+		if(!form.validarUltimoUsuarioEditor(usuarioRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		Optional<ObservacaoPertinente> observacaoPertinenteOpt = observacaoPertinenteRepository.findById(id);
 		
 		if(observacaoPertinenteOpt.isPresent()) {
-			ObservacaoPertinente observacaoPertinente = form.atualizar(id, observacaoPertinenteRepository);
+			ObservacaoPertinente observacaoPertinente = form.atualizar(id, observacaoPertinenteRepository,
+					usuarioRepository);
 			return ResponseEntity.ok(new ObservacaoPertinenteDto(observacaoPertinente));
 		}
 		

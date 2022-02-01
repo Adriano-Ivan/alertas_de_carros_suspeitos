@@ -12,6 +12,7 @@ import org.springframework.data.domain.Page;
 
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.pendencia.TarefaParaFazerDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.pendencia.TarefaParaFazerForm;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 
 @Entity
 @Table(name="tarefas_para_fazer")
@@ -21,8 +22,8 @@ public class TarefaParaFazer extends Pendencia{
 
 	public TarefaParaFazer() {}
 	
-	public TarefaParaFazer(TarefaParaFazerForm form) {
-		super(form);
+	public TarefaParaFazer(TarefaParaFazerForm form,Usuario usuarioInsersor) {
+		super(form,usuarioInsersor);
 		this.cumprida=form.getCumprida();
 	}
 

@@ -57,14 +57,14 @@ public abstract class AlertaParaUsuarioForm {
 		this.idUsuario = idUsuario;
 	}
 	
-	protected Usuario encontrarUsuario(UsuarioRepository usuarioRepository) {
+	protected Usuario montarUsuario(UsuarioRepository usuarioRepository) {
 		Optional<Usuario> usuarioOpt=usuarioRepository.findById(idUsuario);
 		Usuario usuario = usuarioOpt.orElse(null);
 		
 		return usuario;
 	}
 	protected boolean validarUsuario(UsuarioRepository usuarioRepository) {
-		Usuario usuario = encontrarUsuario(usuarioRepository);
+		Usuario usuario = montarUsuario(usuarioRepository);
 		
 		if(usuario == null) { 
 			return false;

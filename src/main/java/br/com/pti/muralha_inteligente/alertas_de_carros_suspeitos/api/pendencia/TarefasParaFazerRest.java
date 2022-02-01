@@ -27,6 +27,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.pendencia.TarefaParaFazerDto;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.pendencia.TarefaParaFazerForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.pendencia.TarefaParaFazer;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.pendencia.TarefaParaFazerRepository;
 
 @RestController
@@ -35,6 +36,9 @@ public class TarefasParaFazerRest {
 
 	@Autowired
 	private TarefaParaFazerRepository tarefaParaFazerRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	@Value("${alertas_de_carros_suspeitos.api.base_servico}")
 	private String base_da_url_do_servico;
@@ -67,7 +71,12 @@ public class TarefasParaFazerRest {
 	@Transactional
 	public ResponseEntity<TarefaParaFazerDto> cadastrar(@RequestBody @Valid TarefaParaFazerForm form,
 			UriComponentsBuilder uriBuilder){
-		TarefaParaFazer tarefaParaFazer = form.converter();
+		
+		if(!form.validarUsuarioInsersor(usuarioRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
+		TarefaParaFazer tarefaParaFazer = form.converter(usuarioRepository);
 		tarefaParaFazerRepository.save(tarefaParaFazer);
 		
 		URI uri = uriBuilder.path(base_da_url_do_servico+"/tarefas_para_fazer")
@@ -80,10 +89,16 @@ public class TarefasParaFazerRest {
 	@Transactional
 	public ResponseEntity<TarefaParaFazerDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid TarefaParaFazerForm form){
+		
+		if(!form.validarUltimoUsuarioEditor(usuarioRepository)) {
+			return ResponseEntity.badRequest().build();
+		}
+		
 		Optional<TarefaParaFazer> tarefaParaFazerOpt = tarefaParaFazerRepository.findById(id);
 		
 		if(tarefaParaFazerOpt.isPresent()) {
-			TarefaParaFazer tarefaParaFazer = form.atualizar(id, tarefaParaFazerRepository);
+			TarefaParaFazer tarefaParaFazer = form.atualizar(id, tarefaParaFazerRepository,
+					usuarioRepository);
 			return ResponseEntity.ok(new TarefaParaFazerDto(tarefaParaFazer));
 		}
 		return ResponseEntity.notFound().build();

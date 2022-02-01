@@ -7,6 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.form_util.MontadorEValidadorDeUsuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.Carro;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroSuspeito;
@@ -14,7 +15,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
-public abstract class CarroForm {
+public abstract class CarroForm extends MontadorEValidadorDeUsuario {
 
 	@NotBlank @NotNull @Size(min=2)
 	private String dono;
@@ -38,15 +39,11 @@ public abstract class CarroForm {
 	private String statusDoVeiculo;
 	
 	@NotNull
-	private Long idZona;
+	protected Long idZona;
 
 	private String latitude;
 	
 	private String longitude;
-	
-	private Long idUsuarioInsersor;
-
-	private Long idUltimoUsuarioEditor;
 	
 	public CarroForm() {}
 	
@@ -98,18 +95,6 @@ public abstract class CarroForm {
 	public void setIdZona(Long idZona) {
 		this.idZona = idZona;
 	}
-	public Long getIdUsuarioInsersor() {
-		return idUsuarioInsersor;
-	}
-	public void setIdUsuarioInsersor(Long idUsuarioInsersor) {
-		this.idUsuarioInsersor = idUsuarioInsersor;
-	}
-	public Long getIdUltimoUsuarioEditor() {
-		return idUltimoUsuarioEditor;
-	}
-	public void setIdUltimoUsuarioEditor(Long idUltimoUsuarioEditor) {
-		this.idUltimoUsuarioEditor = idUltimoUsuarioEditor;
-	}
 
 	public String getLatitude() {
 		return latitude;
@@ -127,34 +112,42 @@ public abstract class CarroForm {
 		this.longitude = longitude;
 	}
 
-	public void atualizar(Carro veiculo) {
-		veiculo.setAlertado(alertado);
-		veiculo.setLocalDoAlerta(localDoAlerta);
-		veiculo.setDono(dono);
-		veiculo.setMomentoDoAlerta(momentoDoAlerta);
-		veiculo.setStatusDoVeiculo(statusDoVeiculo);
-		veiculo.setPlaca(placa);
-		veiculo.setNivelDeUrgencia(nivelDeUrgencia);
-		veiculo.setUpdatedAt(LocalDateTime.now());
+	protected void atualizar(Carro carro) {
+		carro.setAlertado(alertado);
+		carro.setLocalDoAlerta(localDoAlerta);
+		carro.setDono(dono);
+		carro.setMomentoDoAlerta(momentoDoAlerta);
+		carro.setStatusDoVeiculo(statusDoVeiculo);
+		carro.setPlaca(placa);
+		carro.setLatitude(latitude);
+		carro.setLongitude(longitude);
+		carro.setNivelDeUrgencia(nivelDeUrgencia);
+		carro.setUpdatedAt(LocalDateTime.now());
 	}
-	public Usuario montarUsuarioInsersor(UsuarioRepository usuarioRepository) {
-		Optional<Usuario> usuarioInsersorOpt = usuarioRepository.findById(idUsuarioInsersor);
-		Usuario usuarioInsersor = usuarioInsersorOpt.orElse(null);
-		
-		return usuarioInsersor;
-	}
-	public Usuario montarUsuarioEditor(UsuarioRepository usuarioRepository) {
-		Optional<Usuario> usuarioEditorOpt = usuarioRepository.findById(idUltimoUsuarioEditor);
-		Usuario usuarioEditor = usuarioEditorOpt.orElse(null);
-		
-		return usuarioEditor;
-	}
-	public Zona montarZona(ZonaRepository zonaRepository) {
+	
+	protected Zona montarZona(ZonaRepository zonaRepository) {
 		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
 		Zona zona = zonaOpt.orElse(null);
 		
 		return zona;
 	}
 	
+	private boolean validarZona(ZonaRepository zonaRepository) {
+		Zona zona = montarZona(zonaRepository);
+		
+		if(zona==null) {
+			return false;
+		}
+		
+		return true;
+	}
+	
+	public boolean validarUsuarioInsersorEzona(UsuarioRepository usuarioRepository,ZonaRepository zonaRepository) {
+		return validarUsuarioInsersor(usuarioRepository) && validarZona(zonaRepository);
+	}
+	
+	public boolean validarUsuarioEditorEzona(UsuarioRepository usuarioRepository,ZonaRepository zonaRepository) {
+		return validarUltimoUsuarioEditor(usuarioRepository) && validarZona(zonaRepository);
+	}
 	
 }

@@ -38,7 +38,7 @@ public class CarroSuspeitoForm extends CarroForm{
 		CarroSuspeito veiculo = veiculoSuspeitoRepository.getById(id);
 		
 		veiculo.setZona(super.montarZona(zonaRepository));
-		veiculo.setUltimoUsuarioEditor(super.montarUsuarioEditor(usuarioRepository));
+		veiculo.setUltimoUsuarioEditor(super.montarUltimoUsuarioEditor(usuarioRepository));
 		//veiculo.setUsuarioInsersor(super.montarUsuarioInsersor(usuarioRepository));
 		super.atualizar(veiculo);
 
