@@ -36,6 +36,16 @@ public abstract class CarroDto {
 		this.latitude=veiculo.getLatitude();
 		this.longitude=veiculo.getLongitude();
 		
+		if (veiculo.getZona() != null) {
+			this.idZona = veiculo.getZona().getId();
+		}
+		if (veiculo.getUsuarioInsersor() != null) {
+			this.idUsuarioInsersor = veiculo.getUsuarioInsersor().getId();
+		}
+		if (veiculo.getUltimoUsuarioEditor() != null) {
+			this.idUltimoUsuarioEditor = veiculo.getUltimoUsuarioEditor().getId();
+		}
+		
 		if(veiculo.getCreatedAt()!=null) {
 			createdAt=veiculo.getCreatedAt();
 		}

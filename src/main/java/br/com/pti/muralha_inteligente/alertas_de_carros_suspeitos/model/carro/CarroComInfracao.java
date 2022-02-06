@@ -19,65 +19,25 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.
 
 @Entity
 @Table(name="carros_com_infracao")
-public class CarroComInfracao extends Carro implements RelacionavelParaJson{
+public class CarroComInfracao extends Carro {
 
 	@Enumerated(EnumType.STRING)
 	private GravidadeDaInfracao gravidadeDaInfracao;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="zone-infr-movement")
-	protected Zona zona;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="inser-infr-movement")
-	protected Usuario usuarioInsersor;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="edited-infr-movement")
-	protected Usuario ultimoUsuarioEditor;
-	
 	
 	public CarroComInfracao() {}
 	
 	public CarroComInfracao(CarroComInfracaoForm veiculoForm, Zona zona,
 			Usuario usuarioInsersor) {
-		super(veiculoForm,zona);
+		super(veiculoForm,zona,usuarioInsersor);
 		this.gravidadeDaInfracao=veiculoForm.getGravidadeDaInfracao();
-		this.zona=zona;
-		this.usuarioInsersor=usuarioInsersor;
-		//this.ultimoUsuarioEditor=usuarioEditor;
 	}
 
 	public GravidadeDaInfracao getGravidadeDaInfracao() {
 		return this.gravidadeDaInfracao;
 	}
+	
 	public void setGravidadeDaInfracao(GravidadeDaInfracao gdi) {
 		this.gravidadeDaInfracao=gdi;
-	}
-	@JsonBackReference(value="edited-infr-movement")
-	public Usuario getUltimoUsuarioEditor() {
-		return ultimoUsuarioEditor;
-	}
-
-	public void setUltimoUsuarioEditor(Usuario ultimoUsuarioEditor) {
-		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
-	}
-	@JsonBackReference(value="zone-infr-movement")
-	public Zona getZona() {
-		return zona;
-	}
-
-	public void setZona(Zona zona) {
-		this.zona = zona;
-	}
-
-	@JsonBackReference(value="inser-infr-movement")
-	public Usuario getUsuarioInsersor() {
-		return usuarioInsersor;
-	}
-
-	public void setUsuarioInsersor(Usuario usuarioInsersor) {
-		this.usuarioInsersor = usuarioInsersor;
 	}
 	
 	public static CarroComInfracaoDto converter(CarroComInfracao veiculo) {

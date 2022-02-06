@@ -46,40 +46,10 @@ public class Zona {
 	
 	private LocalDateTime updatedAt;
 	
-	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<Usuario> usuarios;
-	
-	@OneToMany(mappedBy="zonaAssociada",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="local-zone-movement")
-	private List<LocalAlvo> locaisAlvo;
-	
-	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="zone-suspects-movement")
-	private List<CarroSuspeito> veiculosSuspeitos;
-	
-	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<CarroRoubado> veiculosRoubados;
-	
-	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<CarroEmSituacaoIrregular> veiculosEmSituacaoIrregular;
-	
-	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<CarroComInfracao> veiculosComInfracao;
-	
-	@OneToMany(mappedBy="zona",fetch=FetchType.LAZY)
-	@JsonIgnore
-	private List<BotDoTelegram> botsDoTelegram;
-	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JsonBackReference(value="zone-user-movement")
 	private Usuario usuarioInsersor;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JsonBackReference(value="zone-user-edited-movement")
 	private Usuario ultimoUsuarioEditor;
 	
 	public Zona() {}
@@ -88,28 +58,7 @@ public class Zona {
 		usuarioInsersor=usuario;
 		this.createdAt=LocalDateTime.now();
 	}
-	public List<BotDoTelegram> getBotsDoTelegram() {
-		return botsDoTelegram;
-	}
-	@JsonManagedReference(value="zone-movement")
-	public List<CarroSuspeito> getCarrosSuspeitos() {
-		return veiculosSuspeitos;
-	}
-	public List<CarroRoubado> getCarrosRoubados() {
-		return veiculosRoubados;
-	}
-	public List<CarroEmSituacaoIrregular> getCarrosEmSituacaoIrregular() {
-		return veiculosEmSituacaoIrregular;
-	}
-	public List<CarroComInfracao> getCarrosComInfracao() {
-		return veiculosComInfracao;
-	}
-	public List<LocalAlvo> getLocaisAlvo() {
-		return locaisAlvo;
-	}
-	public void adicionarLocalAlvo(LocalAlvo localAlvo) {
-		this.locaisAlvo.add(localAlvo);
-	}
+	
 	public Usuario getUsuarioInsersor() {
 		return usuarioInsersor;
 	}
@@ -126,12 +75,6 @@ public class Zona {
 		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
 	}
 
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
-	public void adicionarUsuario(Usuario usuario) {
-		this.usuarios.add(usuario);
-	}
 	public Long getId() {
 		return id;
 	}

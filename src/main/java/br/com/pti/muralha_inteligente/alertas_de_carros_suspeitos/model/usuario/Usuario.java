@@ -19,6 +19,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -26,6 +27,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.estrutura_devolvida.UsuarioDto;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.UsuarioForm;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.BotDoTelegramDeUsuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.LocalAlvo;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
@@ -60,104 +63,38 @@ public class Usuario implements UserDetails{
 	@Column(length=256)
 	private String token;
 
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonIgnore
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Zona zona;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Usuario usuarioInsersor;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Usuario ultimoUsuarioEditor;
 	
 	protected LocalDateTime createdAt;
 	
 	protected LocalDateTime updatedAt;
-	
-	@OneToMany(mappedBy="usuario",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JsonManagedReference(value="bot-user-user-movement")
-	private List<BotDoTelegramDeUsuario> botsDoTelegramDeUsuario;
-	
-	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="local-user-movement")
-	private List<LocalAlvo> locaisAlvoInseridos;
-	
-	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="local-user-edited-movement")
-	private List<LocalAlvo> locaisAlvoEditados;
-	
-	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="zone-user-movement")
-	private List<Zona> zonasInseridas;
-	
-	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="zone-user-edited-movement")
-	private List<Zona> zonasEditadas;
-	
-	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="inser-infr-movement")
-	private List<CarroComInfracao> carrosComInfracaoInseridos;
-	
-	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="edited-infr-movement")
-	private List<CarroComInfracao> carrosComInfracaoEditados;
-	
-	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="inser-irr-movement")
-	private List<CarroEmSituacaoIrregular> carrosEmSituacoaIrregularInseridos;
-	
-	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="edited-irr-movement")
-	private List<CarroEmSituacaoIrregular> carrosEmSituacoaIrregularEditados;
-
-	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="inser-stolen-movement")
-	private List<CarroRoubado> carrosRoubadosInseridos;
-	
-	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="edited-stolen-movement")
-	private List<CarroRoubado> carrosRoubadosEditados;
-	
-	@OneToMany(mappedBy="usuarioInsersor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="inser-suspects-movement")
-	private List<CarroSuspeito> carrosSuspeitosInseridos;
-	
-	@OneToMany(mappedBy="ultimoUsuarioEditor",fetch=FetchType.LAZY)
-	@JsonManagedReference(value="edited-suspects-movement")
-	private List<CarroSuspeito> carrosSuspeitosEditados;
 
 	@ManyToMany(fetch=FetchType.EAGER)
 	private List<Perfil> perfis = new ArrayList<>();
 
+	public Usuario() {}
 	
-	public List<CarroComInfracao> getCarrosComInfracaoInseridos() {
-		return carrosComInfracaoInseridos;
-	}
-
-	public List<CarroComInfracao> getCarrosComInfracaoEditados() {
-		return carrosComInfracaoEditados;
-	}
-
-	public List<CarroEmSituacaoIrregular> getCarrosEmSituacoaIrregularInseridos() {
-		return carrosEmSituacoaIrregularInseridos;
-	}
-
-	public List<CarroEmSituacaoIrregular> getCarrosEmSituacoaIrregularEditados() {
-		return carrosEmSituacoaIrregularEditados;
-	}
-
-	public List<BotDoTelegramDeUsuario> getBotsDoTelegramDeUsuario() {
-		return botsDoTelegramDeUsuario;
-	}
-
-	public List<CarroRoubado> getCarrosRoubadosInseridos() {
-		return carrosRoubadosInseridos;
-	}
-
-	public List<CarroRoubado> getCarrosRoubadosEditados() {
-		return carrosRoubadosEditados;
-	}
-	@JsonManagedReference(value="inser-suspects-movement")
-	public List<CarroSuspeito> getCarrosSuspeitosInseridos() {
-		return carrosSuspeitosInseridos;
-	}
-	@JsonManagedReference(value="edited-suspects-movement")
-	public List<CarroSuspeito> getCarrosSuspeitosEditados() {
-		return carrosSuspeitosEditados;
+	public Usuario(UsuarioForm usuarioForm, Usuario usuarioInsersor, Zona zona) {
+		if(usuarioForm.getAutoridade()!=null) {
+			autoridade=usuarioForm.getAutoridade();
+		}
+		if(usuarioForm.getToken()!=null) {
+			token=usuarioForm.getToken();
+		}
+		
+		createdAt=LocalDateTime.now();
+		this.usuarioInsersor=usuarioInsersor;
+		email=usuarioForm.getEmail();
+		senha=usuarioForm.getSenha();
+		nomeDeUsuario=usuarioForm.getNomeDeUsuario();
+		this.zona=zona;
 	}
 
 	public Long getId() {
@@ -192,6 +129,42 @@ public class Usuario implements UserDetails{
 		this.senha = senha;
 	}
 
+	public Usuario getUsuarioInsersor() {
+		return usuarioInsersor;
+	}
+
+	public void setUsuarioInsersor(Usuario usuarioInsersor) {
+		this.usuarioInsersor = usuarioInsersor;
+	}
+
+	public Usuario getUltimoUsuarioEditor() {
+		return ultimoUsuarioEditor;
+	}
+
+	public void setUltimoUsuarioEditor(Usuario ultimoUsuarioEditor) {
+		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
+	}
+
+	public LocalDateTime getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(LocalDateTime createdAt) {
+		this.createdAt = createdAt;
+	}
+
+	public LocalDateTime getUpdatedAt() {
+		return updatedAt;
+	}
+
+	public void setUpdatedAt(LocalDateTime updatedAt) {
+		this.updatedAt = updatedAt;
+	}
+
+	public List<Perfil> getPerfis() {
+		return perfis;
+	}
+
 	public TipoAutoridade getAutoridade() {
 		return autoridade;
 	}
@@ -222,22 +195,6 @@ public class Usuario implements UserDetails{
 
 	public void setZona(Zona zona) {
 		this.zona = zona;
-	}
-
-	public List<LocalAlvo> getLocaisAlvoInseridos() {
-		return locaisAlvoInseridos;
-	}
-
-	public List<LocalAlvo> getLocaisAlvoEditados() {
-		return locaisAlvoEditados;
-	}
-
-	public List<Zona> getZonasInseridas() {
-		return zonasInseridas;
-	}
-
-	public List<Zona> getZonasEditadas() {
-		return zonasEditadas;
 	}
 
 	@Override
@@ -279,6 +236,14 @@ public class Usuario implements UserDetails{
 	@Override
 	public boolean isEnabled() {
 		return true;
+	}
+
+	public static Page<UsuarioDto> converter(Page<Usuario> usuarios) {
+		return usuarios.map(UsuarioDto::new);
+	}
+
+	public static UsuarioDto converter(Usuario usuario) {
+		return new UsuarioDto(usuario);
 	}
 	
 }

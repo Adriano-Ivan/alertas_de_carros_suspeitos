@@ -32,16 +32,13 @@ public class LocalAlvo {
 	@Column(length=120,nullable=false)
 	private String local;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="local-user-movement")
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Usuario usuarioInsersor;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="local-user-edited-movement")
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Usuario ultimoUsuarioEditor;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="local-zone-movement")
+	@ManyToOne(fetch=FetchType.EAGER)
 	private Zona zonaAssociada;
 	
 	private LocalDateTime createdAt;

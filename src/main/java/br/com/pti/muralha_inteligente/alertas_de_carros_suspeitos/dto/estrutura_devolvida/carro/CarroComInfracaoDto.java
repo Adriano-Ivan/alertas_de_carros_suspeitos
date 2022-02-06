@@ -10,17 +10,6 @@ public class CarroComInfracaoDto extends CarroDto{
 	public CarroComInfracaoDto(CarroComInfracao veiculo) {
 		super(veiculo);
 		this.gravidadeDaInfracao=veiculo.getGravidadeDaInfracao();
-		
-
-		if (veiculo.getZona() != null) {
-			this.idZona = veiculo.getZona().getId();
-		}
-		if (veiculo.getUsuarioInsersor() != null) {
-			this.idUsuarioInsersor = veiculo.getUsuarioInsersor().getId();
-		}
-		if (veiculo.getUltimoUsuarioEditor() != null) {
-			this.idUltimoUsuarioEditor = veiculo.getUltimoUsuarioEditor().getId();
-		}
 	}
 	
 	public GravidadeDaInfracao getGravidadeDaInfracao() {

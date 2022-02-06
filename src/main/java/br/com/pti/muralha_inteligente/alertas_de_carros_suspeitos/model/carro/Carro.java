@@ -50,8 +50,17 @@ public abstract class Carro {
 	
 	private String longitude;
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Zona zona;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Usuario usuarioInsersor;
+	
+	@ManyToOne(fetch=FetchType.EAGER)
+	private Usuario ultimoUsuarioEditor;
+	
 	public Carro() {}
-	public Carro(CarroForm veiculoForm,Zona zona) {
+	public Carro(CarroForm veiculoForm,Zona zona,Usuario usuarioInsersor) {
 		this.dono=veiculoForm.getDono();
 		this.placa=veiculoForm.getPlaca();
 		this.localDoAlerta=veiculoForm.getLocalDoAlerta();
@@ -60,7 +69,9 @@ public abstract class Carro {
 		this.nivelDeUrgencia=veiculoForm.getNivelDeUrgencia();
 		this.statusDoVeiculo=veiculoForm.getStatusDoVeiculo();
 		this.createdAt=LocalDateTime.now();
-	
+		this.usuarioInsersor=usuarioInsersor;
+		this.zona=zona;
+		
 		if(veiculoForm.getLatitude()!=null) {
 			this.latitude=veiculoForm.getLatitude();
 		}
@@ -78,6 +89,29 @@ public abstract class Carro {
 		this.id = id;
 	}
 
+	public Usuario getUltimoUsuarioEditor() {
+		return ultimoUsuarioEditor;
+	}
+
+	public void setUltimoUsuarioEditor(Usuario ultimoUsuarioEditor) {
+		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
+	}
+
+	public Zona getZona() {
+		return zona;
+	}
+
+	public void setZona(Zona zona) {
+		this.zona = zona;
+	}
+
+	public Usuario getUsuarioInsersor() {
+		return usuarioInsersor;
+	}
+
+	public void setUsuarioInsersor(Usuario usuarioInsersor) {
+		this.usuarioInsersor = usuarioInsersor;
+	}
 	public String getLatitude() {
 		return latitude;
 	}
@@ -163,8 +197,9 @@ public abstract class Carro {
 	public String toString() {
 		return "Veiculo [id=" + id + ", dono=" + dono + ", placa=" + placa + ", localDoAlerta=" + localDoAlerta
 				+ ", momentoDoAlerta=" + momentoDoAlerta + ", alertado=" + alertado + ", nivelDeUrgencia="
-				+ nivelDeUrgencia + ", statusDoVeiculo=" + statusDoVeiculo + ", zona=" + "zona" + ", usuarioInsersor="
-				+ "insersor" + ", ultimoUsuarioEditor=" + "editor" + ", próprio_da_filha"+"]";
+				+ nivelDeUrgencia + ", statusDoVeiculo=" + statusDoVeiculo + ", zona=" + getZona().toString() + ", usuarioInsersor="
+				+ getUsuarioInsersor().toString() + ", ultimoUsuarioEditor=" + getUltimoUsuarioEditor().toString() + 
+				", próprio_da_filha"+"]";
 	}
 	
 	

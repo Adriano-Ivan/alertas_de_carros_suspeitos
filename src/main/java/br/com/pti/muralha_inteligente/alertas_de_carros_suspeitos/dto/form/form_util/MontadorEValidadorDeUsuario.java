@@ -2,8 +2,10 @@ package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.form
 
 import java.util.Optional;
 
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 public abstract class MontadorEValidadorDeUsuario {
  
@@ -60,5 +62,12 @@ public abstract class MontadorEValidadorDeUsuario {
 	
 	public boolean validarUltimoUsuarioEditor(UsuarioRepository usuarioRepository) {
 		return validarUsuario(usuarioRepository,idUltimoUsuarioEditor);
+	}
+	
+	private Zona montarZona(Long id, ZonaRepository zonaRepository) {
+		Optional<Zona> zonaOpt = zonaRepository.findById(id);
+		Zona zonaAssociada = zonaOpt.orElse(null);
+		return zonaAssociada;
+		
 	}
 }

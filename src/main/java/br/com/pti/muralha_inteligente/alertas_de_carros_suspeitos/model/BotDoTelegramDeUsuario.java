@@ -35,11 +35,9 @@ public class BotDoTelegramDeUsuario {
 	private String nomeDoBot;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JsonBackReference(value="bot-user-bot-movement")
 	private BotDoTelegram botDoTelegram;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JsonBackReference(value="bot-user-user-movement")
 	private Usuario usuario;
 	
 	private LocalDateTime createdAt;

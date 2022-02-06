@@ -51,12 +51,7 @@ public class BotDoTelegram {
 	private Usuario ultimoUsuarioEditor;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JsonBackReference
 	private Zona zona;
-	
-	@OneToMany(mappedBy="botDoTelegram",fetch=FetchType.LAZY,cascade=CascadeType.ALL)
-	@JsonManagedReference(value="bot-user-bot-movement")
-	private List<BotDoTelegramDeUsuario> botsDoTelegramDeUsuarios;
 	
 	public BotDoTelegram() {}
 	

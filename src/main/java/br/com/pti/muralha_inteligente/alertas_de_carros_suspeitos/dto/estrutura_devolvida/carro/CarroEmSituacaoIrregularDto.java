@@ -10,16 +10,6 @@ public class CarroEmSituacaoIrregularDto extends CarroDto{
 	public CarroEmSituacaoIrregularDto(CarroEmSituacaoIrregular veiculo) {
 		super(veiculo);
 		this.medidaAdministrativa=veiculo.getMedidaAdministrativa();
-
-		if (veiculo.getZona() != null) {
-			this.idZona = veiculo.getZona().getId();
-		}
-		if (veiculo.getUsuarioInsersor() != null) {
-			this.idUsuarioInsersor = veiculo.getUsuarioInsersor().getId();
-		}
-		if (veiculo.getUltimoUsuarioEditor() != null) {
-			this.idUltimoUsuarioEditor = veiculo.getUltimoUsuarioEditor().getId();
-		}
 		
 	}
 	

@@ -11,18 +11,7 @@ public class CarroSuspeitoDto extends CarroDto{
 	public CarroSuspeitoDto(CarroSuspeito veiculo) {
 		super(veiculo);
 		this.justificativa = veiculo.getJustificativa();
-
-		if (veiculo.getZona() != null) {
-			this.idZona = veiculo.getZona().getId();
-		}
-		if (veiculo.getUsuarioInsersor() != null) {
-			this.idUsuarioInsersor = veiculo.getUsuarioInsersor().getId();
-		}
-		if (veiculo.getUltimoUsuarioEditor() != null) {
-			this.idUltimoUsuarioEditor = veiculo.getUltimoUsuarioEditor().getId();
-		}
 	}
-
 
 	public String getJustificativa() {
 		return justificativa;

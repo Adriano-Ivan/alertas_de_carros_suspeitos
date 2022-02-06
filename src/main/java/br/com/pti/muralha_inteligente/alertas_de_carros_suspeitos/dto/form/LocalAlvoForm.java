@@ -15,7 +15,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Loc
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
-public class LocalAlvoForm extends MontadorEValidadorDeUsuario{
+public class LocalAlvoForm extends MontadorEValidadorDeUsuario {
 
 	@NotNull @NotBlank @Size(min=2)
 	private String local;
@@ -42,9 +42,7 @@ public class LocalAlvoForm extends MontadorEValidadorDeUsuario{
 		Optional<Zona> zonaOpt = zonaRepository.findById(id);
 		Zona zonaAssociada = zonaOpt.orElse(null);
 		return zonaAssociada;
-	}
-	public LocalAlvo converter(ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {	
-		return new LocalAlvo(local,montarUsuarioInsersor(usuarioRepository),montarZona(idZonaAssociada,zonaRepository));
+		
 	}
 	
 	private boolean validarZonaAssociada(ZonaRepository zonaRepository) {
@@ -64,6 +62,11 @@ public class LocalAlvoForm extends MontadorEValidadorDeUsuario{
 	public boolean validarZonaAssociadaEultimoUsuarioEditor(ZonaRepository zonaRepository,UsuarioRepository usuarioRepository) {
 		return validarUltimoUsuarioEditor(usuarioRepository) && validarZonaAssociada(zonaRepository);
 	}
+	
+	public LocalAlvo converter(ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {	
+		return new LocalAlvo(local,montarUsuarioInsersor(usuarioRepository),montarZona(idZonaAssociada,zonaRepository));
+	}
+	
 	public LocalAlvo atualizar(Long id, LocalAlvoRepository localAlvoRepository,
 			ZonaRepository zonaRepository, UsuarioRepository usuarioRepository) {
 		LocalAlvo localAlvo=localAlvoRepository.getById(id);

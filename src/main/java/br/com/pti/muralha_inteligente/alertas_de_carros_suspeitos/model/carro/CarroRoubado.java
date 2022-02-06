@@ -17,32 +17,17 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.
 
 @Entity
 @Table(name="carros_roubados")
-public class CarroRoubado extends Carro implements RelacionavelParaJson{
+public class CarroRoubado extends Carro {
 	
 	@Column(length=80)
 	private String localDoRoubo;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="zone-stolen-movement")
-	protected Zona zona;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="inser-stolen-movement")
-	protected Usuario usuarioInsersor;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="edited-stolen-movement")
-	protected Usuario ultimoUsuarioEditor;
 	
 	public CarroRoubado() {}
 
 	public CarroRoubado(CarroRoubadoForm veiculoForm, Zona zona,
 			Usuario usuarioInsersor) {
-		super(veiculoForm,zona);
+		super(veiculoForm,zona,usuarioInsersor);
 		this.localDoRoubo=veiculoForm.getLocalDoRoubo();
-		this.zona=zona;
-		this.usuarioInsersor=usuarioInsersor;
-		//this.ultimoUsuarioEditor=usuarioEditor;
 	}
 
 	public String getLocalDoRoubo() {
@@ -52,31 +37,7 @@ public class CarroRoubado extends Carro implements RelacionavelParaJson{
 	public void setLocalDoRoubo(String localDoRoubo) {
 		this.localDoRoubo = localDoRoubo;
 	}
-	@JsonBackReference(value="edited-stolen-movement")
-	public Usuario getUltimoUsuarioEditor() {
-		return ultimoUsuarioEditor;
-	}
 
-	public void setUltimoUsuarioEditor(Usuario ultimoUsuarioEditor) {
-		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
-	}
-	@JsonBackReference(value="zone-stolen-movement")
-	public Zona getZona() {
-		return zona;
-	}
-
-	public void setZona(Zona zona) {
-		this.zona = zona;
-	}
-
-	@JsonBackReference(value="inser-stolen-movement")
-	public Usuario getUsuarioInsersor() {
-		return usuarioInsersor;
-	}
-
-	public void setUsuarioInsersor(Usuario usuarioInsersor) {
-		this.usuarioInsersor = usuarioInsersor;
-	}
 
 	public static Page<CarroRoubadoDto> converter(Page<CarroRoubado> veiculosSuspeitos) {
 		return veiculosSuspeitos.map(CarroRoubadoDto::new);
@@ -89,9 +50,7 @@ public class CarroRoubado extends Carro implements RelacionavelParaJson{
 	
 	@Override
 	public String toString() {
-		return super.toString().replace("próprio_da_filha", "local do roubo: "+localDoRoubo)
-				.replace("insersor", usuarioInsersor.toString()).replace("editor",ultimoUsuarioEditor.toString())
-				.replace("zona", zona.toString());
+		return super.toString().replace("próprio_da_filha", "local do roubo: "+localDoRoubo);
 	}
 
 }

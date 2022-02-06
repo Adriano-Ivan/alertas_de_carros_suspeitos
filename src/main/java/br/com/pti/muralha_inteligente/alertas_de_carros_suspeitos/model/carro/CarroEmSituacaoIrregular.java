@@ -22,33 +22,17 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Zon
 
 @Entity
 @Table(name="carros_em_situacao_irregular")
-public class CarroEmSituacaoIrregular extends Carro implements RelacionavelParaJson {
+public class CarroEmSituacaoIrregular extends Carro {
 	
 	@Enumerated(EnumType.STRING)
 	private MedidaAdministrativa medidaAdministrativa;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="zone-irr-movement")
-	protected Zona zona;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="inser-irr-movement")
-	protected Usuario usuarioInsersor;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="edited-irr-movement")
-	protected Usuario ultimoUsuarioEditor;
-	
 	
 	public CarroEmSituacaoIrregular() {}
 
 	public CarroEmSituacaoIrregular(CarroEmSituacaoIrregularForm veiculoForm, Zona zona,
 			Usuario usuarioInsersor) {
-		super(veiculoForm,zona);
+		super(veiculoForm,zona,usuarioInsersor);
 		this.medidaAdministrativa=veiculoForm.getMedidaAdministrativa();
-		this.zona=zona;
-		this.usuarioInsersor=usuarioInsersor;
-		//this.ultimoUsuarioEditor=usuarioEditor;
 	}
 
 	public MedidaAdministrativa getMedidaAdministrativa() {
@@ -57,31 +41,6 @@ public class CarroEmSituacaoIrregular extends Carro implements RelacionavelParaJ
 
 	public void setMedidaAdministrativa(MedidaAdministrativa medidaAdministrativa) {
 		this.medidaAdministrativa = medidaAdministrativa;
-	}
-	@JsonBackReference(value="edited-irr-movement")
-	public Usuario getUltimoUsuarioEditor() {
-		return ultimoUsuarioEditor;
-	}
-
-	public void setUltimoUsuarioEditor(Usuario ultimoUsuarioEditor) {
-		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
-	}
-	@JsonBackReference(value="zone-irr-movement")
-	public Zona getZona() {
-		return zona;
-	}
-
-	public void setZona(Zona zona) {
-		this.zona = zona;
-	}
-
-	@JsonBackReference(value="inser-irr-movement")
-	public Usuario getUsuarioInsersor() {
-		return usuarioInsersor;
-	}
-
-	public void setUsuarioInsersor(Usuario usuarioInsersor) {
-		this.usuarioInsersor = usuarioInsersor;
 	}
 	
 	public static Page<CarroEmSituacaoIrregularDto> converter(Page<CarroEmSituacaoIrregular> veiculosEmSituacaoIrregular) {

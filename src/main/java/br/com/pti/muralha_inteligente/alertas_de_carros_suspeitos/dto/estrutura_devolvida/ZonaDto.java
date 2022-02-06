@@ -10,24 +10,24 @@ public class ZonaDto {
 	private String zona;
 	private Long idUltimoUsuarioEditor;
 	private Long idUsuarioInsersor;
-	protected LocalDateTime createdAt;	
-	protected LocalDateTime updatedAt;
+	private LocalDateTime createdAt;	
+	private LocalDateTime updatedAt;
 	
-	public ZonaDto(Zona zonaModel) {
-		id=zonaModel.getId();
-		zona=zonaModel.getZona();
+	public ZonaDto(Zona zona) {
+		id=zona.getId();
+		this.zona=zona.getZona();
 		
-		if(zonaModel.getUltimoUsuarioEditor()!=null) {
-			idUltimoUsuarioEditor=zonaModel.getUltimoUsuarioEditor().getId();
+		if(zona.getUltimoUsuarioEditor()!=null) {
+			idUltimoUsuarioEditor=zona.getUltimoUsuarioEditor().getId();
 		}
-		if(zonaModel.getUsuarioInsersor()!=null) {
-			idUsuarioInsersor=zonaModel.getUsuarioInsersor().getId();
+		if(zona.getUsuarioInsersor()!=null) {
+			idUsuarioInsersor=zona.getUsuarioInsersor().getId();
 		}
-		if(zonaModel.getCreatedAt()!=null) {
-			createdAt=zonaModel.getCreatedAt();
+		if(zona.getCreatedAt()!=null) {
+			createdAt=zona.getCreatedAt();
 		}
-		if(zonaModel.getUpdatedAt()!=null) {
-			updatedAt=zonaModel.getUpdatedAt();
+		if(zona.getUpdatedAt()!=null) {
+			updatedAt=zona.getUpdatedAt();
 		}
 	}
 

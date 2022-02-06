@@ -24,32 +24,18 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.
 
 @Entity
 @Table(name="carros_suspeitos")
-public class CarroSuspeito extends Carro implements RelacionavelParaJson {
+public class CarroSuspeito extends Carro  {
 	
 	@Column(columnDefinition = "TEXT")
 	private String justificativa;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="zone-suspects-movement")
-	protected Zona zona;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="inser-suspects-movement")
-	protected Usuario usuarioInsersor;
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JsonBackReference(value="edited-suspects-movement")
-	protected Usuario ultimoUsuarioEditor;
 	
 	public CarroSuspeito() {}
 
 	public CarroSuspeito(CarroSuspeitoForm veiculoForm, Zona zona, 
 			Usuario usuarioInsersor) {
-		super(veiculoForm, zona);
+		super(veiculoForm, zona,usuarioInsersor);
 		this.justificativa=veiculoForm.getJustificativa();
-		this.zona=zona;
-		this.usuarioInsersor=usuarioInsersor;
-	//	this.ultimoUsuarioEditor=usuarioEditor;
 	}
 
 	public String getJustificativa() {
@@ -59,32 +45,7 @@ public class CarroSuspeito extends Carro implements RelacionavelParaJson {
 	public void setJustificativa(String justificativa) {
 		this.justificativa = justificativa;
 	}
-	@JsonBackReference(value="edited-suspects-movement")
-	public Usuario getUltimoUsuarioEditor() {
-		return ultimoUsuarioEditor;
-	}
-
-	public void setUltimoUsuarioEditor(Usuario ultimoUsuarioEditor) {
-		this.ultimoUsuarioEditor = ultimoUsuarioEditor;
-	}
-	@JsonBackReference(value="zone-suspects-movement")
-	public Zona getZona() {
-		return zona;
-	}
-
-	public void setZona(Zona zona) {
-		this.zona = zona;
-	}
-
-	@JsonBackReference(value="inser-suspects-movement")
-	public Usuario getUsuarioInsersor() {
-		return usuarioInsersor;
-	}
-
-	public void setUsuarioInsersor(Usuario usuarioInsersor) {
-		this.usuarioInsersor = usuarioInsersor;
-	}
-
+	
 	public static Page<CarroSuspeitoDto> converter(Page<CarroSuspeito> veiculosSuspeitos) {
 //		return veiculosSuspeitos.stream().map(VeiculoSuspeitoDto::new)
 //				.collect(Collectors.toList());
@@ -97,9 +58,7 @@ public class CarroSuspeito extends Carro implements RelacionavelParaJson {
 	
 	@Override
 	public String toString() {
-		return super.toString().replace("próprio_da_filha", "justificativa: "+justificativa)
-				.replace("insersor", usuarioInsersor.toString()).replace("editor",ultimoUsuarioEditor.toString())
-				.replace("zona", zona.toString());
+		return super.toString().replace("próprio_da_filha", "justificativa: "+justificativa);
 	}
 
 	
