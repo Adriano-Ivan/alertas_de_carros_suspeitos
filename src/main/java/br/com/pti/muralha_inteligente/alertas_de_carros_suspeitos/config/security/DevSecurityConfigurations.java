@@ -19,51 +19,16 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.Usu
 
 @EnableWebSecurity
 @Configuration
-@Profile("prod")
-public class SecurityConfigurations extends
+@Profile("dev")
+public class DevSecurityConfigurations extends
 	WebSecurityConfigurerAdapter{
 
-	@Autowired
-	private AutenticacaoService autenticacaoService;
-	
-	@Autowired
-	private TokenService tokenService;
-	
-	@Autowired
-	private UsuarioRepository usuarioRepository;
-	
-	@Override
-	@Bean
-	protected AuthenticationManager authenticationManager() throws Exception {
-		return super.authenticationManager();
-	}
-	
-	// Configuração de autenticação
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(autenticacaoService)
-		.passwordEncoder(new BCryptPasswordEncoder());
-		
-	}
-	
 	// Configuração de autorização
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests()
-		.antMatchers(HttpMethod.POST, "/api/v1/autenticacao").permitAll()
-		.anyRequest().authenticated()
-		.and().csrf().disable()
-		.sessionManagement()
-		.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and().addFilterBefore(new AutenticacaoViaTokenFilter(tokenService,
-				usuarioRepository),UsernamePasswordAuthenticationFilter.class);
+		.antMatchers("/**").permitAll()
+		.and().csrf().disable();
 	} 
-	
-	// Configuração de arquivos estáticos
-	@Override
-	public void configure(WebSecurity web) throws Exception {
-		// TODO Auto-generated method stub
-		super.configure(web);
-	}
 	
 }

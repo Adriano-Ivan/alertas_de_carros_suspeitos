@@ -2,16 +2,28 @@ package br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.form
 
 import java.util.Optional;
 
+import javax.validation.constraints.NotNull;
+
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
-public abstract class MontadorEValidadorDeUsuario {
+public abstract class MontadorEValidadorDeUsuarioEzona {
  
 	protected Long idUsuarioInsersor;
 	
 	protected Long idUltimoUsuarioEditor;
+	
+	protected Long idZona;
+	
+	public Long getIdZona() {
+		return idZona;
+	}
+
+	public void setIdZona(Long idZona) {
+		this.idZona = idZona;
+	}
 	
 	public Long getIdUsuarioInsersor() {
 		return idUsuarioInsersor;
@@ -64,10 +76,21 @@ public abstract class MontadorEValidadorDeUsuario {
 		return validarUsuario(usuarioRepository,idUltimoUsuarioEditor);
 	}
 	
-	private Zona montarZona(Long id, ZonaRepository zonaRepository) {
+
+	protected Zona montarZona(Long id, ZonaRepository zonaRepository) {
 		Optional<Zona> zonaOpt = zonaRepository.findById(id);
 		Zona zonaAssociada = zonaOpt.orElse(null);
 		return zonaAssociada;
 		
+	}
+	
+	protected boolean validarZona(ZonaRepository zonaRepository) {
+		Zona zona = montarZona(idZona, zonaRepository);
+		
+		if(zona==null) {
+			return false;
+		}
+		
+		return true;
 	}
 }

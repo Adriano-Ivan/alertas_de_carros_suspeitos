@@ -10,14 +10,14 @@ import javax.validation.constraints.Size;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.form_util.MontadorEValidadorDeUsuario;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.form_util.MontadorEValidadorDeUsuarioEzona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.Usuario;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.enumerator.TipoAutoridade;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
-public class UsuarioForm extends MontadorEValidadorDeUsuario{
+public class UsuarioForm extends MontadorEValidadorDeUsuarioEzona{
 
 	@NotNull @NotBlank @Size(min=6,message="O campo deve ter no mínimo 6 caracteres.")
 	private String nomeDeUsuario;
@@ -27,9 +27,6 @@ public class UsuarioForm extends MontadorEValidadorDeUsuario{
 	
 	@NotNull @NotBlank @Size(min=6,message="O campo deve ter no mínimo 6 caracteres.")
 	private String senha;
-	
-	@NotNull
-	private Long idZona;
 	
 	private TipoAutoridade autoridade;
 	
@@ -75,30 +72,7 @@ public class UsuarioForm extends MontadorEValidadorDeUsuario{
 		this.token = token;
 	}
 
-	public Long getIdZona() {
-		return idZona;
-	}
-
-	public void setIdZona(Long idZona) {
-		this.idZona = idZona;
-	}
 	
-	private Zona montarZona(Long id, ZonaRepository zonaRepository) {
-		Optional<Zona> zonaOpt = zonaRepository.findById(id);
-		Zona zonaAssociada = zonaOpt.orElse(null);
-		return zonaAssociada;
-		
-	}
-	
-	private boolean validarZona(ZonaRepository zonaRepository) {
-		Zona zona = montarZona(idZona, zonaRepository);
-		
-		if(zona==null) {
-			return false;
-		}
-		
-		return true;
-	}
 	
 	public boolean validarZonaAssociadaEUsuarioInsersor(ZonaRepository zonaRepository,UsuarioRepository usuarioRepository) {
 		return validarUsuarioInsersor(usuarioRepository) && validarZona(zonaRepository);

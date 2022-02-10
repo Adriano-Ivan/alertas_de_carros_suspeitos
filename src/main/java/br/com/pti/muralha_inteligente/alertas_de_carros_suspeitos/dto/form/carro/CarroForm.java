@@ -7,7 +7,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.form_util.MontadorEValidadorDeUsuario;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.form_util.MontadorEValidadorDeUsuarioEzona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.Zona;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.Carro;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.carro.CarroSuspeito;
@@ -15,7 +15,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.usuario.
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
-public abstract class CarroForm extends MontadorEValidadorDeUsuario {
+public abstract class CarroForm extends MontadorEValidadorDeUsuarioEzona {
 
 	@NotBlank @NotNull @Size(min=2)
 	private String dono;
@@ -37,9 +37,6 @@ public abstract class CarroForm extends MontadorEValidadorDeUsuario {
 	
 	@NotNull @NotBlank @Size(min=2)
 	private String statusDoVeiculo;
-	
-	@NotNull
-	protected Long idZona;
 
 	private String latitude;
 	
@@ -89,12 +86,6 @@ public abstract class CarroForm extends MontadorEValidadorDeUsuario {
 	public void setStatusDoVeiculo(String statusDoVeiculo) {
 		this.statusDoVeiculo = statusDoVeiculo;
 	}
-	public Long getIdZona() {
-		return idZona;
-	}
-	public void setIdZona(Long idZona) {
-		this.idZona = idZona;
-	}
 
 	public String getLatitude() {
 		return latitude;
@@ -112,6 +103,9 @@ public abstract class CarroForm extends MontadorEValidadorDeUsuario {
 		this.longitude = longitude;
 	}
 
+	protected Zona montarZona(ZonaRepository zonaRepository) {
+		return super.montarZona(idUltimoUsuarioEditor, zonaRepository);
+	}
 	protected void atualizar(Carro carro) {
 		carro.setAlertado(alertado);
 		carro.setLocalDoAlerta(localDoAlerta);
@@ -123,23 +117,6 @@ public abstract class CarroForm extends MontadorEValidadorDeUsuario {
 		carro.setLongitude(longitude);
 		carro.setNivelDeUrgencia(nivelDeUrgencia);
 		carro.setUpdatedAt(LocalDateTime.now());
-	}
-	
-	protected Zona montarZona(ZonaRepository zonaRepository) {
-		Optional<Zona> zonaOpt = zonaRepository.findById(idZona);
-		Zona zona = zonaOpt.orElse(null);
-		
-		return zona;
-	}
-	
-	private boolean validarZona(ZonaRepository zonaRepository) {
-		Zona zona = montarZona(zonaRepository);
-		
-		if(zona==null) {
-			return false;
-		}
-		
-		return true;
 	}
 	
 	public boolean validarUsuarioInsersorEzona(UsuarioRepository usuarioRepository,ZonaRepository zonaRepository) {

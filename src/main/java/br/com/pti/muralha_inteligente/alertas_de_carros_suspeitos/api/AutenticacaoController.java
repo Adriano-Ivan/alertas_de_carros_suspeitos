@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -19,6 +20,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.dto.form.Login
 
 @RestController
 @RequestMapping("${alertas_de_carros_suspeitos.api.base_servico}/autenticacao")
+@Profile("prod")
 public class AutenticacaoController {
 
 	@Autowired

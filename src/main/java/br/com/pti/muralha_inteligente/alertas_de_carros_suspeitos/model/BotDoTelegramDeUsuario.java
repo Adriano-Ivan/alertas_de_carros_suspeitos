@@ -44,6 +44,9 @@ public class BotDoTelegramDeUsuario {
 	
 	private LocalDateTime updatedAt;
 	
+	@ManyToOne(fetch=FetchType.LAZY)
+	private Zona zona;
+	
 	@ManyToOne(fetch=FetchType.EAGER)
 	private Usuario usuarioInsersor;
 	
@@ -54,6 +57,7 @@ public class BotDoTelegramDeUsuario {
 
 	public BotDoTelegramDeUsuario(Usuario usuario, BotDoTelegram botDoTelegram,Usuario usuarioInsersor) {
 		this.usuario=usuario;
+		this.zona=usuario.getZona();
 		this.botDoTelegram=botDoTelegram;
 		this.nomeDoBot=botDoTelegram.getDenominacao();
 		this.nomeDoUsuario=usuario.getNomeDeUsuario();
@@ -68,6 +72,13 @@ public class BotDoTelegramDeUsuario {
 
 	public void setUsuarioInsersor(Usuario usuarioInsersor) {
 		this.usuarioInsersor = usuarioInsersor;
+	}
+
+	public void setZona(Zona zona) {
+		this.zona=zona;
+	}
+	public Zona getZona() {
+		return zona;
 	}
 
 	public Usuario getUltimoUsuarioEditor() {

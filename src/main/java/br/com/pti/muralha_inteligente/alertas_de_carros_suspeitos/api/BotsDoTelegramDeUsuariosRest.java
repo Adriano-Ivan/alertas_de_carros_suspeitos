@@ -30,6 +30,7 @@ import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.model.BotDoTel
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.BotDoTelegramDeUsuarioRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.BotDoTelegramRepository;
 import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.UsuarioRepository;
+import br.com.pti.muralha_inteligente.alertas_de_carros_suspeitos.repository.ZonaRepository;
 
 @RestController
 @RequestMapping("${alertas_de_carros_suspeitos.api.base_servico}/bots_do_telegram_de_usuarios")
@@ -43,6 +44,9 @@ public class BotsDoTelegramDeUsuariosRest {
 	
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private ZonaRepository zonaRepository;
 	
 	@Value("${alertas_de_carros_suspeitos.api.base_servico}")
 	private String base_da_url_do_servico;
@@ -90,7 +94,7 @@ public class BotsDoTelegramDeUsuariosRest {
 	@Transactional
 	public ResponseEntity<BotDoTelegramDeUsuarioDto> cadastrar(@RequestBody @Valid BotDoTelegramDeUsuarioForm 
 			form, UriComponentsBuilder uriBuilder){
-		if(!form.validarBotDoTelegramEusuario(botDoTelegramRepository, usuarioRepository) ||
+		if(!form.validarBotDoTelegramEusuarioEzona(botDoTelegramRepository, usuarioRepository,zonaRepository) ||
 				!form.validarUsuarioInsersor(usuarioRepository)) {
 			return ResponseEntity.badRequest().build();
 		}
@@ -108,9 +112,9 @@ public class BotsDoTelegramDeUsuariosRest {
 	public ResponseEntity<BotDoTelegramDeUsuarioDto> atualizar(@PathVariable("id") Long id,
 			@RequestBody @Valid BotDoTelegramDeUsuarioForm 
 			form){
-		System.out.println(form.validarBotDoTelegramEusuario(botDoTelegramRepository, usuarioRepository));
-		System.out.println(form.validarUltimoUsuarioEditor(usuarioRepository) );
-		if(!form.validarBotDoTelegramEusuario(botDoTelegramRepository, usuarioRepository) ||
+//		System.out.println(form.validarBotDoTelegramEusuario(botDoTelegramRepository, usuarioRepository));
+//		System.out.println(form.validarUltimoUsuarioEditor(usuarioRepository) );
+		if(!form.validarBotDoTelegramEusuarioEzona(botDoTelegramRepository, usuarioRepository,zonaRepository) ||
 				!form.validarUltimoUsuarioEditor(usuarioRepository) 
 				) {
 			return ResponseEntity.badRequest().build();
@@ -121,7 +125,7 @@ public class BotsDoTelegramDeUsuariosRest {
 		
 		if(botDoTelegramDeUsuarioOpt.isPresent()) {
 			BotDoTelegramDeUsuario botDoTelegramDeUsuario = form.atualizar(id, botDoTelegramDeUsuarioRepository,
-					botDoTelegramRepository, usuarioRepository);
+					botDoTelegramRepository, usuarioRepository,zonaRepository);
 			return ResponseEntity.ok(new BotDoTelegramDeUsuarioDto(botDoTelegramDeUsuario));
 		}
 		
